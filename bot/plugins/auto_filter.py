@@ -115,12 +115,13 @@ async def connect(bot: Bot, update):
         )
         return
     
+    chat_name = await bot.get_chat(channel_id) 
     responce = add_connections(group_id, channel1, channel2, channel3)
 
     if responce:
         await bot.send_message(
             chat_id=group_id,
-            text=f"Sucessfully Connected To <code>{channel_id}</code>",
+            text=f"Sucessfully Connected To <code>{chat_name.title}</code>",
             parse_mode="html",
             reply_to_message_id=update.message_id
         )
@@ -188,6 +189,8 @@ async def disconnect(bot, update):
     except:
         pass
     
+    chat_name = await bot.get_chat(channel_id)
+    
     try:
         await bot.leave_chat(channel_id)
     except:
@@ -198,7 +201,7 @@ async def disconnect(bot, update):
     if responce:
         await bot.send_message(
             chat_id=group_id,
-            text=f"Sucessfully Disconnected From <code>{channel_id}</code>",
+            text=f"Sucessfully Disconnected From <code>{chat_name.title}</code>",
             parse_mode="html", 
             reply_to_message_id=update.message_id
         )
