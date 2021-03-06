@@ -1,0 +1,4 @@
+Dnspython
+Pyrogram
+Pymongo
+TgCrypto
