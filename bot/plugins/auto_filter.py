@@ -336,7 +336,7 @@ async def auto_filter (bot, update):
         result += [results[i * 30 :(i + 1) * 30 ] for i in range((len(results) + 30 - 1) // 30 )]
         
         if len(results) >30:
-            result[0].append([InlineKeyboardButton("Next", callback_data=f"0 | {update.from_user.id} | next_btn")])
+            result[0].append([InlineKeyboardButton("Next ⏩", callback_data=f"0 | {update.from_user.id} | next_btn")])
 
         reply_markup = InlineKeyboardMarkup(result[0])
 
@@ -436,7 +436,7 @@ async def cb_handler(bot, query:CallbackQuery, group=1):
     
         if int(index_val) == (len(result) -1) or int(index_val) == 10: # Max 10 Page
             temp_results.append([
-                InlineKeyboardButton("Back", callback_data=f"{index_val} | {query.from_user.id} | back_btn")
+                InlineKeyboardButton("⏪ Back", callback_data=f"{index_val} | {query.from_user.id} | back_btn")
             ])
     
         elif int(index_val) == 0:
@@ -444,8 +444,8 @@ async def cb_handler(bot, query:CallbackQuery, group=1):
     
         else:
             temp_results.append([
-                InlineKeyboardButton("Back", callback_data=f"{index_val} | {query.from_user.id} | back_btn"),
-                InlineKeyboardButton("Next", callback_data=f"{index_val} | {query.from_user.id} | next_btn")
+                InlineKeyboardButton("⏪ Back", callback_data=f"{index_val} | {query.from_user.id} | back_btn"),
+                InlineKeyboardButton("Next ⏩", callback_data=f"{index_val} | {query.from_user.id} | next_btn")
             ])
     
         reply_markup = InlineKeyboardMarkup(temp_results)
