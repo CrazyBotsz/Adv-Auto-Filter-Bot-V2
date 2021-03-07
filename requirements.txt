@@ -1,4 +1,5 @@
 Dnspython
+Motor
 Pyrogram
 Pymongo
 TgCrypto
