@@ -14,12 +14,9 @@ from pyrogram import Client, filters
 
 from bot.bot import Bot
 from bot.translation import Translation
-from bot.plugins.database import ( # pylint: disable=import-error
-    add_connections,
-    find_connections,
-    delete_connections
-    )
+from bot.plugins.database import Database
 
+db = Database () 
 result = []
 
 @Client.on_message(filters.command("connect") & filters.group)
@@ -38,7 +35,7 @@ async def connect(bot: Bot, update):
     
     channel_id = int(text[1])
     
-    conn_hist = find_connections(group_id)
+    conn_hist = await db.find_connections(group_id)
     
     if conn_hist: #TODO: Better Way!? 
 
@@ -79,7 +76,8 @@ async def connect(bot: Bot, update):
     # Export Invite Link For Userbot
     try:
         join_link = await bot.export_chat_invite_link(channel_id)
-    except:
+    except Exception as e:
+        print(e) 
         await bot.send_message(
             chat_id=group_id,
             text=f"Make Sure I'm Admin In <code>{channel_id}</code> And Have Permission - `Invite Users via Link`",
@@ -116,7 +114,7 @@ async def connect(bot: Bot, update):
         return
     
     chat_name = await bot.get_chat(channel_id) 
-    responce = add_connections(group_id, channel1, channel2, channel3)
+    responce = await db.add_connections(group_id, channel1, channel2, channel3)
 
     if responce:
         await bot.send_message(
@@ -151,7 +149,7 @@ async def disconnect(bot, update):
     
     channel_id = int(text[1])
     
-    conn_hist = find_connections(group_id)
+    conn_hist = await db.find_connections(group_id)
     
     if conn_hist:
         channel1 = int(conn_hist["channel_ids"]["channel1"]) if conn_hist["channel_ids"]["channel1"] else None
@@ -196,7 +194,7 @@ async def disconnect(bot, update):
     except:
         pass
     
-    responce = add_connections(group_id, channel1, channel2, channel3)
+    responce = await db.add_connections(group_id, channel1, channel2, channel3)
 
     if responce:
         await bot.send_message(
@@ -222,13 +220,14 @@ async def delall(bot, update):
 
     x = await bot.get_chat_member(group_id, update.from_user.id)
     
-    if x.status == "owner":
+    if x.status == "creator":
         pass
     else:
+        print(x.status) 
         return
-    
-    conn_hist = find_connections(group_id)
-    
+    print("Ok") 
+    conn_hist = await db.find_connections(group_id)
+    print(conn_hist) 
     if conn_hist:
         channel1 = int(conn_hist["channel_ids"]["channel1"]) if conn_hist["channel_ids"]["channel1"] else None
         channel2 = int(conn_hist["channel_ids"]["channel2"]) if conn_hist["channel_ids"]["channel2"] else None
@@ -249,7 +248,7 @@ async def delall(bot, update):
         except:
             pass
     
-    responce = delete_connections(group_id)
+    responce = await db.delete_connections(group_id)
     
     if responce:
         await bot.send_message(
@@ -275,7 +274,7 @@ async def auto_filter (bot, update):
     
     results = []
 
-    conn_hist = find_connections(group_id)
+    conn_hist = await db.find_connections(group_id)
     
     if conn_hist: # TODO: Better Way!? 😕
         channel1 = int(conn_hist["channel_ids"]["channel1"]) if conn_hist["channel_ids"]["channel1"] else None
