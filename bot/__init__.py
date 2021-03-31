@@ -4,21 +4,23 @@
 
 import os
 import logging
+import time
+
 from logging.handlers import RotatingFileHandler
 
+from .translation import Translation
+
+# Change Accordingly While Deploying To A VPS
 APP_ID = int(os.environ.get("APP_ID"))
 
 API_HASH = os.environ.get("API_HASH")
 
 BOT_TOKEN = os.environ.get("BOT_TOKEN")
 
-BOT_SESSION = os.environ.get("BOT_SESSION", "bot")
-
 DB_URI = os.environ.get("DB_URI")
 
 USER_SESSION = os.environ.get("USER_SESSION")
 
-LOG_FILE_NAME = "autofilterbot.txt"
 
 logging.basicConfig(
     level=logging.INFO,
@@ -26,7 +28,7 @@ logging.basicConfig(
     datefmt='%d-%b-%y %H:%M:%S',
     handlers=[
         RotatingFileHandler(
-            LOG_FILE_NAME,
+            "autofilterbot.txt",
             maxBytes=50000000,
             backupCount=10
         ),
@@ -34,6 +36,9 @@ logging.basicConfig(
     ]
 )
 logging.getLogger("pyrogram").setLevel(logging.WARNING)
+
+start_uptime = time.time()
+
 
 def LOGGER(name: str) -> logging.Logger:
     return logging.getLogger(name)

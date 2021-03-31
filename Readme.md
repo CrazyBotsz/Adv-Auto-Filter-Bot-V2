@@ -1,60 +1,105 @@
-# Adv Auto Filter Bot
+# Adv Auto Filter Bot V2
 
 <p align="center">
-  <a href="https://github.com/AlbertEinsteinTG/Adv-Auto-Filter-Bot/stargazers">
-    <img src="https://img.shields.io/github/stars/AlbertEinsteinTG/Adv-Auto-Filter-Bot?style=social">
+  <a href="https://github.com/AlbertEinsteinTG/Adv-Auto-Filter-Bot-V2/stargazers">
+    <img src="https://img.shields.io/github/stars/AlbertEinsteinTG/Adv-Auto-Filter-Bot-V2?style=social">
 
   </a>
   
-  <a href="https://github.com/AlbertEinsteinTG/Adv-Auto-Filter-Bot/fork">
-    <img src="https://img.shields.io/github/forks/AlbertEinsteinTG/Adv-Auto-Filter-Bot?label=Fork&style=social">
+  <a href="https://github.com/AlbertEinsteinTG/Adv-Auto-Filter-Bot-V2/fork">
+    <img src="https://img.shields.io/github/forks/AlbertEinsteinTG/Adv-Auto-Filter-Bot-V2?label=Fork&style=social">
 
   </a>  
 </p>
 
-_This Just A Simple Hand Auto Filter Bot For Searching Files From Channel..._
+__This Is Just An Simple Advance Auto Filter Bot Complete Rewritten Version Of [Adv-Filter-Bot](https://github.com/AlbertEinsteinTG/Adv-Auto-Filter-Bot)..__
 
-_Just Sent Any Text I Will Search In All Connected Chat And Reply You With The Message link_
+__Just Sent Any Text As Query It Will Search For All Connected Chat's Files In Its MongoDB And Reply You With The Message Link As A Button__
 
-_You Can Even Connected To 3 Channels At A Time..._
 
 ## Usage
 
-_=> Add Bot To Any Channel As Admin With Add Members/ Invite Users Via Link_
+**__How To Use Me!?__**
 
-_=> Copy Channel ID_
+* -> Add me to any group and make me admin<br>
+* -> Add me to your channel as admin with full previlages
 
-_=> Use `/connect {channel id}` In Your Group To Connect With The Group_
+**Bot Commands (Works Only In Groups) :**
 
-_=> Use `/disconnect {channel id}` In Your Group To Disconnect From Your Group_
 
-_=> Use `/delall` In Your Group To Clear All Your Group  Connections (Owner Only)_
+  * -> `/add chat_id`<br>
+     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+OR
+     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- To establish a connection of group with a channel (Bot should be admin with full previlages in both group and channel)<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`/add @Username`
 
-_Now You Are All Set And Ready To Go..._
 
-_Just Send Any Text Will Try To Lookup In Channel And Provide You The Link_
+  * -> `/del chat_id`<br>
+     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+OR 
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- To delete a group's coneection with a channel (Use disable option from settigns pannel for disconnecting temporarily instead of deleteing)<br>
+    &nbsp;&nbsp;&nbsp;&nbsp; `/del @Username`
+
+
+  * -> `/delall`&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; - To delete all connections of a group and deletes all its file from DB
+  
+  * -> `/settings`&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -  To disaply a Settings Pannel Instance which can be used to tweek bot's settings accordingly
+
+    * -> Channel - Button will show you all the connected chats with the group along with there index buttons correspnding to there order for furthur controls...
+
+    * -> Filter Types - Button will show you the 3 filter types available in bot... Pressing each buttons will either enable or disable them and this will take into action as soon as you use them...without the need of a restart....
+
+    * -> Configure - Button will help you to change no. of pages/ buttons per page/ total result without acutally editing the repo... Also it provide option to Enable/Disable  showing Invite Link in each results
+
+    * -> Status - Button will show the stats of your current group
 
 ### Pre Requisites 
+------------------
+* ->__Your Bot Token From [@BotFather](http://www.telegram.dog/BotFather)__
 
-_Your Bot Token From @BotFather_
+* ->__Your APP ID And API Harsh From [Telegram](http://www.my.telegram.org) or [@UseTGXBot](http://www.telegram.dog/UseTGXBot)__
 
-_Your APP ID And API Harsh From [Telegram](http://www.my.telegram.org) or [@UseTGXBot](http://www.telegram.dog/UseTGXBot)_
+* ->__Your User Session String Obtained From [@PyrogramStringBot](http://www.telegram.dog/PyrogramStringBot)__
 
-_Your User Session String Obtained From [@PyrogramStringBot](http://www.telegram.dog/PyrogramStringBot)_
+* ->__Mongo DB URL Obtained From [Mongo DB](http://www.mongodb.com)__
 
-_Mongo DB URL Obtained From [Mongo DB](http://www.mongodb.com)_
+#### PR's Are Very Welcome
 
-### Deploy:
-[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/AlbertEinsteinTG/Adv-Auto-Filter-Bot)
+## Deploy
+You can deploy this bot anywhere.
 
-### TODO :
+<details><summary>Deploy To Heroku</summary>
+<p>
+<br>
+<a href="https://heroku.com/deploy?template=https://github.com/AlbertEinsteinTG/Adv-Auto-Filter-Bot-V2">
+  <img src="https://www.herokucdn.com/deploy/button.svg" alt="Deploy">
+</a>
+</p>
+</details>
 
-- [ ] - Brodcast
-- [ ] - Better Codes
-- [x] - Rewrite To Motor Asyncious Driver
+<details><summary>Deploy To VPS</summary>
+<p>
+<pre>
+git clone https://github.com/AlbertEinsteinTG/Adv-Auto-Filter-Bot-V2
+cd Adv-Auto-Filter-Bot-ReMaster
+pip3 install -r requirements.txt
+# Change The Vars Of bot/__init__.py File Accordingly
+python3 -m bot
+</pre>
+</p>
+</details>
 
-PR's Are Very Welcome And If Found Any Bug Feel Free To Open A Issue...
-If YOu Found This Repo As Usefull A Star And Fork Would Be Amazing..😋
+## Support   
+Join Our [Telegram Group](https://www.telegram.dog/CrazyBotszGrp) For Support/Assistance And Our [Channel](https://www.telegram.dog/CrazyBotsz) For Updates.   
+   
+Report Bugs, Give Feature Requests There..   
+Do Fork And Star The Repository If You Liked It.
+
+## Disclaimer
+[![GNU Affero General Public License v3.0](https://www.gnu.org/graphics/agplv3-155x51.png)](https://www.gnu.org/licenses/agpl-3.0.en.html#header)    
+Licensed under [GNU AGPL v3.0.](https://github.com/AlbertEinsteinTG/Adv-Auto-Filter-Bot-V2/blob/main/LICENSE)
+Selling The Codes To Other People For Money Is *Strictly Prohibited*.
+
 
 ## Credits
 

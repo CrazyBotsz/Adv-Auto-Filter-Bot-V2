@@ -4,8 +4,7 @@
 
 from pyrogram import Client, __version__
 
-from . import API_HASH, APP_ID, LOGGER, \
-    BOT_SESSION, BOT_TOKEN 
+from . import API_HASH, APP_ID, LOGGER, BOT_TOKEN 
 
 from .user import User
 
@@ -17,7 +16,7 @@ class Bot(Client):
 
     def __init__(self):
         super().__init__(
-            BOT_SESSION,
+            "bot",
             api_hash=API_HASH,
             api_id=APP_ID,
             plugins={

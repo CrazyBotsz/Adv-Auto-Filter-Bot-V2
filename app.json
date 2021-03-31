@@ -1,5 +1,5 @@
 {
-    "name": "Auto Filter Bot",
+    "name": "Auto Filter Bot ReMaster",
     "description": "A Filter Bot Which Doesnt Need Manuall Filter Adding",
     "logo": "https://telegra.ph/file/667e15c821117633d07bd.png",
     "keywords": [
@@ -8,7 +8,7 @@
         "Mongo DB"
     ],
     "website": "https://github.com/AlbertEinsteinTG",
-    "repository": "https://github.com/AlbertEinsteinTG/Adv-Auto-Filter-Bot",
+    "repository": "https://github.com/AlbertEinsteinTG/Adv-Auto-Filter-Bot-ReMaster",
     "success_url": "https://telegram.dog/CrazyBotsz",
     "env": {
         "APP_ID": {
