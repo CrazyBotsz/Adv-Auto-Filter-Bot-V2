@@ -199,7 +199,7 @@ async def GenInviteLinks(db, g_id, bot, update):
     return 
 
 
-async def ReCacher(g_id, ReCacheInvite=True, ReCacheActive=False, bot=Client, update=Message):
+async def ReCacher(g_id, ReCacheInvite=True, ReCacheActive=False, bot=Bot, update=Message):
 
     global InviteLink, ActiveChats
 
