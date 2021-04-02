@@ -294,6 +294,13 @@ async def callback_data(bot, update: CallbackQuery):
             for x in db_list["chat_ids"]:
                 cid = x["chat_id"]
                 cname = x["chat_name"]
+                
+                try:
+                    if (cid == None or cname == None):
+                        continue
+                except:
+                    break
+                
                 cname = remove_emoji(cname[:38])
                 cid_list.append(cid)
                 cname_list.append(cname)
