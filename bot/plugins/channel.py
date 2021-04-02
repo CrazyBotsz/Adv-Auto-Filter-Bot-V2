@@ -182,7 +182,7 @@ async def disconnect(bot: Bot, update):
         await update.reply_text(f"My UserBot [{userbot_name}](tg://user?id={userbot_id}) Couldnt Fetch Details Of `{target}` Make Sure Userbot Is Not Banned There Or Add It Manually And Try Again....!!")
         return
     
-    in_db = db.in_db(chat_id, channel_id)
+    in_db = await db.in_db(chat_id, channel_id)
     
     if not in_db:
         await update.reply_text("This Channel Is Not Connected With The Group...")
