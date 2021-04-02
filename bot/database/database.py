@@ -144,12 +144,15 @@ class Database(metaclass=Singleton):
                                 c_id
                             }
                         }
-                    }
+                    },
+                false,
+                true
             )
 
             await self.del_active(g_id, c_id)
             await self.refresh_cache(g_id)
-            
+            print(self.find_chat(g_id))
+
             return True
 
         return False
