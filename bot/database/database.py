@@ -151,7 +151,6 @@ class Database(metaclass=Singleton):
 
             await self.del_active(g_id, c_id)
             await self.refresh_cache(g_id)
-            print(self.find_chat(g_id))
 
             return True
 
@@ -262,7 +261,7 @@ class Database(metaclass=Singleton):
         templ = {"$pull": {"chats": dict(chat_id = c_id)}}
         
         try:
-            await self.acol.update_one({"_id": g_id}, templ)
+            await self.acol.update_one({"_id": g_id}, templ, False, True)
         except Exception as e:
             print(e)
             pass
