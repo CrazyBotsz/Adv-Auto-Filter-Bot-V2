@@ -134,7 +134,7 @@ async def connect(bot: Bot, update):
     
     await db.add_filters(data)
     await db.add_chat(chat_id, channel_id, channel_name)
-    await ReCacher(chat_id, True, True)
+    await ReCacher(chat_id, True, True, bot, update)
     
     await wait_msg.edit_text(f"Channel Was Sucessfully Added With <code>{len(data)}</code> Files..")
 
@@ -192,7 +192,7 @@ async def disconnect(bot: Bot, update):
     
     await db.del_filters(chat_id, channel_id)
     await db.del_active(chat_id, channel_id)
-    await ReCacher(chat_id, True, True)
+    await ReCacher(chat_id, True, True, bot, update)
     
     await wait_msg.edit_text("Sucessfully Deleted All Files From DB....")
 
@@ -211,7 +211,7 @@ async def delall(bot: Bot, update):
         return
     
     await db.delete_all(chat_id)
-    await ReCacher(chat_id, True, True)
+    await ReCacher(chat_id, True, True, bot, update)
     
     await update.reply_text("Sucessfully Deleted All Connected Chats From This Group....")
 
