@@ -505,7 +505,7 @@ async def callback_data(bot, update: CallbackQuery):
                         )
                 ]
         )
-        await ReCacher(chat_id, False, True)
+        await ReCacher(chat_id, False, True, bot, update)
         
         reply_markup = InlineKeyboardMarkup(buttons)
             
@@ -569,7 +569,7 @@ async def callback_data(bot, update: CallbackQuery):
         
         reply_markup = InlineKeyboardMarkup(buttons)
         
-        await ReCacher(chat_id, False, True)
+        await ReCacher(chat_id, False, True, bot, update)
 
         await update.message.edit_text(
                 text, reply_markup=reply_markup, parse_mode="html"
@@ -613,7 +613,7 @@ async def callback_data(bot, update: CallbackQuery):
             ]
         ]
 
-        await ReCacher(chat_id, True, True)
+        await ReCacher(chat_id, True, True, bot, update)
         
         reply_markup=InlineKeyboardMarkup(buttons)
 
