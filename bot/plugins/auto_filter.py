@@ -214,12 +214,12 @@ async def ReCacher(g_id, ReCacheInvite=True, ReCacheActive=False, bot=Client, up
         if chats:
             for x in chats:
                 Name = x["chat_name"]
-                
-                if Name == None:
+                chat_id = int(x["chat_id"])
+                if (Name == None or chat_id == None):
                     continue
                 
-                Link = await bot.export_chat_invite_link(int(x["chat_id"]))
-                Links.append({"chat_id": int(x["chat_id"]), "chat_name": Name, "invite_link": Link})
+                Link = await bot.export_chat_invite_link(chat_id)
+                Links.append({"chat_id": chat_id, "chat_name": Name, "invite_link": Link})
 
             InviteLink[str(g_id)] = Links
     
