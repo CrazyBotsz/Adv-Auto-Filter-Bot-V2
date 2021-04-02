@@ -145,8 +145,8 @@ class Database(metaclass=Singleton):
                             }
                         }
                     },
-                false,
-                true
+                False,
+                True
             )
 
             await self.del_active(g_id, c_id)
