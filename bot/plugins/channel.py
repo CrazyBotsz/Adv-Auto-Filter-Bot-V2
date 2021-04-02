@@ -191,7 +191,7 @@ async def disconnect(bot: Bot, update):
     wait_msg = await update.reply_text("Deleting All Files Of This Channel From DB....!!!\n\nPlease Be Patience...Dont Sent Another Command Until This Process Finishes..")
     
     db.del_filters(chat_id, channel_id)
-    db.del_active(chat_id, channel_id, channel_name)
+    db.del_active(chat_id, channel_id)
     await ReCacher(chat_id, True, True)
     
     await wait_msg.edit_text("Sucessfully Deleted All Files From DB....")
