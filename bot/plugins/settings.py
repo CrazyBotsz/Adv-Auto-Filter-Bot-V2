@@ -14,7 +14,7 @@ async def settings(bot, update):
     chat_id = update.chat.id
     chat_name = (remove_emoji(update.chat.title)).encode('ascii', 'ignore').decode('ascii')[:38]
 
-    if hasattr(update, "from_user"): # Anonymous Admin Bypass
+    if not update.sender_chat: # Anonymous Admin Bypass
         user_id = update.from_user.id
         try:
             user_info = await bot.get_chat_member(chat_id, user_id)
