@@ -25,7 +25,8 @@ async def auto_filter (bot, update):
     if re.findall(r"((^\/|^,|^\.|^[\U0001F600-\U000E007F]).*)", update.text):
         return
     
-    query = update.text
+    query = re.sub(r"[1-2]\d{3}", "", update.text) # Targeting Only 1000 - 2999 😁
+    
     if len(query) < 2:
         return
     
@@ -98,17 +99,18 @@ async def auto_filter (bot, update):
     
         result = []
         result += [results[i * maxb :(i + 1) * maxb ] for i in range((len(results) + maxb - 1) // maxb )]
+        len_result = len(result)
         len_results = len(results)
         results = None # Free Up Memory
         
         Find[query] = {"results": result, "total_len": len_results, "max_pages": maxp} # TrojanzHex's Idea Of Dicts😅
 
-        if len_results >maxb:
+        if len_result >maxb:
             result[0].append([InlineKeyboardButton("Next ⏩", callback_data=f"navigate(0|next|{query})")])
         
         # Just A Decarator
         result[0].append([
-            InlineKeyboardButton(f"🔰 Page 1/{len_results if len_results < maxp else maxp} 🔰", callback_data="ignore")
+            InlineKeyboardButton(f"🔰 Page 1/{len_result if len_result < maxp else maxp} 🔰", callback_data="ignore")
         ])
         
         if showInvite:
