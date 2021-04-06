@@ -36,7 +36,7 @@ async def callback_data(bot, update: CallbackQuery):
         index_val, btn, query = re.findall(r"navigate\((.+)\)", query_data)[0].split("|", 2)
         
 
-        if hasattr(update.message.reply_to_message, "from_user"): # Anonymous Admin Bypass
+        if update.message.reply_to_message.sender_chat == None: # Anonymous Admin Bypass
             ruser_id = update.message.reply_to_message.from_user.id or None
             auser_id = update.from_user.id
             try:
@@ -162,7 +162,7 @@ async def callback_data(bot, update: CallbackQuery):
         """
         A Callback Funtion For Back Button in /settings Command
         """
-        if hasattr(update.message.reply_to_message, "from_user"): # Anonymous Admin Bypass
+        if update.message.reply_to_message.sender_chat == None: # Anonymous Admin Bypass
             if verify.get(str(update.message.reply_to_message.message_id)) != update.from_user.id:
                 return
 
@@ -222,7 +222,8 @@ async def callback_data(bot, update: CallbackQuery):
         """
         A Callback Funtion For Acknowledging User's About What Are They Upto
         """
-        if hasattr(update.message.reply_to_message, "from_user"):
+        if update.message.reply_to_message.sender_chat == None:
+
             if verify.get(str(update.message.reply_to_message.message_id)) != update.from_user.id:
                 return
         
@@ -275,7 +276,8 @@ async def callback_data(bot, update: CallbackQuery):
         A Callback Funtion For Displaying All Channel List And Providing A Menu To Navigate
         To Every COnnect Chats For Furthur Control
         """
-        if not update.message.reply_to_message.sender_chat: #hasattr(update.message.reply_to_message, "from_user"): # Just To Make Sure If Its Anonymous Admin Or Not
+        if update.message.reply_to_message.sender_chat == None: # Just To Make Sure If Its Anonymous Admin Or Not
+
             if verify.get(str(update.message.reply_to_message.message_id)) != update.from_user.id:
                 return
 
@@ -369,7 +371,7 @@ async def callback_data(bot, update: CallbackQuery):
         A Callback Funtion For Displaying Details Of The Connected Chat And Provide
         Ability To Connect / Disconnect / Delete / Delete Filters of That Specific Chat
         """
-        if hasattr(update.message.reply_to_message, "from_user"):
+        if update.message.reply_to_message.sender_chat == None:
             if verify.get(str(update.message.reply_to_message.message_id)) != update.from_user.id:
                 return
 
@@ -461,7 +463,8 @@ async def callback_data(bot, update: CallbackQuery):
         A Callback Funtion Helping The user To Make A Chat Active Chat Which Will
         Make The Bot To Fetch Results From This Channel Too
         """
-        if hasattr(update.message.reply_to_message, "from_user"):
+
+        if update.message.reply_to_message.sender_chat == None:
             if verify.get(str(update.message.reply_to_message.message_id)) != update.from_user.id:
                 return
 
@@ -528,7 +531,7 @@ async def callback_data(bot, update: CallbackQuery):
         A Callback Funtion Helping The user To Make A Chat inactive Chat Which Will
         Make The Bot To Avoid Fetching Results From This Channel
         """
-        if hasattr(update.message.reply_to_message, "from_user"):
+        if update.message.reply_to_message.sender_chat == None:
             if verify.get(str(update.message.reply_to_message.message_id)) != update.from_user.id:
                 return
 
@@ -595,7 +598,7 @@ async def callback_data(bot, update: CallbackQuery):
         A Callback Funtion For Delete A Channel Connection From A Group Chat History
         Along With All Its Filter Files
         """
-        if hasattr(update.message.reply_to_message, "from_user"):
+        if update.message.reply_to_message.sender_chat == None:
             if verify.get(str(update.message.reply_to_message.message_id)) != update.from_user.id:
                 return
 
@@ -640,7 +643,7 @@ async def callback_data(bot, update: CallbackQuery):
         """
         A Callback Funtion For Delete A Specific Channel's Filters Connected To A Group
         """
-        if hasattr(update.message.reply_to_message, "from_user"):
+        if update.message.reply_to_message.sender_chat == None:
             if verify.get(str(update.message.reply_to_message.message_id)) != update.from_user.id:
                 return
 
@@ -680,7 +683,7 @@ async def callback_data(bot, update: CallbackQuery):
         """
         A Callback Funtion For Changing The Result Types To Be Shown In While Sending Results
         """
-        if hasattr(update.message.reply_to_message, "from_user"):
+        if update.message.reply_to_message.sender_chat == None:
             if verify.get(str(update.message.reply_to_message.message_id)) != update.from_user.id:
                 return
 
@@ -757,7 +760,7 @@ async def callback_data(bot, update: CallbackQuery):
         """
         A Callback Funtion Support handler For types()
         """
-        if hasattr(update.message.reply_to_message, "from_user"):
+        if update.message.reply_to_message.sender_chat == None:
             if verify.get(str(update.message.reply_to_message.message_id)) != update.from_user.id:
                 return
 
@@ -866,7 +869,7 @@ async def callback_data(bot, update: CallbackQuery):
         A Callback Funtion For Chaning The Number Of Total Pages / 
         Total Results / Results Per pages / Enable or Diable Invite Link
         """
-        if hasattr(update.message.reply_to_message, "from_user"):
+        if update.message.reply_to_message.sender_chat == None:
             if verify.get(str(update.message.reply_to_message.message_id)) != update.from_user.id:
                 return
 
@@ -946,7 +949,7 @@ async def callback_data(bot, update: CallbackQuery):
         """
         A Callback Funtion For Changing The Count Of Result To Be Shown Per Page
         """
-        if hasattr(update.message.reply_to_message, "from_user"):
+        if update.message.reply_to_message.sender_chat == None:
             if verify.get(str(update.message.reply_to_message.message_id)) != update.from_user.id:
                 return
 
@@ -1010,7 +1013,7 @@ async def callback_data(bot, update: CallbackQuery):
         """
         A Callback Funtion For Changing The Count Of Maximum Result Pages To Be Shown
         """
-        if hasattr(update.message.reply_to_message, "from_user"):
+        if update.message.reply_to_message.sender_chat == None:
             if verify.get(str(update.message.reply_to_message.message_id)) != update.from_user.id:
                 return
 
@@ -1070,7 +1073,7 @@ async def callback_data(bot, update: CallbackQuery):
         """
         A Callback Funtion For Changing The Count Of Maximum Files TO Be Fetched From Database
         """
-        if hasattr(update.message.reply_to_message, "from_user"):
+        if update.message.reply_to_message.sender_chat == None:
             if verify.get(str(update.message.reply_to_message.message_id)) != update.from_user.id:
                 return
 
@@ -1135,7 +1138,7 @@ async def callback_data(bot, update: CallbackQuery):
         """
         A Callback Funtion For Enabling Or Diabling Invite Link Buttons
         """
-        if hasattr(update.message.reply_to_message, "from_user"):
+        if update.message.reply_to_message.sender_chat == None:
             if verify.get(str(update.message.reply_to_message.message_id)) != update.from_user.id:
                 return
 
@@ -1190,7 +1193,7 @@ async def callback_data(bot, update: CallbackQuery):
         """
         A Callback Funtion Support For config()
         """
-        if hasattr(update.message.reply_to_message, "from_user"):
+        if update.message.reply_to_message.sender_chat == None:
             if verify.get(str(update.message.reply_to_message.message_id)) != update.from_user.id:
                 return
 
@@ -1266,7 +1269,7 @@ async def callback_data(bot, update: CallbackQuery):
         """
         A Callback Funtion For Showing Overall Status Of A Group
         """
-        if hasattr(update.message.reply_to_message, "from_user"):
+        if update.message.reply_to_message.sender_chat == None:
             if verify.get(str(update.message.reply_to_message.message_id)) != update.from_user.id:
                 return
         
@@ -1304,7 +1307,7 @@ async def callback_data(bot, update: CallbackQuery):
         """
         A Callback Funtion For Showing About Section In Bot Setting Menu
         """
-        if hasattr(update.message.reply_to_message, "from_user"):
+        if update.message.reply_to_message.sender_chat == None:
             if verify.get(str(update.message.reply_to_message.message_id)) != update.from_user.id:
                 return
 
