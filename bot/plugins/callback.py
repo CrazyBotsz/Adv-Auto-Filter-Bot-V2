@@ -25,6 +25,7 @@ db = Database()
 @Client.on_callback_query()
 async def callback_data(bot, update: CallbackQuery):
 
+    global verify
     query_data = update.data
     chat_id = update.message.chat.id
     chat_name = remove_emoji(update.message.chat.title).encode('ascii', 'ignore').decode('ascii')[:38]
@@ -288,7 +289,6 @@ async def callback_data(bot, update: CallbackQuery):
                     return
                 if user_info.status in ["member"]:
                     return
-                global verify
                 verify[str(update.message.reply_to_message.message_id)] = user_id
                 
             elif verify.get(str(update.message.reply_to_message.message_id)) != user_id:
