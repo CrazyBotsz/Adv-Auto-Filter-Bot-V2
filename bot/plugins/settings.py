@@ -25,7 +25,9 @@ async def settings(bot, update):
             return
         
         verify[str(update.message_id)] = user_id
-
+    else:
+        verify[str(update.message_id)] = chat_id
+    
     bot_status = await bot.get_me()
     bot_fname= bot_status.first_name
     
