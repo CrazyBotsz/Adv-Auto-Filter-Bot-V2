@@ -275,7 +275,7 @@ async def callback_data(bot, update: CallbackQuery):
         A Callback Funtion For Displaying All Channel List And Providing A Menu To Navigate
         To Every COnnect Chats For Furthur Control
         """
-        if hasattr(update.message.reply_to_message, "from_user"): # Just To Make Sure If Its Anonymous Admin Or Not
+        if not update.message.reply_to_message.sender_chat: #hasattr(update.message.reply_to_message, "from_user"): # Just To Make Sure If Its Anonymous Admin Or Not
             if verify.get(str(update.message.reply_to_message.message_id)) != update.from_user.id:
                 return
 
