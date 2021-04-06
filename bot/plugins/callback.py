@@ -276,20 +276,24 @@ async def callback_data(bot, update: CallbackQuery):
         A Callback Funtion For Displaying All Channel List And Providing A Menu To Navigate
         To Every COnnect Chats For Furthur Control
         """
+        user_id = update.from_user.id
         if update.message.reply_to_message.sender_chat == None: # Just To Make Sure If Its Anonymous Admin Or Not
-            if verify.get(str(update.message.reply_to_message.message_id)) != update.from_user.id:
+            if verify.get(str(update.message.reply_to_message.message_id)) != user_id:
                 return
-            else:
-                print("2nd If")
-                print(verify.get(str(update.message.reply_to_message.message_id)))
-                print(update.from_user.id)
-                print(verify)
         else:
-            print("1st If")
-            print(update.message.reply_to_message)
-            print()
-            print()
-            print(update.message.reply_to_message.sender_chat)
+            if not verify.get(str(update.message.reply_to_message.message_id)):
+                try:
+                    user_info = await bot.get_chat_member(chat_id, user_id)
+                except Exception:
+                    return
+                if user_info.status in ["member"]:
+                    return
+                global verify
+                verify[str(update.message.reply_to_message.message_id)] = user_id
+                
+            elif verify.get(str(update.message.reply_to_message.message_id)) != user_id:
+                return
+            
             
         chat_id, chat_name =  re.findall(r"channel_list\((.+)\)", query_data)[0].split("|", 1)
         
