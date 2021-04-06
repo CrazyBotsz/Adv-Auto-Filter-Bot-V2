@@ -277,10 +277,19 @@ async def callback_data(bot, update: CallbackQuery):
         To Every COnnect Chats For Furthur Control
         """
         if update.message.reply_to_message.sender_chat == None: # Just To Make Sure If Its Anonymous Admin Or Not
-
             if verify.get(str(update.message.reply_to_message.message_id)) != update.from_user.id:
                 return
-
+            else:
+                print("2nd If")
+                print(verify.get(str(update.message.reply_to_message.message_id)))
+                print(update.from_user.id)
+                print(verify)
+        else:
+            print("1st If")
+            print(update.message.reply_to_message)
+            print()
+            print()
+            print(update.message.reply_to_message.sender_chat)
             
         chat_id, chat_name =  re.findall(r"channel_list\((.+)\)", query_data)[0].split("|", 1)
         
