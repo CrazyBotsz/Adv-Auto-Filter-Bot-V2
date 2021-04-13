@@ -27,7 +27,10 @@ async def callback_data(bot, update: CallbackQuery):
 
     query_data = update.data
     chat_id = update.message.chat.id
-    chat_name = remove_emoji(update.message.chat.title).encode('ascii', 'ignore').decode('ascii')[:38]
+
+    chat_name = remove_emoji(update.message.chat.title)
+    chat_name = chat_name.encode('ascii', 'ignore')
+    chat_name = chat_name.decode('ascii')[:38]
 
     if re.fullmatch(r"navigate\((.+)\)", query_data):
         """
@@ -300,7 +303,9 @@ async def callback_data(bot, update: CallbackQuery):
                 except:
                     break
                 
-                cname = remove_emoji(cname).encode('ascii', 'ignore').decode('ascii')[:38]
+                cname = remove_emoji(cname)
+                cname = cname.encode('ascii', 'ignore')
+                cname = cname.decode('ascii')[:38]
                 cid_list.append(cid)
                 cname_list.append(cname)
             
