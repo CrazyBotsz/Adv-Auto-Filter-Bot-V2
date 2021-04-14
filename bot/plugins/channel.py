@@ -80,7 +80,7 @@ async def connect(bot: Bot, update):
     try:
         type_list = ["video", "audio", "document"]
         data = []
-        
+        skipCT = 0
         
         for typ in type_list:
 
@@ -125,9 +125,11 @@ async def connect(bot: Bot, update):
                     data.append(dicted)
                 except Exception as e:
                     if 'NoneType' in str(e): # For Some Unknown Reason Some File Name is 'None'
+                        skipCT +=1
                         continue
                     print(e)
-                
+
+        print(f"{skiptc} Files Been Skipped Due To File Name Been None..... #BlameTG")
     except Exception as e:
         await wait_msg.edit_text("Couldnt Fetch Files From Channel... Please look Into Logs For More Details")
         raise e
