@@ -6,7 +6,7 @@ from pyrogram import Client, filters
 from pyrogram.errors import FloodWait, UserNotParticipant
 from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup, CallbackQuery
 
-from bot import start_uptime, Translation # pylint: disable=import-error
+from bot import start_uptime, Translation, verify # pylint: disable=import-error
 from bot.plugins.auto_filter import ( # pylint: disable=import-error
     Find, 
     InviteLink, 
@@ -29,7 +29,9 @@ async def callback_data(bot, update: CallbackQuery):
     query_data = update.data
     chat_id = update.message.chat.id
     chat_name = remove_emoji(update.message.chat.title).encode('ascii', 'ignore').decode('ascii')[:38]
-
+    user_id = update.from_user.id
+    
+    
     if re.fullmatch(r"navigate\((.+)\)", query_data):
         """
         A Callback Funtion For The Next Button Appearing In Results
@@ -40,19 +42,16 @@ async def callback_data(bot, update: CallbackQuery):
         if update.message.reply_to_message.sender_chat == None: # Anonymous Admin Bypass
             ruser_id = update.message.reply_to_message.from_user.id or None
             auser_id = update.from_user.id
-            try:
-                user = await bot.get_chat_member(update.message.chat.id, auser_id)
             
-            except UserNotParticipant:
-                await update.answer("Nice Try ;)",show_alert=True)
-                return
+            if not verify[str(chat_id)]: # Make Admin's ID List
+                admin_list = []
+                async for x in bot.iter_chat_members(chat_id=chat_id, filter="administrators"):
+                    admin_id = x.user.id 
+                    admin_list.append(admin_id)
+                admin_list.append(None)
+                verify[str(chat_id)] = admin_list
             
-            except Exception as e:
-                print(e)
-                return
-            
-            if (auser_id != ruser_id) or (user.status == "member"):
-                
+            if (auser_id != ruser_id) or (auser_id not in verify.get(str(chat_id))):
                 await update.answer("Nice Try ;)",show_alert=True)
                 return
 
@@ -163,9 +162,8 @@ async def callback_data(bot, update: CallbackQuery):
         """
         A Callback Funtion For Back Button in /settings Command
         """
-        if update.message.reply_to_message.sender_chat == None: # Anonymous Admin Bypass
-            if verify.get(str(update.message.reply_to_message.message_id)) != update.from_user.id:
-                return
+        if user_id not in verify.get(str(chat_id)):
+            return
 
         bot_status = await bot.get_me()
         bot_fname= bot_status.first_name

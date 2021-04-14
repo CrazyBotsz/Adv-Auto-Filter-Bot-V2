@@ -1,6 +1,7 @@
 from pyrogram import Client, filters
 from pyrogram.errors import UserAlreadyParticipant, FloodWait
 
+from bot import verify # pylint: disable=import-error
 from bot.bot import Bot # pylint: disable=import-error
 from bot.database import Database # pylint: disable=import-error
 from bot.plugins.auto_filter import ReCacher # pylint: disable=import-error
@@ -13,12 +14,19 @@ async def connect(bot: Bot, update):
     A Funtion To Handle Incoming /add Command TO COnnect A Chat With Group
     """
     chat_id = update.chat.id
-    user_id = update.from_user.id
+    user_id = update.from_user.id or None
     target_chat = update.text.split(None, 1)[1]
+    global verify
     
-    user_info = await bot.get_chat_member(chat_id, user_id)
-    
-    if user_info.status == ("member"):
+    if not verify[str(chat_id)]: # Make Admin's ID List
+        admin_list = []
+        async for x in bot.iter_chat_members(chat_id=chat_id, filter="administrators"):
+            admin_id = x.user.id 
+            admin_list.append(admin_id)
+        admin_list.append(None)
+        verify[str(chat_id)] = admin_list
+
+    if not user_id in verify.get(str(chat_id)):
         return
     
     try:
@@ -145,12 +153,19 @@ async def disconnect(bot: Bot, update):
     A Funtion To Handle Incoming /del Command TO Disconnect A Chat With A Group
     """
     chat_id = update.chat.id
-    user_id = update.from_user.id
+    user_id = update.from_user.id or None
     target_chat = update.text.split(None, 1)[1]
+    global verify
     
-    user_info = await bot.get_chat_member(chat_id, user_id)
-    
-    if user_info.status == ("member"):
+    if not verify[str(chat_id)]: # Make Admin's ID List
+        admin_list = []
+        async for x in bot.iter_chat_members(chat_id=chat_id, filter="administrators"):
+            admin_id = x.user.id 
+            admin_list.append(admin_id)
+        admin_list.append(None)
+        verify[str(chat_id)] = admin_list
+
+    if not user_id in verify.get(str(chat_id)):
         return
     
     try:
@@ -177,7 +192,6 @@ async def disconnect(bot: Bot, update):
     try:
         channel_info = await bot.USER.get_chat(target)
         channel_id = channel_info.id
-        channel_name = channel_info.title
     except Exception:
         await update.reply_text(f"My UserBot [{userbot_name}](tg://user?id={userbot_id}) Couldnt Fetch Details Of `{target}` Make Sure Userbot Is Not Banned There Or Add It Manually And Try Again....!!")
         return
@@ -205,10 +219,17 @@ async def delall(bot: Bot, update):
     """
     chat_id=update.chat.id
     user_id = update.from_user.id
+    global verify
     
-    user_info = await bot.get_chat_member(chat_id, user_id)
-    
-    if user_info.status == ("member"):
+    if not verify[str(chat_id)]: # Make Admin's ID List
+        admin_list = []
+        async for x in bot.iter_chat_members(chat_id=chat_id, filter="administrators"):
+            admin_id = x.user.id 
+            admin_list.append(admin_id)
+        admin_list.append(None)
+        verify[str(chat_id)] = admin_list
+
+    if not user_id in verify.get(str(chat_id)):
         return
     
     await db.delete_all(chat_id)
@@ -272,3 +293,4 @@ async def new_files(bot: Bot, update):
             data.append(data_packets)
         await db.add_filters(data)
     return
+

@@ -12,30 +12,22 @@ from bot import verify # pylint: disable=import-error
 async def settings(bot, update):
     
     chat_id = update.chat.id
-<<<<<<< Updated upstream
-    chat_name = (remove_emoji(update.chat.title)).encode('ascii', 'ignore').decode('ascii')[:38]
-=======
     user_id = update.from_user.id or None
     chat_name = remove_emoji(update.chat.title)
-    chat_name = chat_name.encode('ascii', 'ignore')
-    chat_name = chat_name.decode('ascii')[:38]
->>>>>>> Stashed changes
+    chat_name = chat_name.encode('ascii', 'ignore').decode('ascii')[:38]
+    global verify
 
-    if not verify[str(chat_id)]: # Admin List
+    if not verify[str(chat_id)]: # Make Admin's ID List
         admin_list = []
-        
-<<<<<<< Updated upstream
-        verify[str(update.message_id)] = user_id
-        
-=======
-        await bot.get_chat_members(chat_id)
-                
-        verify[str(chat_id)] = user_id
-    else:
-        if not user_id in verify.get(str(chat_id)):
-            return
+        async for x in bot.iter_chat_members(chat_id=chat_id, filter="administrators"):
+            admin_id = x.user.id 
+            admin_list.append(admin_id)
+        admin_list.append(None)
+        verify[str(chat_id)] = admin_list
+
+    if not user_id in verify.get(str(chat_id)):
+        return
     
->>>>>>> Stashed changes
     bot_status = await bot.get_me()
     bot_fname= bot_status.first_name
     
@@ -114,4 +106,4 @@ def remove_emoji(string):
                                u"\u3030"
     "]+", flags=re.UNICODE)
     
-    return emoji_pattern.sub(r' ', string)
+    return emoji_pattern.sub(r' ', str(string))
