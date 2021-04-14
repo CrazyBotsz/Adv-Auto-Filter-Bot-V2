@@ -18,7 +18,7 @@ async def connect(bot: Bot, update):
     target_chat = update.text.split(None, 1)[1]
     global verify
     
-    if not verify[str(chat_id)]: # Make Admin's ID List
+    if not verify.get(str(chat_id)): # Make Admin's ID List
         admin_list = []
         async for x in bot.iter_chat_members(chat_id=chat_id, filter="administrators"):
             admin_id = x.user.id 
@@ -157,7 +157,7 @@ async def disconnect(bot: Bot, update):
     target_chat = update.text.split(None, 1)[1]
     global verify
     
-    if not verify[str(chat_id)]: # Make Admin's ID List
+    if not verify.get(str(chat_id)): # Make Admin's ID List
         admin_list = []
         async for x in bot.iter_chat_members(chat_id=chat_id, filter="administrators"):
             admin_id = x.user.id 
@@ -221,7 +221,7 @@ async def delall(bot: Bot, update):
     user_id = update.from_user.id if update.from_user else None
     global verify
     
-    if not verify[str(chat_id)]: # Make Admin's ID List
+    if not verify.get(str(chat_id)): # Make Admin's ID List
         admin_list = []
         async for x in bot.iter_chat_members(chat_id=chat_id, filter="administrators"):
             admin_id = x.user.id 

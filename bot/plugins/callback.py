@@ -43,7 +43,7 @@ async def callback_data(bot, update: CallbackQuery):
             ruser_id = update.message.reply_to_message.from_user.id or None
             auser_id = update.from_user.id
             
-            if not verify[str(chat_id)]: # Make Admin's ID List
+            if not verify.get(str(chat_id)): # Make Admin's ID List
                 admin_list = []
                 async for x in bot.iter_chat_members(chat_id=chat_id, filter="administrators"):
                     admin_id = x.user.id 

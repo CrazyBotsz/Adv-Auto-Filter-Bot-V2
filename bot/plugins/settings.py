@@ -17,7 +17,7 @@ async def settings(bot, update):
     chat_name = chat_name.encode('ascii', 'ignore').decode('ascii')[:38]
     global verify
 
-    if not verify[str(chat_id)]: # Make Admin's ID List
+    if not verify.get(str(chat_id)): # Make Admin's ID List
         admin_list = []
         async for x in bot.iter_chat_members(chat_id=chat_id, filter="administrators"):
             admin_id = x.user.id 
