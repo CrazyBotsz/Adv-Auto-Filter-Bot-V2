@@ -6,26 +6,36 @@ import re
 from pyrogram import Client, filters
 from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup
 
-verify={}
+from bot import verify # pylint: disable=import-error
 
 @Client.on_message(filters.command(["settings"]) & filters.group, group=1)
 async def settings(bot, update):
     
     chat_id = update.chat.id
+<<<<<<< Updated upstream
     chat_name = (remove_emoji(update.chat.title)).encode('ascii', 'ignore').decode('ascii')[:38]
+=======
+    user_id = update.from_user.id or None
+    chat_name = remove_emoji(update.chat.title)
+    chat_name = chat_name.encode('ascii', 'ignore')
+    chat_name = chat_name.decode('ascii')[:38]
+>>>>>>> Stashed changes
 
-    if not update.sender_chat: # Anonymous Admin Bypass
-        user_id = update.from_user.id
-        try:
-            user_info = await bot.get_chat_member(chat_id, user_id)
-        except Exception:
-            return
+    if not verify[str(chat_id)]: # Admin List
+        admin_list = []
         
-        if user_info.status == ("member"):
-            return
-        
+<<<<<<< Updated upstream
         verify[str(update.message_id)] = user_id
         
+=======
+        await bot.get_chat_members(chat_id)
+                
+        verify[str(chat_id)] = user_id
+    else:
+        if not user_id in verify.get(str(chat_id)):
+            return
+    
+>>>>>>> Stashed changes
     bot_status = await bot.get_me()
     bot_fname= bot_status.first_name
     

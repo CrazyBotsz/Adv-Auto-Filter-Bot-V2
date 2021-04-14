@@ -21,6 +21,7 @@ DB_URI = os.environ.get("DB_URI")
 
 USER_SESSION = os.environ.get("USER_SESSION")
 
+verify = {}
 
 logging.basicConfig(
     level=logging.INFO,
