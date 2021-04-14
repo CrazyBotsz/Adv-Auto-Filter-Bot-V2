@@ -15,7 +15,7 @@ async def connect(bot: Bot, update):
     """
     chat_id = update.chat.id
     user_id = update.from_user.id if update.from_user else None
-    target_chat = update.text.split(None, 1)[1]
+    target_chat = update.text.split(None, 1)
     global verify
     
     if not verify.get(str(chat_id)): # Make Admin's ID List
@@ -30,17 +30,17 @@ async def connect(bot: Bot, update):
         return
     
     try:
-        if target_chat.startswith("@"):
-            if len(target_chat) < 5:
+        if target_chat[1].startswith("@"):
+            if len(target_chat[1]) < 5:
                 await update.reply_text("Invalid Username...!!!")
                 return
-            target = target_chat
+            target = target_chat[1]
             
-        elif not target_chat.startswith("@"):
-            if len(target_chat) < 14:
+        elif not target_chat[1].startswith("@"):
+            if len(target_chat[1]) < 14:
                 await update.reply_text("Invalid Chat Id...\nChat ID Should Be Something Like This: <code>-100xxxxxxxxxx</code>")
                 return
-            target = int(target_chat)
+            target = int(target_chat[1])
                 
     except Exception:
         await update.reply_text("Invalid Input...\nYou Should Specify Valid <code>chat_id(-100xxxxxxxxxx)</code> or <code>@username</code>")
