@@ -12,7 +12,9 @@ verify={}
 async def settings(bot, update):
     
     chat_id = update.chat.id
-    chat_name = (remove_emoji(update.chat.title)).encode('ascii', 'ignore').decode('ascii')[:38]
+    chat_name = remove_emoji(update.chat.title)
+    chat_name = chat_name.encode('ascii', 'ignore')
+    chat_name = chat_name.decode('ascii')[:38]
 
     if not update.sender_chat: # Anonymous Admin Bypass
         user_id = update.from_user.id
