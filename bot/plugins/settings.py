@@ -12,7 +12,7 @@ from bot import verify # pylint: disable=import-error
 async def settings(bot, update):
     
     chat_id = update.chat.id
-    user_id = update.from_user.id or None
+    user_id = update.from_user.id if update.from_user else None
     chat_name = remove_emoji(update.chat.title)
     chat_name = chat_name.encode('ascii', 'ignore').decode('ascii')[:38]
     global verify

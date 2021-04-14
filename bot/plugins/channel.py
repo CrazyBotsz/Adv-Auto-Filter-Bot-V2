@@ -14,7 +14,7 @@ async def connect(bot: Bot, update):
     A Funtion To Handle Incoming /add Command TO COnnect A Chat With Group
     """
     chat_id = update.chat.id
-    user_id = update.from_user.id or None
+    user_id = update.from_user.id if update.from_user else None
     target_chat = update.text.split(None, 1)[1]
     global verify
     
@@ -153,7 +153,7 @@ async def disconnect(bot: Bot, update):
     A Funtion To Handle Incoming /del Command TO Disconnect A Chat With A Group
     """
     chat_id = update.chat.id
-    user_id = update.from_user.id or None
+    user_id = update.from_user.id if update.from_user else None
     target_chat = update.text.split(None, 1)[1]
     global verify
     
@@ -218,7 +218,7 @@ async def delall(bot: Bot, update):
     A Funtion To Handle Incoming /delall Command TO Disconnect All Chats From A Group
     """
     chat_id=update.chat.id
-    user_id = update.from_user.id
+    user_id = update.from_user.id if update.from_user else None
     global verify
     
     if not verify[str(chat_id)]: # Make Admin's ID List

@@ -29,7 +29,7 @@ async def callback_data(bot, update: CallbackQuery):
     query_data = update.data
     chat_id = update.message.chat.id
     chat_name = remove_emoji(update.message.chat.title).encode('ascii', 'ignore').decode('ascii')[:38]
-    user_id = update.from_user.id
+    user_id = update.from_user.id if update.from_user else None
     
     
     if re.fullmatch(r"navigate\((.+)\)", query_data):
