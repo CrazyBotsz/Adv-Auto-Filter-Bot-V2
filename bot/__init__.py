@@ -21,6 +21,7 @@ DB_URI = os.environ.get("DB_URI")
 
 USER_SESSION = os.environ.get("USER_SESSION")
 
+verify = {}
 
 logging.basicConfig(
     level=logging.INFO,
@@ -38,7 +39,7 @@ logging.basicConfig(
 logging.getLogger("pyrogram").setLevel(logging.WARNING)
 
 start_uptime = time.time()
-verify={}
+
 
 def LOGGER(name: str) -> logging.Logger:
     return logging.getLogger(name)
