@@ -296,8 +296,7 @@ async def callback_data(bot, update: CallbackQuery):
                 except:
                     break
                 
-                cname = remove_emoji(cname)
-                cname = cname.encode('ascii', 'ignore').decode('ascii')[:38]
+                cname = remove_emoji(cname).encode('ascii', 'ignore').decode('ascii')[:38]
                 cid_list.append(cid)
                 cname_list.append(cname)
             
