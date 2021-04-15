@@ -12,25 +12,14 @@ verify={}
 async def settings(bot, update):
     
     chat_id = update.chat.id
+    try:
+        user_id = update.message.from_user.id
+    except:
+        user_id = None
     chat_name = remove_emoji(update.chat.title)
     chat_name = chat_name.encode('ascii', 'ignore')
     chat_name = chat_name.decode('ascii')[:38]
 
-<<<<<<< Updated upstream
-    if not update.sender_chat: # Anonymous Admin Bypass
-        user_id = update.from_user.id
-        try:
-            user_info = await bot.get_chat_member(chat_id, user_id)
-        except Exception:
-            return
-        
-        if user_info.status == ("member"):
-            return
-        
-        verify[str(update.message_id)] = user_id
-    else:
-        verify[str(update.message_id)] = chat_id
-=======
     if verify.get(str(chat_id)) == None: # Make Admin's ID List
         admin_list = []
         async for x in bot.iter_chat_members(chat_id=chat_id, filter="administrators"):
@@ -41,7 +30,6 @@ async def settings(bot, update):
 
     if not user_id in verify.get(str(chat_id)):
         return
->>>>>>> Stashed changes
     
     bot_status = await bot.get_me()
     bot_fname= bot_status.first_name

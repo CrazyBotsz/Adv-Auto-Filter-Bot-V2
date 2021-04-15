@@ -1,6 +1,7 @@
 from pyrogram import Client, filters
 from pyrogram.errors import UserAlreadyParticipant, FloodWait
 
+from bot import verify # pylint: disable=import-error
 from bot.bot import Bot # pylint: disable=import-error
 from bot.database import Database # pylint: disable=import-error
 from bot.plugins.auto_filter import ReCacher # pylint: disable=import-error
@@ -13,14 +14,6 @@ async def connect(bot: Bot, update):
     A Funtion To Handle Incoming /add Command TO COnnect A Chat With Group
     """
     chat_id = update.chat.id
-<<<<<<< Updated upstream
-    user_id = update.from_user.id
-    target_chat = update.text.split(None, 1)[1]
-    
-    user_info = await bot.get_chat_member(chat_id, user_id)
-    
-    if user_info.status == ("member"):
-=======
     user_id = update.from_user.id if update.from_user else None
     target_chat = update.text.split(None, 1)
     global verify
@@ -34,7 +27,6 @@ async def connect(bot: Bot, update):
         verify[str(chat_id)] = admin_list
 
     if not user_id in verify.get(str(chat_id)):
->>>>>>> Stashed changes
         return
     
     try:
@@ -145,7 +137,7 @@ async def connect(bot: Bot, update):
                         continue
                     print(e)
 
-        print(f"{skiptc} Files Been Skipped Due To File Name Been None..... #BlameTG")
+        print(f"{skipCT} Files Been Skipped Due To File Name Been None..... #BlameTG")
     except Exception as e:
         await wait_msg.edit_text("Couldnt Fetch Files From Channel... Please look Into Logs For More Details")
         raise e
@@ -163,14 +155,6 @@ async def disconnect(bot: Bot, update):
     A Funtion To Handle Incoming /del Command TO Disconnect A Chat With A Group
     """
     chat_id = update.chat.id
-<<<<<<< Updated upstream
-    user_id = update.from_user.id
-    target_chat = update.text.split(None, 1)[1]
-    
-    user_info = await bot.get_chat_member(chat_id, user_id)
-    
-    if user_info.status == ("member"):
-=======
     user_id = update.from_user.id if update.from_user else None
     target_chat = update.text.split(None, 1)
     global verify
@@ -184,7 +168,6 @@ async def disconnect(bot: Bot, update):
         verify[str(chat_id)] = admin_list
 
     if not user_id in verify.get(str(chat_id)):
->>>>>>> Stashed changes
         return
     
     try:
@@ -211,7 +194,6 @@ async def disconnect(bot: Bot, update):
     try:
         channel_info = await bot.USER.get_chat(target)
         channel_id = channel_info.id
-        channel_name = channel_info.title
     except Exception:
         await update.reply_text(f"My UserBot [{userbot_name}](tg://user?id={userbot_id}) Couldnt Fetch Details Of `{target}` Make Sure Userbot Is Not Banned There Or Add It Manually And Try Again....!!")
         return
@@ -238,13 +220,6 @@ async def delall(bot: Bot, update):
     A Funtion To Handle Incoming /delall Command TO Disconnect All Chats From A Group
     """
     chat_id=update.chat.id
-<<<<<<< Updated upstream
-    user_id = update.from_user.id
-    
-    user_info = await bot.get_chat_member(chat_id, user_id)
-    
-    if user_info.status == ("member"):
-=======
     user_id = update.from_user.id if update.from_user else None
     global verify
     
@@ -257,7 +232,6 @@ async def delall(bot: Bot, update):
         verify[str(chat_id)] = admin_list
 
     if not user_id in verify.get(str(chat_id)):
->>>>>>> Stashed changes
         return
     
     await db.delete_all(chat_id)
@@ -321,3 +295,4 @@ async def new_files(bot: Bot, update):
             data.append(data_packets)
         await db.add_filters(data)
     return
+

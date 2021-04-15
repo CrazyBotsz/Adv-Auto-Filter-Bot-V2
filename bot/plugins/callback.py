@@ -27,54 +27,32 @@ async def callback_data(bot, update: CallbackQuery):
 
     query_data = update.data
     chat_id = update.message.chat.id
-<<<<<<< Updated upstream
-
-    chat_name = remove_emoji(update.message.chat.title)
-    chat_name = chat_name.encode('ascii', 'ignore')
-    chat_name = chat_name.decode('ascii')[:38]
-
-=======
     chat_name = remove_emoji(update.message.chat.title)
     chat_name = chat_name.encode('ascii', 'ignore').decode('ascii')[:38]
     user_id = update.from_user.id
     
     
->>>>>>> Stashed changes
     if re.fullmatch(r"navigate\((.+)\)", query_data):
         """
         A Callback Funtion For The Next Button Appearing In Results
         """
         index_val, btn, query = re.findall(r"navigate\((.+)\)", query_data)[0].split("|", 2)
+        try:
+            ruser_id = update.message.reply_to_message.from_user.id
+        except:
+            ruser_id = None
         
-
-        if not update.message.reply_to_message.sender_chat: # Anonymous Admin Bypass
-            ruser_id = update.message.reply_to_message.from_user.id or None
-            auser_id = update.from_user.id
-            try:
-                user = await bot.get_chat_member(update.message.chat.id, auser_id)
+        if verify.get(str(chat_id)) == None: # Make Admin's ID List
+            admin_list = []
+            async for x in bot.iter_chat_members(chat_id=chat_id, filter="administrators"):
+                admin_id = x.user.id 
+                admin_list.append(admin_id)
+            admin_list.append(None)
+            verify[str(chat_id)] = admin_list
             
-<<<<<<< Updated upstream
-            except UserNotParticipant:
-                await update.answer("Nice Try ;)",show_alert=True)
-                return
-=======
-            if verify.get(str(chat_id)) == None: # Make Admin's ID List
-                admin_list = []
-                async for x in bot.iter_chat_members(chat_id=chat_id, filter="administrators"):
-                    admin_id = x.user.id 
-                    admin_list.append(admin_id)
-                admin_list.append(None)
-                verify[str(chat_id)] = admin_list
->>>>>>> Stashed changes
-            
-            except Exception as e:
-                print(e)
-                return
-            
-            if (auser_id != ruser_id) or (user.status == "member"):
-                
-                await update.answer("Nice Try ;)",show_alert=True)
-                return
+        if (user_id != ruser_id) or (user_id not in verify.get(str(chat_id))):
+            await update.answer("Nice Try ;)",show_alert=True)
+            return
 
 
         if btn == "next":
@@ -183,9 +161,8 @@ async def callback_data(bot, update: CallbackQuery):
         """
         A Callback Funtion For Back Button in /settings Command
         """
-        if not update.message.reply_to_message.sender_chat: # Anonymous Admin Bypass
-            if verify.get(str(update.message.reply_to_message.message_id)) != update.from_user.id:
-                return
+        if user_id not in verify.get(str(chat_id)):
+            return
 
         bot_status = await bot.get_me()
         bot_fname= bot_status.first_name
@@ -243,14 +220,8 @@ async def callback_data(bot, update: CallbackQuery):
         """
         A Callback Funtion For Acknowledging User's About What Are They Upto
         """
-<<<<<<< Updated upstream
-        if not update.message.reply_to_message.sender_chat:
-            if verify.get(str(update.message.reply_to_message.message_id)) != update.from_user.id:
-                return
-=======
         if user_id not in verify.get(str(chat_id)):
             return
->>>>>>> Stashed changes
         
         c_id, c_name, action = re.findall(r"warn\((.+)\)", query_data)[0].split("|", 2)
         
@@ -300,17 +271,9 @@ async def callback_data(bot, update: CallbackQuery):
         """
         A Callback Funtion For Displaying All Channel List And Providing A Menu To Navigate
         To Every COnnect Chats For Furthur Control
-        """
-<<<<<<< Updated upstream
-        if not update.message.reply_to_message.sender_chat: # Just To Make Sure If Its Anonymous Admin Or Not
-            if verify.get(str(update.message.reply_to_message.message_id)) != update.from_user.id:
-                return
-
-=======
-        
+        """        
         if user_id not in verify.get(str(chat_id)):
             return
->>>>>>> Stashed changes
             
         chat_id, chat_name =  re.findall(r"channel_list\((.+)\)", query_data)[0].split("|", 1)
         
@@ -333,8 +296,7 @@ async def callback_data(bot, update: CallbackQuery):
                     break
                 
                 cname = remove_emoji(cname)
-                cname = cname.encode('ascii', 'ignore')
-                cname = cname.decode('ascii')[:38]
+                cname = cname.encode('ascii', 'ignore').decode('ascii')[:38]
                 cid_list.append(cid)
                 cname_list.append(cname)
             
@@ -403,14 +365,8 @@ async def callback_data(bot, update: CallbackQuery):
         A Callback Funtion For Displaying Details Of The Connected Chat And Provide
         Ability To Connect / Disconnect / Delete / Delete Filters of That Specific Chat
         """
-<<<<<<< Updated upstream
-        if not update.message.reply_to_message.sender_chat:
-            if verify.get(str(update.message.reply_to_message.message_id)) != update.from_user.id:
-                return
-=======
         if user_id not in verify.get(str(chat_id)):
             return
->>>>>>> Stashed changes
 
         c_id, c_name = re.findall(r"info\((.+)\)", query_data)[0].split("|", 1)
         
@@ -500,15 +456,8 @@ async def callback_data(bot, update: CallbackQuery):
         A Callback Funtion Helping The user To Make A Chat Active Chat Which Will
         Make The Bot To Fetch Results From This Channel Too
         """
-<<<<<<< Updated upstream
-        if not update.message.reply_to_message.sender_chat:
-            if verify.get(str(update.message.reply_to_message.message_id)) != update.from_user.id:
-                return
-=======
-
         if user_id not in verify.get(str(chat_id)):
             return
->>>>>>> Stashed changes
 
         c_id, c_name = re.findall(r"connect\((.+)\)", query_data)[0].split("|", 1)
         c_id = int(c_id)
@@ -573,14 +522,8 @@ async def callback_data(bot, update: CallbackQuery):
         A Callback Funtion Helping The user To Make A Chat inactive Chat Which Will
         Make The Bot To Avoid Fetching Results From This Channel
         """
-<<<<<<< Updated upstream
-        if not update.message.reply_to_message.sender_chat:
-            if verify.get(str(update.message.reply_to_message.message_id)) != update.from_user.id:
-                return
-=======
         if user_id not in verify.get(str(chat_id)):
             return
->>>>>>> Stashed changes
 
         c_id, c_name = re.findall(r"connect\((.+)\)", query_data)[0].split("|", 1)
         
@@ -645,14 +588,8 @@ async def callback_data(bot, update: CallbackQuery):
         A Callback Funtion For Delete A Channel Connection From A Group Chat History
         Along With All Its Filter Files
         """
-<<<<<<< Updated upstream
-        if not update.message.reply_to_message.sender_chat:
-            if verify.get(str(update.message.reply_to_message.message_id)) != update.from_user.id:
-                return
-=======
         if user_id not in verify.get(str(chat_id)):
             return
->>>>>>> Stashed changes
 
         c_id, c_name = re.findall(r"c_delete\((.+)\)", query_data)[0].split("|", 1)
         c_id = int(c_id)
@@ -695,14 +632,8 @@ async def callback_data(bot, update: CallbackQuery):
         """
         A Callback Funtion For Delete A Specific Channel's Filters Connected To A Group
         """
-<<<<<<< Updated upstream
-        if not update.message.reply_to_message.sender_chat:
-            if verify.get(str(update.message.reply_to_message.message_id)) != update.from_user.id:
-                return
-=======
         if user_id not in verify.get(str(chat_id)):
             return
->>>>>>> Stashed changes
 
         c_id, c_name = re.findall(r"f_delete\((.+)\)", query_data)[0].split("|", 1)
 
@@ -740,14 +671,8 @@ async def callback_data(bot, update: CallbackQuery):
         """
         A Callback Funtion For Changing The Result Types To Be Shown In While Sending Results
         """
-<<<<<<< Updated upstream
-        if not update.message.reply_to_message.sender_chat:
-            if verify.get(str(update.message.reply_to_message.message_id)) != update.from_user.id:
-                return
-=======
         if user_id not in verify.get(str(chat_id)):
             return
->>>>>>> Stashed changes
 
         chat_id, chat_name = re.findall(r"types\((.+)\)", query_data)[0].split("|", 1)
         
@@ -822,14 +747,8 @@ async def callback_data(bot, update: CallbackQuery):
         """
         A Callback Funtion Support handler For types()
         """
-<<<<<<< Updated upstream
-        if not update.message.reply_to_message.sender_chat:
-            if verify.get(str(update.message.reply_to_message.message_id)) != update.from_user.id:
-                return
-=======
         if user_id not in verify.get(str(chat_id)):
             return
->>>>>>> Stashed changes
 
         chat_id, types, val = re.findall(r"toggle\((.+)\)", query_data)[0].split("|", 2)
         
@@ -936,14 +855,8 @@ async def callback_data(bot, update: CallbackQuery):
         A Callback Funtion For Chaning The Number Of Total Pages / 
         Total Results / Results Per pages / Enable or Diable Invite Link
         """
-<<<<<<< Updated upstream
-        if not update.message.reply_to_message.sender_chat:
-            if verify.get(str(update.message.reply_to_message.message_id)) != update.from_user.id:
-                return
-=======
         if user_id not in verify.get(str(chat_id)):
             return
->>>>>>> Stashed changes
 
         chat_id, chat_name = re.findall(r"config\((.+)\)", query_data)[0].split("|", 2)
         
@@ -1021,14 +934,8 @@ async def callback_data(bot, update: CallbackQuery):
         """
         A Callback Funtion For Changing The Count Of Result To Be Shown Per Page
         """
-<<<<<<< Updated upstream
-        if not update.message.reply_to_message.sender_chat:
-            if verify.get(str(update.message.reply_to_message.message_id)) != update.from_user.id:
-                return
-=======
         if user_id not in verify.get(str(chat_id)):
             return
->>>>>>> Stashed changes
 
         count, chat_id, chat_name = re.findall(r"mr_count\((.+)\)", query_data)[0].split("|", 2)
     
@@ -1090,14 +997,8 @@ async def callback_data(bot, update: CallbackQuery):
         """
         A Callback Funtion For Changing The Count Of Maximum Result Pages To Be Shown
         """
-<<<<<<< Updated upstream
-        if not update.message.reply_to_message.sender_chat:
-            if verify.get(str(update.message.reply_to_message.message_id)) != update.from_user.id:
-                return
-=======
         if user_id not in verify.get(str(chat_id)):
             return
->>>>>>> Stashed changes
 
         count, chat_id, chat_name = re.findall(r"mp_count\((.+)\)", query_data)[0].split("|", 2)
         
@@ -1155,14 +1056,8 @@ async def callback_data(bot, update: CallbackQuery):
         """
         A Callback Funtion For Changing The Count Of Maximum Files TO Be Fetched From Database
         """
-<<<<<<< Updated upstream
-        if not update.message.reply_to_message.sender_chat:
-            if verify.get(str(update.message.reply_to_message.message_id)) != update.from_user.id:
-                return
-=======
         if user_id not in verify.get(str(chat_id)):
             return
->>>>>>> Stashed changes
 
         count, chat_id, chat_name = re.findall(r"mf_count\((.+)\)", query_data)[0].split("|", 2)
 
@@ -1225,14 +1120,8 @@ async def callback_data(bot, update: CallbackQuery):
         """
         A Callback Funtion For Enabling Or Diabling Invite Link Buttons
         """
-<<<<<<< Updated upstream
-        if not update.message.reply_to_message.sender_chat:
-            if verify.get(str(update.message.reply_to_message.message_id)) != update.from_user.id:
-                return
-=======
         if user_id not in verify.get(str(chat_id)):
             return
->>>>>>> Stashed changes
 
         value, chat_id, chat_name = re.findall(r"showInvites\((.+)\)", query_data)[0].split("|", 2)
         
@@ -1285,14 +1174,8 @@ async def callback_data(bot, update: CallbackQuery):
         """
         A Callback Funtion Support For config()
         """
-<<<<<<< Updated upstream
-        if not update.message.reply_to_message.sender_chat:
-            if verify.get(str(update.message.reply_to_message.message_id)) != update.from_user.id:
-                return
-=======
         if user_id not in verify.get(str(chat_id)):
             return
->>>>>>> Stashed changes
 
         action, val, chat_id, curr_val = re.findall(r"set\((.+)\)", query_data)[0].split("|", 3)
 
@@ -1366,14 +1249,8 @@ async def callback_data(bot, update: CallbackQuery):
         """
         A Callback Funtion For Showing Overall Status Of A Group
         """
-<<<<<<< Updated upstream
-        if not update.message.reply_to_message.sender_chat:
-            if verify.get(str(update.message.reply_to_message.message_id)) != update.from_user.id:
-                return
-=======
         if user_id not in verify.get(str(chat_id)):
             return
->>>>>>> Stashed changes
         
         chat_id, chat_name = re.findall(r"status\((.+)\)", query_data)[0].split("|", 2)
         
@@ -1409,14 +1286,8 @@ async def callback_data(bot, update: CallbackQuery):
         """
         A Callback Funtion For Showing About Section In Bot Setting Menu
         """
-<<<<<<< Updated upstream
-        if not update.message.reply_to_message.sender_chat:
-            if verify.get(str(update.message.reply_to_message.message_id)) != update.from_user.id:
-                return
-=======
         if user_id not in verify.get(str(chat_id)):
             return
->>>>>>> Stashed changes
 
         text=f"<i><u>Bot's Status</u></i>\n"
         text+=f"\n<b><i>Bot's Uptime:</i></b> <code>{time_formatter(time.time() - start_uptime)}</code>\n"
