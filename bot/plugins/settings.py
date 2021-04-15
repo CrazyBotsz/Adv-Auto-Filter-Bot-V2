@@ -16,6 +16,7 @@ async def settings(bot, update):
     chat_name = chat_name.encode('ascii', 'ignore')
     chat_name = chat_name.decode('ascii')[:38]
 
+<<<<<<< Updated upstream
     if not update.sender_chat: # Anonymous Admin Bypass
         user_id = update.from_user.id
         try:
@@ -29,6 +30,18 @@ async def settings(bot, update):
         verify[str(update.message_id)] = user_id
     else:
         verify[str(update.message_id)] = chat_id
+=======
+    if verify.get(str(chat_id)) == None: # Make Admin's ID List
+        admin_list = []
+        async for x in bot.iter_chat_members(chat_id=chat_id, filter="administrators"):
+            admin_id = x.user.id 
+            admin_list.append(admin_id)
+        admin_list.append(None)
+        verify[str(chat_id)] = admin_list
+
+    if not user_id in verify.get(str(chat_id)):
+        return
+>>>>>>> Stashed changes
     
     bot_status = await bot.get_me()
     bot_fname= bot_status.first_name

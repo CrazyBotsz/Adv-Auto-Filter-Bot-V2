@@ -13,12 +13,28 @@ async def connect(bot: Bot, update):
     A Funtion To Handle Incoming /add Command TO COnnect A Chat With Group
     """
     chat_id = update.chat.id
+<<<<<<< Updated upstream
     user_id = update.from_user.id
     target_chat = update.text.split(None, 1)[1]
     
     user_info = await bot.get_chat_member(chat_id, user_id)
     
     if user_info.status == ("member"):
+=======
+    user_id = update.from_user.id if update.from_user else None
+    target_chat = update.text.split(None, 1)
+    global verify
+    
+    if verify.get(str(chat_id)) == None: # Make Admin's ID List
+        admin_list = []
+        async for x in bot.iter_chat_members(chat_id=chat_id, filter="administrators"):
+            admin_id = x.user.id 
+            admin_list.append(admin_id)
+        admin_list.append(None)
+        verify[str(chat_id)] = admin_list
+
+    if not user_id in verify.get(str(chat_id)):
+>>>>>>> Stashed changes
         return
     
     try:
@@ -147,26 +163,42 @@ async def disconnect(bot: Bot, update):
     A Funtion To Handle Incoming /del Command TO Disconnect A Chat With A Group
     """
     chat_id = update.chat.id
+<<<<<<< Updated upstream
     user_id = update.from_user.id
     target_chat = update.text.split(None, 1)[1]
     
     user_info = await bot.get_chat_member(chat_id, user_id)
     
     if user_info.status == ("member"):
+=======
+    user_id = update.from_user.id if update.from_user else None
+    target_chat = update.text.split(None, 1)
+    global verify
+    
+    if verify.get(str(chat_id)) == None: # Make Admin's ID List
+        admin_list = []
+        async for x in bot.iter_chat_members(chat_id=chat_id, filter="administrators"):
+            admin_id = x.user.id 
+            admin_list.append(admin_id)
+        admin_list.append(None)
+        verify[str(chat_id)] = admin_list
+
+    if not user_id in verify.get(str(chat_id)):
+>>>>>>> Stashed changes
         return
     
     try:
-        if target_chat.startswith("@"):
-            if len(target_chat) < 5:
+        if target_chat[1].startswith("@"):
+            if len(target_chat[1]) < 5:
                 await update.reply_text("Invalid Username...!!!")
                 return
-            target = target_chat
+            target = target_chat[1]
             
         elif not target_chat.startswith("@"):
-            if len(target_chat) < 14:
+            if len(target_chat[1]) < 14:
                 await update.reply_text("Invalid Chat Id...\nChat ID Should Be Something Like This: <code>-100xxxxxxxxxx</code>")
                 return
-            target = int(target_chat)
+            target = int(target_chat[1])
                 
     except Exception:
         await update.reply_text("Invalid Input...\nYou Should Specify Valid chat_id(-100xxxxxxxxxx) or @username")
@@ -206,11 +238,26 @@ async def delall(bot: Bot, update):
     A Funtion To Handle Incoming /delall Command TO Disconnect All Chats From A Group
     """
     chat_id=update.chat.id
+<<<<<<< Updated upstream
     user_id = update.from_user.id
     
     user_info = await bot.get_chat_member(chat_id, user_id)
     
     if user_info.status == ("member"):
+=======
+    user_id = update.from_user.id if update.from_user else None
+    global verify
+    
+    if verify.get(str(chat_id)) == None: # Make Admin's ID List
+        admin_list = []
+        async for x in bot.iter_chat_members(chat_id=chat_id, filter="administrators"):
+            admin_id = x.user.id 
+            admin_list.append(admin_id)
+        admin_list.append(None)
+        verify[str(chat_id)] = admin_list
+
+    if not user_id in verify.get(str(chat_id)):
+>>>>>>> Stashed changes
         return
     
     await db.delete_all(chat_id)
