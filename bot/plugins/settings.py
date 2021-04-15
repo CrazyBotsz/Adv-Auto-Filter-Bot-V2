@@ -6,7 +6,7 @@ import re
 from pyrogram import Client, filters
 from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup
 
-verify={}
+from bot import verify # pylint: disable=import-error
 
 @Client.on_message(filters.command(["settings"]) & filters.group, group=1)
 async def settings(bot, update):

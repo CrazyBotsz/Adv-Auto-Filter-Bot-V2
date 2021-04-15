@@ -6,7 +6,7 @@ from pyrogram import Client, filters
 from pyrogram.errors import FloodWait, UserNotParticipant
 from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup, CallbackQuery
 
-from bot import start_uptime, Translation # pylint: disable=import-error
+from bot import start_uptime, Translation, verify # pylint: disable=import-error
 from bot.plugins.auto_filter import ( # pylint: disable=import-error
     Find, 
     InviteLink, 
@@ -15,7 +15,6 @@ from bot.plugins.auto_filter import ( # pylint: disable=import-error
     GenInviteLinks
     )
 from bot.plugins.settings import( # pylint: disable=import-error
-    verify,
     remove_emoji
 )
 from bot.database import Database # pylint: disable=import-error
