@@ -15,7 +15,6 @@ from bot.plugins.auto_filter import ( # pylint: disable=import-error
     GenInviteLinks
     )
 from bot.plugins.settings import( # pylint: disable=import-error
-    verify,
     remove_emoji
 )
 from bot.database import Database # pylint: disable=import-error
@@ -38,11 +37,10 @@ async def callback_data(bot, update: CallbackQuery):
         A Callback Funtion For The Next Button Appearing In Results
         """
         index_val, btn, query = re.findall(r"navigate\((.+)\)", query_data)[0].split("|", 2)
-        
-
-        if update.message.reply_to_message.sender_chat == None: # Anonymous Admin Bypass
-            ruser_id = update.message.reply_to_message.from_user.id or None
-            auser_id = update.from_user.id
+        try:
+            ruser_id = update.message.reply_to_message.from_user.id
+        except:
+            ruser_id = None
             
             if verify.get(str(chat_id)) == None: # Make Admin's ID List
                 admin_list = []
@@ -52,7 +50,7 @@ async def callback_data(bot, update: CallbackQuery):
                 admin_list.append(None)
                 verify[str(chat_id)] = admin_list
             
-            if (auser_id != ruser_id) or (auser_id not in verify.get(str(chat_id))):
+        if (user_id != ruser_id) or (user_id not in verify.get(str(chat_id))):
                 await update.answer("Nice Try ;)",show_alert=True)
                 return
 
