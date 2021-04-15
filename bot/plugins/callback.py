@@ -15,6 +15,7 @@ from bot.plugins.auto_filter import ( # pylint: disable=import-error
     GenInviteLinks
     )
 from bot.plugins.settings import( # pylint: disable=import-error
+    verify,
     remove_emoji
 )
 from bot.database import Database # pylint: disable=import-error
@@ -24,6 +25,7 @@ db = Database()
 @Client.on_callback_query()
 async def callback_data(bot, update: CallbackQuery):
 
+    global verify
     query_data = update.data
     chat_id = update.message.chat.id
     chat_name = remove_emoji(update.message.chat.title)
@@ -36,22 +38,23 @@ async def callback_data(bot, update: CallbackQuery):
         A Callback Funtion For The Next Button Appearing In Results
         """
         index_val, btn, query = re.findall(r"navigate\((.+)\)", query_data)[0].split("|", 2)
-        try:
-            ruser_id = update.message.reply_to_message.from_user.id
-        except:
-            ruser_id = None
         
-        if verify.get(str(chat_id)) == None: # Make Admin's ID List
-            admin_list = []
-            async for x in bot.iter_chat_members(chat_id=chat_id, filter="administrators"):
-                admin_id = x.user.id 
-                admin_list.append(admin_id)
-            admin_list.append(None)
-            verify[str(chat_id)] = admin_list
+
+        if update.message.reply_to_message.sender_chat == None: # Anonymous Admin Bypass
+            ruser_id = update.message.reply_to_message.from_user.id or None
+            auser_id = update.from_user.id
             
-        if (user_id != ruser_id) or (user_id not in verify.get(str(chat_id))):
-            await update.answer("Nice Try ;)",show_alert=True)
-            return
+            if verify.get(str(chat_id)) == None: # Make Admin's ID List
+                admin_list = []
+                async for x in bot.iter_chat_members(chat_id=chat_id, filter="administrators"):
+                    admin_id = x.user.id 
+                    admin_list.append(admin_id)
+                admin_list.append(None)
+                verify[str(chat_id)] = admin_list
+            
+            if (auser_id != ruser_id) or (auser_id not in verify.get(str(chat_id))):
+                await update.answer("Nice Try ;)",show_alert=True)
+                return
 
 
         if btn == "next":
@@ -270,7 +273,8 @@ async def callback_data(bot, update: CallbackQuery):
         """
         A Callback Funtion For Displaying All Channel List And Providing A Menu To Navigate
         To Every COnnect Chats For Furthur Control
-        """        
+        """
+        
         if user_id not in verify.get(str(chat_id)):
             return
             
@@ -294,8 +298,7 @@ async def callback_data(bot, update: CallbackQuery):
                 except:
                     break
                 
-                cname = remove_emoji(cname)
-                cname = cname.encode('ascii', 'ignore').decode('ascii')[:38]
+                cname = remove_emoji(cname).encode('ascii', 'ignore').decode('ascii')[:38]
                 cid_list.append(cid)
                 cname_list.append(cname)
             
@@ -455,6 +458,7 @@ async def callback_data(bot, update: CallbackQuery):
         A Callback Funtion Helping The user To Make A Chat Active Chat Which Will
         Make The Bot To Fetch Results From This Channel Too
         """
+
         if user_id not in verify.get(str(chat_id)):
             return
 

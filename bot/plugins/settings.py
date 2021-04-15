@@ -12,13 +12,10 @@ from bot import verify # pylint: disable=import-error
 async def settings(bot, update):
     
     chat_id = update.chat.id
-    try:
-        user_id = update.message.from_user.id
-    except:
-        user_id = None
+    user_id = update.from_user.id if update.from_user else None
     chat_name = remove_emoji(update.chat.title)
-    chat_name = chat_name.encode('ascii', 'ignore')
-    chat_name = chat_name.decode('ascii')[:38]
+    chat_name = chat_name.encode('ascii', 'ignore').decode('ascii')[:38]
+    global verify
 
     if verify.get(str(chat_id)) == None: # Make Admin's ID List
         admin_list = []
