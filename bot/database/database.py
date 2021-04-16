@@ -48,7 +48,8 @@ class Database(metaclass=Singleton):
                 max_pages=5,
                 max_results=50,
                 max_per_page=10,
-                show_invite_link=True              
+                show_invite_link=True,
+                pm_fchat=True
             )
         )
 
@@ -391,6 +392,19 @@ class Database(metaclass=Singleton):
                 continue
 
         return filters
+
+
+    async def get_file(self, uid: str):
+        
+        file = await self.fcol.find_one({"unique_id": uid})
+        file_id = None
+        file_type = None
+        
+        if file:
+            file_id = file.get("file_id")
+            file_type = file.get("file_type")
+            
+        return file_id, file_type
 
 
     async def cf_count(self, g_id: int, c_id: int):

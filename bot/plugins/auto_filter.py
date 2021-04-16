@@ -4,7 +4,7 @@ import asyncio
 
 from pyrogram import Client, filters
 from pyrogram.types import Message, InlineKeyboardButton, InlineKeyboardMarkup, CallbackQuery
-from pyrogram.errors import ButtonDataInvalid
+from pyrogram.errors import ButtonDataInvalid, FloodWait
 
 from bot.database import Database # pylint: disable=import-error
 from bot.bot import Bot # pylint: disable=import-error
@@ -25,7 +25,10 @@ async def auto_filter (bot, update):
     if re.findall(r"((^\/|^,|^\.|^[\U0001F600-\U000E007F]).*)", update.text):
         return
     
-    query = re.sub(r"[1-2]\d{3}", "", update.text) # Targeting Only 1000 - 2999 😁
+    if ("https://" or "http://") in update.text:
+        return
+    
+    query = re.sub(r"[1-2]\d{3}", "", update.text) # Targetting Only 1000 - 2999 😁
     
     if len(query) < 2:
         return
@@ -33,9 +36,11 @@ async def auto_filter (bot, update):
     results = []
     
     global ActiveChats
+    global Find
     
     configs = await db.find_chat(group_id)
     achats = ActiveChats[str(group_id)] if ActiveChats.get(str(group_id)) else await db.find_active(group_id)
+    ActiveChats[str(group_id)] = achats
     
     if not configs:
         return
@@ -47,7 +52,10 @@ async def auto_filter (bot, update):
     maxp = configs["configs"]["max_pages"]
     maxr = configs["configs"]["max_results"]
     maxb = configs["configs"]["max_per_page"]
+    pm_fchat = configs["configs"]["pm_fchat"]
     showInvite = configs["configs"]["show_invite_link"]
+    
+    showInvite = (False if pm_fchat == True else showInvite)
     
     filters = await db.get_filters(group_id, query)
     
@@ -78,6 +86,20 @@ async def auto_filter (bot, update):
             if len(results) >= maxr:
                 break
             
+            if pm_fchat:
+                unique_id = filter.get("unique_id")
+                if not Find.get("bot_details"):
+                    try:
+                        bot_= await bot.get_me()
+                        Find["bot_details"] = bot_
+                    except FloodWait as e:
+                        asyncio.sleep(e.x)
+                        bot_= await bot.get_me()
+                        Find["bot_details"] = bot_
+                
+                bot_ = Find.get("bot_details")
+                file_link = f"https://t.me/{bot_.username}?start={unique_id}"
+            
             results.append(
                 [
                     InlineKeyboardButton
@@ -95,7 +117,6 @@ async def auto_filter (bot, update):
         return
     
     else:
-        global Find
     
         result = []
         result += [results[i * maxb :(i + 1) * maxb ] for i in range((len(results) + maxb - 1) // maxb )]
@@ -105,13 +126,14 @@ async def auto_filter (bot, update):
         
         Find[query] = {"results": result, "total_len": len_results, "max_pages": maxp} # TrojanzHex's Idea Of Dicts😅
 
-        if len_result >maxb:
+        if len_result != 1:
             result[0].append([InlineKeyboardButton("Next ⏩", callback_data=f"navigate(0|next|{query})")])
         
-        # Just A Decarator
+        # Just A Decaration
         result[0].append([
             InlineKeyboardButton(f"🔰 Page 1/{len_result if len_result < maxp else maxp} 🔰", callback_data="ignore")
         ])
+        
         
         if showInvite:
             

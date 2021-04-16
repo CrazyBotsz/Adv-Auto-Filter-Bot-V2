@@ -28,7 +28,7 @@ async def callback_data(bot, update: CallbackQuery):
     query_data = update.data
     chat_id = update.message.chat.id
     chat_name = remove_emoji(update.message.chat.title)
-    chat_name = chat_name.encode('ascii', 'ignore').decode('ascii')[:38]
+    chat_name = chat_name.encode('ascii', 'ignore').decode('ascii')[:35]
     user_id = update.from_user.id
     
     
@@ -39,20 +39,25 @@ async def callback_data(bot, update: CallbackQuery):
         index_val, btn, query = re.findall(r"navigate\((.+)\)", query_data)[0].split("|", 2)
         try:
             ruser_id = update.message.reply_to_message.from_user.id
-        except:
+        except Exception as e:
+            print(e)
             ruser_id = None
+        
+        admin_list = verify.get(str(chat_id))
+        if admin_list == None: # Make Admin's ID List
             
-            if verify.get(str(chat_id)) == None: # Make Admin's ID List
-                admin_list = []
-                async for x in bot.iter_chat_members(chat_id=chat_id, filter="administrators"):
-                    admin_id = x.user.id 
-                    admin_list.append(admin_id)
-                admin_list.append(None)
-                verify[str(chat_id)] = admin_list
+            admin_list = []
             
-        if (user_id != ruser_id) or (user_id not in verify.get(str(chat_id))):
-                await update.answer("Nice Try ;)",show_alert=True)
-                return
+            async for x in bot.iter_chat_members(chat_id=chat_id, filter="administrators"):
+                admin_id = x.user.id 
+                admin_list.append(admin_id)
+                
+            admin_list.append(None) # Just For Anonymous Admin....
+            verify[str(chat_id)] = admin_list
+        
+        if not ((user_id == ruser_id) or (user_id in admin_list)):
+            await update.answer("Nice Try ;)",show_alert=True)
+            return
 
 
         if btn == "next":
@@ -62,7 +67,9 @@ async def callback_data(bot, update: CallbackQuery):
         
         achats = ActiveChats[str(chat_id)]
         configs = await db.find_chat(chat_id)
+        pm_fchat = configs["configs"]["pm_fchat"]
         showInvite = configs["configs"]["show_invite_link"]
+        showInvite = (False if pm_fchat == True else showInvite)
         
         results = Find.get(query).get("results")
         leng = Find.get(query).get("total_len")
@@ -174,24 +181,24 @@ async def callback_data(bot, update: CallbackQuery):
             [
                 InlineKeyboardButton
                     (
-                        "Channels", callback_data=f"channel_list({chat_id}|{chat_name})"
+                        "Channels", callback_data=f"channel_list({chat_id})"
                     ), 
                 
                 InlineKeyboardButton
                     (
-                        "Filter Types", callback_data=f"types({chat_id}|{chat_name})"
+                        "Filter Types", callback_data=f"types({chat_id})"
                     )
             ],
             [
                 InlineKeyboardButton
                     (
-                        "Configure 🛠", callback_data=f"config({chat_id}|{chat_name})"
+                        "Configure 🛠", callback_data=f"config({chat_id})"
                     )
             ], 
             [
                 InlineKeyboardButton
                     (
-                        "Status", callback_data=f"status({chat_id}|{chat_name})"
+                        "Status", callback_data=f"status({chat_id})"
                     ),
                 
                 InlineKeyboardButton
@@ -276,7 +283,7 @@ async def callback_data(bot, update: CallbackQuery):
         if user_id not in verify.get(str(chat_id)):
             return
             
-        chat_id, chat_name =  re.findall(r"channel_list\((.+)\)", query_data)[0].split("|", 1)
+        chat_id =  re.findall(r"channel_list\((.+)\)", query_data)[0]
         
         text = "<i>Semms Like You Dont Have Any Channel Connected...</i>\n\n<i>Connect To Any Chat To Continue With This Settings...</i>"
         
@@ -296,7 +303,7 @@ async def callback_data(bot, update: CallbackQuery):
                 except:
                     break
                 
-                cname = remove_emoji(cname).encode('ascii', 'ignore').decode('ascii')[:38]
+                cname = remove_emoji(cname).encode('ascii', 'ignore').decode('ascii')[:35]
                 cid_list.append(cid)
                 cname_list.append(cname)
             
@@ -439,7 +446,7 @@ async def callback_data(bot, update: CallbackQuery):
                 [
                     InlineKeyboardButton
                         (
-                            "🔙 Back", callback_data=f"channel_list({chat_id}|{chat_name})"
+                            "🔙 Back", callback_data=f"channel_list({chat_id})"
                         )
                 ]
         )
@@ -505,7 +512,7 @@ async def callback_data(bot, update: CallbackQuery):
                 [
                     InlineKeyboardButton
                         (
-                            "🔙 Back", callback_data=f"channel_list({chat_id}|{chat_name})"
+                            "🔙 Back", callback_data=f"channel_list({chat_id})"
                         )
                 ]
         )
@@ -570,7 +577,7 @@ async def callback_data(bot, update: CallbackQuery):
                 [
                     InlineKeyboardButton
                         (
-                            "🔙 Back", callback_data=f"channel_list({chat_id}|{chat_name})"
+                            "🔙 Back", callback_data=f"channel_list({chat_id})"
                         )
                 ]
         )
@@ -604,13 +611,13 @@ async def callback_data(bot, update: CallbackQuery):
 
         else:
             text=f"<i>Couldn't Delete Channel And All Its Files From DB Sucessfully....</i>\n<i>Please Try Again After Sometimes...Also Make Sure To Check The Logs..!!</i>"
-            await query.answer(text=text, show_alert=True)
+            await update.answer(text=text, show_alert=True)
 
         buttons = [
             [
                 InlineKeyboardButton
                     (
-                        "🔙 Back", callback_data=f"channel_list({chat_id}|{chat_name})"
+                        "🔙 Back", callback_data=f"channel_list({chat_id})"
                     ),
                     
                 InlineKeyboardButton
@@ -675,7 +682,7 @@ async def callback_data(bot, update: CallbackQuery):
         if user_id not in verify.get(str(chat_id)):
             return
 
-        chat_id, chat_name = re.findall(r"types\((.+)\)", query_data)[0].split("|", 1)
+        chat_id = re.findall(r"types\((.+)\)", query_data)[0]
         
         _types = await db.find_chat(int(chat_id))
         
@@ -859,38 +866,41 @@ async def callback_data(bot, update: CallbackQuery):
         if user_id not in verify.get(str(chat_id)):
             return
 
-        chat_id, chat_name = re.findall(r"config\((.+)\)", query_data)[0].split("|", 2)
+        chat_id = re.findall(r"config\((.+)\)", query_data)[0]
         
         settings = await db.find_chat(int(chat_id))
         
         mp_count = settings["configs"]["max_pages"]
         mf_count = settings["configs"]["max_results"]
         mr_count = settings["configs"]["max_per_page"]
+        pm_file_chat  = settings["configs"]["pm_fchat"]
         show_invite = settings["configs"]["show_invite_link"]
         
         text=f"<i><b>Configure Your <u><code>{chat_name}</code></u> Group's Filter Settings...</b></i>\n"
         
         text+=f"\n<i>{chat_name}</i> Current Settings:\n"
 
-        text+=f"\n - Max Filter Per Page: <code>{mr_count}</code>\n"
-        
         text+=f"\n - Max Filter: <code>{mf_count}</code>\n"
         
         text+=f"\n - Max Pages: <code>{mp_count}</code>\n"
         
+        text+=f"\n - Max Filter Per Page: <code>{mr_count}</code>\n"
+        
         text+=f"\n - Show Invitation Link: <code>{show_invite}</code>\n"
+        
+        text+=f"\n - Provide File In Bot PM: <code>{pm_file_chat}</code>\n"
         
         text+="\nAdjust Above Value Using Buttons Below... "
         buttons=[
             [
                 InlineKeyboardButton
                     (
-                        "Filter Per Page", callback_data=f"mr_count({mr_count}|{chat_id}|{chat_name})"
+                        "Filter Per Page", callback_data=f"mr_count({mr_count}|{chat_id})"
                     ), 
         
                 InlineKeyboardButton
                     (
-                        "Max Pages",       callback_data=f"mp_count({mp_count}|{chat_id}|{chat_name})"
+                        "Max Pages",       callback_data=f"mp_count({mp_count}|{chat_id})"
                     )
             ]
         ]
@@ -899,7 +909,7 @@ async def callback_data(bot, update: CallbackQuery):
             [
                 InlineKeyboardButton
                     (
-                        "Total Filter Count", callback_data=f"mf_count({mf_count}|{chat_id}|{chat_name})"
+                        "Total Filter Count", callback_data=f"mf_count({mf_count}|{chat_id})"
                     )
             ]
         )
@@ -908,7 +918,12 @@ async def callback_data(bot, update: CallbackQuery):
             [
                 InlineKeyboardButton
                     (
-                        "Show Invite Links", callback_data=f"showInvites({show_invite}|{chat_id}|{chat_name})"
+                        "Show Invite Links", callback_data=f"showInvites({show_invite}|{chat_id})"
+                    ),
+                
+                InlineKeyboardButton
+                    (
+                        "Bot File Chat", callback_data=f"inPM({pm_file_chat}|{chat_id})"
                     )
             ]
         )
@@ -938,7 +953,7 @@ async def callback_data(bot, update: CallbackQuery):
         if user_id not in verify.get(str(chat_id)):
             return
 
-        count, chat_id, chat_name = re.findall(r"mr_count\((.+)\)", query_data)[0].split("|", 2)
+        count, chat_id = re.findall(r"mr_count\((.+)\)", query_data)[0].split("|", 1)
     
         text = f"<i>Choose Your Desired 'Max Filter Count Per Page' For Every Filter Results Shown In</i> <code>{chat_name}</code>"
     
@@ -982,7 +997,7 @@ async def callback_data(bot, update: CallbackQuery):
             [
                 InlineKeyboardButton
                     (
-                        "🔙 Back", callback_data=f"config({chat_id}|{chat_name})"
+                        "🔙 Back", callback_data=f"config({chat_id})"
                     )
             ]
         ]
@@ -1001,7 +1016,7 @@ async def callback_data(bot, update: CallbackQuery):
         if user_id not in verify.get(str(chat_id)):
             return
 
-        count, chat_id, chat_name = re.findall(r"mp_count\((.+)\)", query_data)[0].split("|", 2)
+        count, chat_id = re.findall(r"mp_count\((.+)\)", query_data)[0].split("|", 1)
         
         text = f"<i>Choose Your Desired 'Max Filter Page Count' For Every Filter Results Shown In</i> <code>{chat_name}</code>"
         
@@ -1040,7 +1055,7 @@ async def callback_data(bot, update: CallbackQuery):
             [
                 InlineKeyboardButton
                     (
-                        "🔙 Back", callback_data=f"config({chat_id}|{chat_name})"
+                        "🔙 Back", callback_data=f"config({chat_id})"
                     )
             ]
 
@@ -1060,7 +1075,7 @@ async def callback_data(bot, update: CallbackQuery):
         if user_id not in verify.get(str(chat_id)):
             return
 
-        count, chat_id, chat_name = re.findall(r"mf_count\((.+)\)", query_data)[0].split("|", 2)
+        count, chat_id = re.findall(r"mf_count\((.+)\)", query_data)[0].split("|", 1)
 
         text = f"<i>Choose Your Desired 'Max Filter' To Be Fetched From DB For Every Filter Results Shown In</i> <code>{chat_name}</code>"
 
@@ -1105,7 +1120,7 @@ async def callback_data(bot, update: CallbackQuery):
             [
                 InlineKeyboardButton
                     (
-                        "🔙 Back", callback_data=f"config({chat_id}|{chat_name})"
+                        "🔙 Back", callback_data=f"config({chat_id})"
                     )
             ]
         ]
@@ -1124,7 +1139,7 @@ async def callback_data(bot, update: CallbackQuery):
         if user_id not in verify.get(str(chat_id)):
             return
 
-        value, chat_id, chat_name = re.findall(r"showInvites\((.+)\)", query_data)[0].split("|", 2)
+        value, chat_id = re.findall(r"showInvites\((.+)\)", query_data)[0].split("|", 1)
         
         value = True if value=="True" else False
         
@@ -1139,7 +1154,7 @@ async def callback_data(bot, update: CallbackQuery):
                 [
                     InlineKeyboardButton
                         (
-                            "Back 🔙", callback_data=f"config({chat_id}|{chat_name})"
+                            "Back 🔙", callback_data=f"config({chat_id})"
                         )
                 ]
             ]
@@ -1155,7 +1170,7 @@ async def callback_data(bot, update: CallbackQuery):
                 [
                     InlineKeyboardButton
                         (
-                            "Back 🔙", callback_data=f"config({chat_id}|{chat_name})"
+                            "Back 🔙", callback_data=f"config({chat_id})"
                         )
                 ]
             ]
@@ -1169,7 +1184,61 @@ async def callback_data(bot, update: CallbackQuery):
             reply_markup=reply_markup,
             parse_mode="html"
         )
+
+
+    elif re.fullmatch(r"inPM\((.+)\)", query_data):
+        """
+        A Callback Funtion For Enabling Or Diabling File Transfer Through Bot PM
+        """
+        if user_id not in verify.get(str(chat_id)):
+            return
+
+        value, chat_id = re.findall(r"inPM\((.+)\)", query_data)[0].split("|", 1)
+
+        value = True if value=="True" else False
         
+        if value:
+            buttons= [
+                [
+                    InlineKeyboardButton
+                        (
+                            "Disable ❎", callback_data=f"set(inPM|False|{chat_id}|{value})"
+                        )
+                ],
+                [
+                    InlineKeyboardButton
+                        (
+                            "Back 🔙", callback_data=f"config({chat_id})"
+                        )
+                ]
+            ]
+        
+        else:
+            buttons =[
+                [
+                    InlineKeyboardButton
+                        (
+                            "Enable ✅", callback_data=f"set(inPM|True|{chat_id}|{value})"
+                        )
+                ],
+                [
+                    InlineKeyboardButton
+                        (
+                            "Back 🔙", callback_data=f"config({chat_id})"
+                        )
+                ]
+            ]
+        
+        text=f"<i>This Config Will Help You To Enable/Disable File Transfer Through Bot PM Without Redirecting Them To Channel....</i>"
+        
+        reply_markup=InlineKeyboardMarkup(buttons)
+        
+        await update.message.edit_text(
+            text,
+            reply_markup=reply_markup,
+            parse_mode="html"
+        )
+
 
     elif re.fullmatch(r"set\((.+)\)", query_data):
         """
@@ -1183,8 +1252,7 @@ async def callback_data(bot, update: CallbackQuery):
         try:
             val, chat_id, curr_val = int(val), int(chat_id), int(curr_val)
         except:
-            chat_id = int(chat_id) # Quick bypass with try and 
-            # except for show Invite Lol😂🤣
+            chat_id = int(chat_id)
         
         if val == curr_val:
             await update.answer("New Value Cannot Be Old Value...Please Choose Different Value...!!!", show_alert=True)
@@ -1195,7 +1263,8 @@ async def callback_data(bot, update: CallbackQuery):
         p_max_pages = int(prev["configs"].get("max_pages"))
         p_max_results = int(prev["configs"].get("max_results"))
         p_max_per_page = int(prev["configs"].get("max_per_page"))
-        show_invite_link = True if prev["configs"]["show_invite_link"] == True else False
+        pm_file_chat = True if prev["configs"]["pm_fchat"] == (True or "True") else False
+        show_invite_link = True if prev["configs"]["show_invite_link"] == (True or "True") else False
         
         if action == "pages":
             p_max_pages = val
@@ -1205,22 +1274,27 @@ async def callback_data(bot, update: CallbackQuery):
             
         elif action == "per_page":
             p_max_per_page = val
-            
+
         elif action =="showInv":
             show_invite_link = True if val=="True" else False
+
+        elif action == "inPM":
+            pm_file_chat = True if val=="True" else False
+            
 
         new = dict(
             max_pages=p_max_pages,
             max_results=p_max_results,
             max_per_page=p_max_per_page,
-            show_invite_link=show_invite_link
+            show_invite_link=show_invite_link,
+            pm_fchat=pm_file_chat
         )
         
         append_db = await db.update_configs(chat_id, new)
         
         if not append_db:
             text="Something Wrong Please Check Bot Log For More Information...."
-            await query.answer(text=text, show_alert=True)
+            await update.answer(text=text, show_alert=True)
             return
         
         text=f"Your Request Was Updated Sucessfully....\nNow All Upcoming Results Will Show According To This Settings..."
@@ -1229,7 +1303,7 @@ async def callback_data(bot, update: CallbackQuery):
             [
                 InlineKeyboardButton
                     (
-                        "Back 🔙", callback_data=f"config({chat_id}|{chat_name})"
+                        "Back 🔙", callback_data=f"config({chat_id})"
                     ),
                 
                 InlineKeyboardButton
@@ -1253,7 +1327,7 @@ async def callback_data(bot, update: CallbackQuery):
         if user_id not in verify.get(str(chat_id)):
             return
         
-        chat_id, chat_name = re.findall(r"status\((.+)\)", query_data)[0].split("|", 2)
+        chat_id = re.findall(r"status\((.+)\)", query_data)[0]
         
         total_filters, total_chats, total_achats = await db.status(chat_id)
         
@@ -1293,8 +1367,8 @@ async def callback_data(bot, update: CallbackQuery):
         text=f"<i><u>Bot's Status</u></i>\n"
         text+=f"\n<b><i>Bot's Uptime:</i></b> <code>{time_formatter(time.time() - start_uptime)}</code>\n"
         text+=f"\n<b><i>Bot Funtion:</i></b> <i>Auto Filter Files</i>\n"
-        text+=f"""\n<b><i>Bot Support:</i></b> <a herf="https://t.me/CrazyBotszGrp">@CrazyBotszGrp</a>\n"""
-        text+="""\n<b><i>Source Code:</i></b> <a herf="https://github.com/AlbertEinsteinTG/Adv-Filter-Bot">Source</a>"""
+        text+=f"""\n<b><i>Bot Support:</i></b> <a href="https://t.me/CrazyBotszGrp">@CrazyBotszGrp</a>\n"""
+        text+="""\n<b><i>Source Code:</i></b> <a href="https://github.com/AlbertEinsteinTG/Adv-Filter-Bot-V2">Source</a>"""
 
         buttons = [
             [
