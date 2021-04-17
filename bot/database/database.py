@@ -403,8 +403,9 @@ class Database(metaclass=Singleton):
         if file:
             file_id = file.get("file_id")
             file_type = file.get("file_type")
+            file_name = file.get("file_name") 
             
-        return file_id, file_type
+        return file_id, file_name, file_type
 
 
     async def cf_count(self, g_id: int, c_id: int):
