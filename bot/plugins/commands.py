@@ -18,7 +18,7 @@ async def start(bot, update):
         file_uid = False
     
     if file_uid:
-        file_id, file_type = await db.get_file(file_uid)
+        file_id, file_name, file_type = await db.get_file(file_uid)
         
         if (file_id or file_type) == None:
             return
@@ -28,7 +28,7 @@ async def start(bot, update):
             await bot.send_document(
                 chat_id=update.chat.id,
                 document = file_id,
-                caption = '',
+                caption = str(file_name), # str() as to make NoneType to str type if file_name return None... 
                 reply_to_message_id=update.message_id,
                 reply_markup=InlineKeyboardMarkup(
                     [
@@ -47,6 +47,7 @@ async def start(bot, update):
             await update.reply_video(
                 file_id,
                 quote=True,
+                caption = str(file_name),
                 reply_markup=InlineKeyboardMarkup(
                     [
                         [
@@ -64,6 +65,7 @@ async def start(bot, update):
             await update.reply_audio(
                 file_id,
                 quote=True,
+                caption = str(file_name),
                 reply_markup=InlineKeyboardMarkup(
                     [
                         [
