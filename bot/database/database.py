@@ -364,7 +364,7 @@ class Database(metaclass=Singleton):
 
     async def get_filters(self, g_id: int, keyword: str):
 
-        await self.create_index()
+#        await self.create_index()
 
         achats = await self.find_active(g_id)
         
@@ -378,7 +378,7 @@ class Database(metaclass=Singleton):
         filters = []
 
         pipeline= {
-            "group_id": g_id, "$text":{"$search": keyword}
+            "group_id": g_id, "file_name": keyword
         }
         
         db_list = self.fcol.find(pipeline)
