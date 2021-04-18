@@ -380,7 +380,10 @@ class Database(metaclass=Singleton):
         pipeline= {
             "group_id": g_id, "file_name": keyword
         }
+
         print(pipeline)
+        print(await self.fcol.count_documents(pipeline)) 
+
         db_list = self.fcol.find(pipeline)
 
         for document in await db_list.to_list(length=600):
