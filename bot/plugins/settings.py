@@ -6,32 +6,30 @@ import re
 from pyrogram import Client, filters
 from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup
 
-from bot import verify # pylint: disable=import-error
+from bot import VERIFY # pylint: disable=import-error
 
 @Client.on_message(filters.command(["settings"]) & filters.group, group=1)
 async def settings(bot, update):
     
     chat_id = update.chat.id
     user_id = update.from_user.id if update.from_user else None
-    chat_name = remove_emoji(update.chat.title)
-    chat_name = chat_name.encode('ascii', 'ignore').decode('ascii')[:38]
-    global verify
+    global VERIFY
 
-    if verify.get(str(chat_id)) == None: # Make Admin's ID List
+    if VERIFY.get(str(chat_id)) == None: # Make Admin's ID List
         admin_list = []
         async for x in bot.iter_chat_members(chat_id=chat_id, filter="administrators"):
             admin_id = x.user.id 
             admin_list.append(admin_id)
         admin_list.append(None)
-        verify[str(chat_id)] = admin_list
+        VERIFY[str(chat_id)] = admin_list
 
-    if not user_id in verify.get(str(chat_id)):
+    if not user_id in VERIFY.get(str(chat_id)): # Checks if user is admin of the chat
         return
     
-    bot_status = await bot.get_me()
-    bot_fname= bot_status.first_name
+    bot_info = await bot.get_me()
+    bot_first_name= bot_info.first_name
     
-    text =f"<i>{bot_fname}'s</i> Settings Pannel.....\n"
+    text =f"<i>{bot_first_name}'s</i> Settings Pannel.....\n"
     text+=f"\n<i>You Can Use This Menu To Change Connectivity And Know Status Of Your Every Connected Channel, Change Filter Types, Configure Filter Results And To Know Status Of Your Group...</i>"
     
     buttons = [

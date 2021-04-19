@@ -18,17 +18,20 @@ async def start(bot, update):
         file_uid = False
     
     if file_uid:
-        file_id, file_name, file_type = await db.get_file(file_uid)
+        file_id, file_name, file_caption, file_type = await db.get_file(file_uid)
         
         if (file_id or file_type) == None:
             return
+        
+        caption = file_caption if file_caption != ("" or None) else ("<code>" + file_name + "</code>")
         
         if file_type == "document":
         
             await bot.send_document(
                 chat_id=update.chat.id,
                 document = file_id,
-                caption = str(file_name), # str() as to make NoneType to str type if file_name return None... 
+                caption = caption,
+                parse_mode="html",
                 reply_to_message_id=update.message_id,
                 reply_markup=InlineKeyboardMarkup(
                     [
@@ -44,16 +47,17 @@ async def start(bot, update):
 
         elif file_type == "video":
         
-            await update.reply_video(
-                file_id,
-                quote=True,
-                caption = str(file_name),
+            await update.bot.send_video(
+                chat_id=update.chat.id,
+                video = file_id,
+                caption = caption,
+                parse_mode="html",
                 reply_markup=InlineKeyboardMarkup(
                     [
                         [
                             InlineKeyboardButton
                                 (
-                                    'My Dev 👨‍🔬', url="https://t.me/CrazyBotsz"
+                                    'Developers', url="https://t.me/CrazyBotsz"
                                 )
                         ]
                     ]
@@ -62,16 +66,17 @@ async def start(bot, update):
             
         elif file_type == "audio":
         
-            await update.reply_audio(
-                file_id,
-                quote=True,
-                caption = str(file_name),
+            await update.bot.send_audio(
+                chat_id=update.chat.id,
+                audio = file_id,
+                caption = caption,
+                parse_mode="html",
                 reply_markup=InlineKeyboardMarkup(
                     [
                         [
                             InlineKeyboardButton
                                 (
-                                    'My Dev 👨‍🔬', url="https://t.me/CrazyBotsz"
+                                    'Developers', url="https://t.me/CrazyBotsz"
                                 )
                         ]
                     ]
@@ -141,4 +146,3 @@ async def about(bot, update):
         parse_mode="html",
         reply_to_message_id=update.message_id
     )
-    
