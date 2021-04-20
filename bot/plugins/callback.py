@@ -1632,7 +1632,7 @@ async def cb_about(bot, update: CallbackQuery):
 
 
 
-@Client.on_callback_query(filters.regex(r"navigate\((.+)\)"), group=2)
+@Client.on_callback_query(filters.regex(r"^(start|help|about|close)$"), group=2)
 async def callback_data(bot, update: CallbackQuery):
 
     query_data = update.data
