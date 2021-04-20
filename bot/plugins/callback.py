@@ -951,8 +951,9 @@ async def cb_config(bot, update: CallbackQuery):
     mp_count = settings["configs"]["max_pages"]
     mf_count = settings["configs"]["max_results"]
     mr_count = settings["configs"]["max_per_page"]
-    pm_file_chat  = settings["configs"]["pm_fchat"]
     show_invite = settings["configs"]["show_invite_link"]
+    pm_file_chat  = settings["configs"]["pm_fchat"]
+    accuracy_point = settings["configs"].get("accuracy", 0.80)
     
     text=f"<i><b>Configure Your <u><code>{chat_name}</code></u> Group's Filter Settings...</b></i>\n"
     
@@ -963,6 +964,8 @@ async def cb_config(bot, update: CallbackQuery):
     text+=f"\n - Max Pages: <code>{mp_count}</code>\n"
     
     text+=f"\n - Max Filter Per Page: <code>{mr_count}</code>\n"
+
+    text+=f"\n - Accuracy Percentage: <code>{accuracy_point}</code>\n"
     
     text+=f"\n - Show Invitation Link: <code>{show_invite}</code>\n"
     
@@ -982,7 +985,8 @@ async def cb_config(bot, update: CallbackQuery):
                 )
         ]
     ]
-    
+
+
     buttons.append(
         [
             InlineKeyboardButton
@@ -991,20 +995,33 @@ async def cb_config(bot, update: CallbackQuery):
                 )
         ]
     )
-    
+
+
     buttons.append(
-        [
-            InlineKeyboardButton
+        [                
+             InlineKeyboardButton
                 (
                     "Show Invite Links", callback_data=f"show_invites({show_invite}|{chat_id})"
                 ),
-            
+
             InlineKeyboardButton
                 (
                     "Bot File Chat", callback_data=f"inPM({pm_file_chat}|{chat_id})"
                 )
         ]
     )
+
+
+    buttons.append(
+        [
+            InlineKeyboardButton
+                (
+                    "Result's Accuracy", callback_data=f"accuracy({accuracy_point}|{chat_id})"
+                )
+        ]
+    )
+
+
     buttons.append(
         [
             InlineKeyboardButton
@@ -1357,6 +1374,81 @@ async def cb_pm_file(bot, update: CallbackQuery):
 
 
 
+@Client.on_callback_query(filters.regex(r"accuracy\((.+)\)"), group=2)
+async def cb_accuracy(bot, update: CallbackQuery):
+    """
+    A Callaback Funtion to control the accuracy of matching results
+    that the bot should return for a query....
+    """
+    global VERIFY
+    chat_id = update.message.chat.id
+    chat_name = update.message.chat.title
+    user_id = update.from_user.id
+    query_data = update.data
+    
+    
+    if user_id not in VERIFY.get(str(chat_id)):
+        return
+
+    val, chat_id = re.findall(r"accuracy\((.+)\)", query_data)[0].split("|", 1)
+    
+    text = f"<i>Choose Your Desired 'Accuracy Perceentage' For Every Filter Results Shown In</i> <code>{chat_name}</code>\n\n"
+    text+= f"<i>NB: Higher The Value Better Matching Results Will Be Provided... And If Value Is Lower It Will Show More Results \
+        Which Is Fimilary To Query Search (Wont Be Accurate)....</i>"
+
+    buttons = [
+        [
+            InlineKeyboardButton
+                (
+                    "100 %", callback_data=f"set(accuracy|1.00|{chat_id}|{val})"
+                )
+        ],
+        [
+            InlineKeyboardButton
+                (
+                    "80 %", callback_data=f"set(accuracy|0.80|{chat_id}|{val})"
+                )
+        ],
+        [
+            InlineKeyboardButton
+                (
+                    "65 %", callback_data=f"set(accuracy|0.65|{chat_id}|{val})"
+                )
+        ],
+        [
+            InlineKeyboardButton
+                (
+                    "60 %", callback_data=f"set(accuracy|0.60|{chat_id}|{val})"
+                )
+        ],
+        [
+            InlineKeyboardButton
+                (
+                    "55 %", callback_data=f"set(accuracy|0.55|{chat_id}|{val})"
+                )
+        ],
+        [
+            InlineKeyboardButton
+                (
+                    "50 %", callback_data=f"set(accuracy|0.50|{chat_id}|{val})"
+                )
+        ],
+        [
+            InlineKeyboardButton
+                (
+                    "🔙 Back", callback_data=f"config({chat_id})"
+                )
+        ]
+    ]
+
+    reply_markup = InlineKeyboardMarkup(buttons)
+
+    await update.message.edit_text(
+        text, reply_markup=reply_markup, parse_mode="html"
+    )
+
+
+
 @Client.on_callback_query(filters.regex(r"set\((.+)\)"), group=2)
 async def cb_set(bot, update: CallbackQuery):
     """
@@ -1373,7 +1465,7 @@ async def cb_set(bot, update: CallbackQuery):
     action, val, chat_id, curr_val = re.findall(r"set\((.+)\)", query_data)[0].split("|", 3)
 
     try:
-        val, chat_id, curr_val = int(val), int(chat_id), int(curr_val)
+        val, chat_id, curr_val = float(val), int(chat_id), float(curr_val)
     except:
         chat_id = int(chat_id)
     
@@ -1383,20 +1475,24 @@ async def cb_set(bot, update: CallbackQuery):
     
     prev = await db.find_chat(chat_id)
 
-    p_max_pages = int(prev["configs"].get("max_pages"))
-    p_max_results = int(prev["configs"].get("max_results"))
-    p_max_per_page = int(prev["configs"].get("max_per_page"))
-    pm_file_chat = True if prev["configs"]["pm_fchat"] == (True or "True") else False
-    show_invite_link = True if prev["configs"]["show_invite_link"] == (True or "True") else False
+    accuracy = float(prev["configs"].get("accuracy", 0.80))
+    max_pages = int(prev["configs"].get("max_pages"))
+    max_results = int(prev["configs"].get("max_results"))
+    max_per_page = int(prev["configs"].get("max_per_page"))
+    pm_file_chat = True if prev["configs"].get("pm_fchat") == (True or "True") else False
+    show_invite_link = True if prev["configs"].get("show_invite_link") == (True or "True") else False
     
-    if action == "pages":
-        p_max_pages = val
+    if action == "accuracy": # Scophisticated way 😂🤣
+        accuracy = val
+    
+    elif action == "pages":
+        max_pages = int(val)
         
     elif action == "results":
-        p_max_results = val
+        max_results = int(val)
         
     elif action == "per_page":
-        p_max_per_page = val
+        max_per_page = int(val)
 
     elif action =="showInv":
         show_invite_link = True if val=="True" else False
@@ -1406,11 +1502,12 @@ async def cb_set(bot, update: CallbackQuery):
         
 
     new = dict(
-        max_pages=p_max_pages,
-        max_results=p_max_results,
-        max_per_page=p_max_per_page,
-        show_invite_link=show_invite_link,
-        pm_fchat=pm_file_chat
+        accuracy=accuracy,
+        max_pages=max_pages,
+        max_results=max_results,
+        max_per_page=max_per_page,
+        pm_fchat=pm_file_chat,
+        show_invite_link=show_invite_link
     )
     
     append_db = await db.update_configs(chat_id, new)

@@ -47,16 +47,17 @@ class Database(metaclass=Singleton):
                 "chat_name": channel_name
                 }],
             types = dict(
-                video=True,
                 audio=False,
-                document=True
+                document=True,
+                video=True
             ),
             configs = dict(
+                accuracy=0.80,
                 max_pages=5,
                 max_results=50,
                 max_per_page=10,
-                show_invite_link=True,
-                pm_fchat=True
+                pm_fchat=True,
+                show_invite_link=True
             )
         )
 
@@ -428,11 +429,11 @@ class Database(metaclass=Singleton):
         """
         A Funtion to fetch all similar results for a keyowrd
         from using text index
-        
-        TODO: add $meta $score for text index
         """
         await self.create_index()
 
+        chat = await self.find_chat(group_id)
+        chat_accuracy = float(chat["configs"].get("accuracy", 0.80))
         achats = await self.find_active(group_id)
         
         achat_ids=[]
@@ -443,18 +444,25 @@ class Database(metaclass=Singleton):
             achat_ids.append(chats.get("chat_id"))
         
         filters = []
-
+                
         pipeline= {
-            "group_id": group_id, "$text":{"$search": keyword}
+            '$text':{'$search': keyword}
         }
         
-        db_list = self.fcol.find(pipeline)
+        
+        db_list = self.fcol.find(
+            pipeline, 
+            {'score': {'$meta':'textScore'}} # Makes A New Filed With Match Score In Each Document
+        )
 
+        db_list.sort([("score", {'$meta': 'textScore'})]) # Sort all document on the basics of the score field
+        
         for document in await db_list.to_list(length=600):
+            if document["score"] < chat_accuracy:
+                continue
             
             if document["chat_id"] in achat_ids:
                 filters.append(document)
-            
             else:
                 continue
 
