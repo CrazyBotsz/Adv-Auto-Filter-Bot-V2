@@ -477,6 +477,8 @@ class Database(metaclass=Singleton):
         file = await self.fcol.find_one({"unique_id": unique_id})
         file_id = None
         file_type = None
+        file_name = None
+        file_caption = None
         
         if file:
             file_id = file.get("file_id")
