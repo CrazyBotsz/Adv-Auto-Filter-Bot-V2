@@ -42,12 +42,12 @@ async def connect(bot: Bot, update):
             
         elif not target_chat[1].startswith("@"):
             if len(target_chat[1]) < 14:
-                await update.reply_text("Invalid Chat Id...\nChat ID Should Be Something Like This: <code>-100xxxxxxxxxx</code>")
+                await update.reply_text("Invalid Chat Id...\nChat ID Should Be Something Like This: <code>-100xxxxxxxxxx</code> {@Mo_Tech_YT}")
                 return
             target = int(target_chat[1])
                 
     except Exception:
-        await update.reply_text("Invalid Input...\nYou Should Specify Valid <code>chat_id(-100xxxxxxxxxx)</code> or <code>@username</code>")
+        await update.reply_text("Invalid Input...\nYou Should Specify Valid <code>chat_id(-100xxxxxxxxxx)</code> or <code>@username</code> {@Mo_Tech_YT}")
         return
     
     try:
@@ -219,12 +219,12 @@ async def disconnect(bot: Bot, update):
             
         elif not target_chat.startswith("@"):
             if len(target_chat[1]) < 14:
-                await update.reply_text("Invalid Chat Id...\nChat ID Should Be Something Like This: <code>-100xxxxxxxxxx</code>")
+                await update.reply_text("Invalid Chat Id...\nChat ID Should Be Something Like This: <code>-100xxxxxxxxxx</code> {@Mo_Tech_YT}")
                 return
             target = int(target_chat[1])
                 
     except Exception:
-        await update.reply_text("Invalid Input...\nYou Should Specify Valid chat_id(-100xxxxxxxxxx) or @username")
+        await update.reply_text("Invalid Input...\nYou Should Specify Valid chat_id(-100xxxxxxxxxx) or @username {@Mo_Tech_YT}")
         return
     
     userbot = await bot.USER.get_me()
