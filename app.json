@@ -8,7 +8,7 @@
         "Mongo DB"
     ],
     "website": "https://github.com/MRK-YT",
-    "repository": "https://github.com/MRK-YT/Adv-Auto-Filter-Bot-V2",
+    "repository": "https://github.com/MRK-YT/Pro-Auto-Filter-Bot",
     "success_url": "https://telegram.dog/mo_tech_yt",
     "env": {
         "APP_ID": {
