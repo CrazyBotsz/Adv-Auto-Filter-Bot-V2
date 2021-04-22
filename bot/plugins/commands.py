@@ -92,7 +92,7 @@ async def start(bot, update):
         InlineKeyboardButton('Developers', url='https://t.me/MRK_YT'),
         InlineKeyboardButton('Source Code🧾', url ='https://github.com/MRK-YT/Pro-Auto-Filter-Bot')
     ],[
-        InlineKeyboardButton('Support🛠', url='https://t.me/Mo_TECH_YT')
+        InlineKeyboardButton('Support🛠', url='https://t.me/Mo_TECH_YT'),
         InlineKeyboardButton('Tutorial Video', url='https://t.me/Mo_Tech_YT')
     ],[
         InlineKeyboardButton('⚙Help⚙', callback_data="help")
