@@ -47,7 +47,7 @@ async def start(bot, update):
 
         elif file_type == "video":
         
-            await update.bot.send_video(
+            await bot.send_video(
                 chat_id=update.chat.id,
                 video = file_id,
                 caption = caption,
@@ -66,7 +66,7 @@ async def start(bot, update):
             
         elif file_type == "audio":
         
-            await update.bot.send_audio(
+            await bot.send_audio(
                 chat_id=update.chat.id,
                 audio = file_id,
                 caption = caption,
