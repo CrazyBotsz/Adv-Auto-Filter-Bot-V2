@@ -1,4 +1,4 @@
-No#!/usr/bin/env python3
+#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 # (c) @AlbertEinsteinTG
 
@@ -89,12 +89,11 @@ async def start(bot, update):
         return
 
     buttons = [[
-        InlineKeyboardButton('Developers', url='https://t.me/v_spot'),
-        InlineKeyboardButton('Help ⚙', callback_data="help")
-    ],[
+        InlineKeyboardButton('Developers', url='https://t.me/CrazyBotsz'),
         InlineKeyboardButton('Support 🛠', url='https://t.me/CrazyBotszGrp')
+    ],[
+        InlineKeyboardButton('Help ⚙', callback_data="help")
     ]]
-        
     
     reply_markup = InlineKeyboardMarkup(buttons)
     
@@ -140,6 +139,9 @@ async def about(bot, update):
     await bot.send_message(
         chat_id=update.chat.id,
         text=Translation.ABOUT_TEXT,
+        reply_markup=reply_markup,
+        disable_web_page_preview=True,
         parse_mode="html",
         reply_to_message_id=update.message_id
     )
+
