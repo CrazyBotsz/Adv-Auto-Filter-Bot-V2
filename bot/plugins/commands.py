@@ -89,9 +89,12 @@ async def start(bot, update):
         return
 
     buttons = [[
-        InlineKeyboardButton('Developer', url='https://t.me/v_Spot'),
-        InlineKeyboardButton('Help💡', callback_data="help")
+        InlineKeyboardButton('Developers', url='https://t.me/v_spot'),
+        InlineKeyboardButton('Help ⚙', callback_data="help")
+    ],[
+        InlineKeyboardButton('Support 🛠', url='https://t.me/CrazyBotszGrp')
     ]]
+        
     
     reply_markup = InlineKeyboardMarkup(buttons)
     
@@ -142,4 +145,3 @@ async def about(bot, update):
         parse_mode="html",
         reply_to_message_id=update.message_id
     )
-
