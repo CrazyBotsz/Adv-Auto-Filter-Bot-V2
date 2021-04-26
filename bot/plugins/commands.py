@@ -91,9 +91,7 @@ async def start(bot, update):
 
     buttons = [[
       InlineKeyboardButton('Help 💡', callback_data="help")
-   InlineKeyboardButton('About 🚩', callback_data='about')
- ]]
-    
+   ]]
     reply_markup = InlineKeyboardMarkup(buttons)
     
     await bot.send_message(
