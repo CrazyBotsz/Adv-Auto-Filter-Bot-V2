@@ -7,7 +7,7 @@ class Translation(object):
     START_TEXT = """<b>Hey {}!!</b>
 <i>Am Just A Advance Auto Filter Bot....😉
 
-Using only @film_zone_group no waste your time 
+@film_zone_group join our group
 For More Details Click Help Button Below..
 @v_spot
 </i>"""    
@@ -45,7 +45,7 @@ For More Details Click Help Button Below..
 @v_spot
 """
     
-    ABOUT_TEXT = """<b>➥ Name</b> : <code> Auto Filter Bot</code>
+    ABOUT_TEXT = """<b>➥ Name</b> : <code> Fz Links </code>
     
 <b>➥ Creator</b> : <b><i><a href="https://t.me/v_spot">v_spot</a></i></b>
 
@@ -53,5 +53,5 @@ For More Details Click Help Button Below..
 
 <b>➥ Library</b> : <i><a href="https://docs.pyrogram.org">Pyrogram Asyncio 1.13.0 </a></i>
 
-<b>➥ Source Code</b> : <i><a href="https://github.com/AlbertEinsteinTG/Adv-Auto-Filter-Bot">Click Me</a></i>
+<b>➥ Source Code</b> : <i><a href="https://github.com/Ajmalyaseen/Adv-Auto-Filter-Bot">Click Me</a></i>
 """
