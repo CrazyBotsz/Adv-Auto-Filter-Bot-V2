@@ -27,5 +27,5 @@ class Translation(object):
 
 <b>💠 Library</b> : <i><a href="https://docs.pyrogram.org">Pyrogram</a></i>
 
-<b>💠 Source Code</b> : <i>Dm me</i>
+<b>💠 Source Code</b> : <i>🔐</i>
 """
