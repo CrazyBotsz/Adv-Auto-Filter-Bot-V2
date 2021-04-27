@@ -95,8 +95,6 @@ async def start(bot, update):
         InlineKeyboardButton('Help ⚙', callback_data="help")
     ]]
     
-    reply_markup = InlineKeyboardMarkup(buttons)
-    
     await bot.send_message(
         chat_id=update.chat.id,
         text=Translation.START_TEXT.format(
@@ -116,8 +114,6 @@ async def help(bot, update):
         InlineKeyboardButton('Close 🔐', callback_data='close')
     ]]
     
-    reply_markup = InlineKeyboardMarkup(buttons)
-    
     await bot.send_message(
         chat_id=update.chat.id,
         text=Translation.HELP_TEXT,
@@ -134,7 +130,6 @@ async def about(bot, update):
         InlineKeyboardButton('Home ⚡', callback_data='start'),
         InlineKeyboardButton('Close 🔐', callback_data='close')
     ]]
-    reply_markup = InlineKeyboardMarkup(buttons)
     
     await bot.send_message(
         chat_id=update.chat.id,
