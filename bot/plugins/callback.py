@@ -1639,11 +1639,7 @@ async def callback_data(bot, update: CallbackQuery):
 
     if query_data == "start":
         buttons = [[
-            InlineKeyboardButton('My Dev 👨‍🔬', url='https://t.me/AlbertEinstein_TG'),
-            InlineKeyboardButton('Source Code 🧾', url ='https://github.com/AlbertEinsteinTG/Adv-Auto-Filter-Bot')
-        ],[
-            InlineKeyboardButton('Support 🛠', url='https://t.me/CrazyBotszGrp')
-        ],[
+            InlineKeyboardButton('My Dev 👨‍🔬', url='https://t.me/V_spot'),
             InlineKeyboardButton('Help ⚙', callback_data="help")
         ]]
     
@@ -1651,6 +1647,7 @@ async def callback_data(bot, update: CallbackQuery):
         
         await update.message.edit_text(
             Translation.START_TEXT.format(update.from_user.mention),
+            reply_markup=reply_markup
             parse_mode="html",
             disable_web_page_preview=True
         )
