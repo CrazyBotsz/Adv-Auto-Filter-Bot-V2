@@ -90,8 +90,6 @@ async def start(bot, update):
 
     buttons = [[
         InlineKeyboardButton('Developer', url='https://t.me/v_spot'),
-        InlineKeyboardButton('Source Code 🧾', url ='https://github.com/AlbertEinsteinTG/Adv-Auto-Filter-Bot-V2')
-    ],[
         InlineKeyboardButton('Help ⚙', callback_data="help")
     ]]
     reply_markup = InlineKeyboardMarkup(buttons)
