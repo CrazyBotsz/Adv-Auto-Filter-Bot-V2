@@ -1,5 +1,5 @@
 {
-    "name": "Auto Filter Bot V2",
+    "name": "Pro Auto Filter Bot V2",
     "description": "A Filter Bot Which Doesnt Need Manuall Filter Adding",
     "logo": "https://telegra.ph/file/9e831d15da94deb56ef4c.png",
     "keywords": [
@@ -9,7 +9,7 @@
     ],
     "website": "https://github.com/MRK-YT",
     "repository": "https://github.com/MRK-YT/Pro-Auto-Filter-Bot",
-    "success_url": "https://telegram.dog/mo_tech_yt",
+    "success_url": "https://telegram.dog/mo_tech_yt/26",
     "env": {
         "APP_ID": {
             "description": "Your APP ID From my.telegram.org or @UseTGXBot",
