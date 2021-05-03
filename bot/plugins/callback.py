@@ -1643,7 +1643,7 @@ async def callback_data(bot, update: CallbackQuery):
             InlineKeyboardButton('Source Code 🧾', url ='https://github.com/MRK-YT/Pro-Auto-Filter-Bot')
         ],[
             InlineKeyboardButton('Support🛠', url='https://t.me/Mo_Tech_YT'),
-            InlineKeyboardButton('Tutorial Video', url='https://t.me/Mo_Tech_YT')
+            InlineKeyboardButton('Tutorial Video', url='https://t.me/Mo_Tech_YT/26')
         ],[
             InlineKeyboardButton('Help ⚙', callback_data="help")
         ]]
