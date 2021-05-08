@@ -1,10 +1,14 @@
+import random
+import string
+import asyncio
+
 from pyrogram import Client, filters
 from pyrogram.errors import UserAlreadyParticipant, FloodWait
 
-from bot import verify # pylint: disable=import-error
+from bot import VERIFY # pylint: disable=import-error
 from bot.bot import Bot # pylint: disable=import-error
 from bot.database import Database # pylint: disable=import-error
-from bot.plugins.auto_filter import ReCacher # pylint: disable=import-error
+from bot.plugins.auto_filter import recacher # pylint: disable=import-error
 
 db = Database()
 
@@ -16,17 +20,17 @@ async def connect(bot: Bot, update):
     chat_id = update.chat.id
     user_id = update.from_user.id if update.from_user else None
     target_chat = update.text.split(None, 1)
-    global verify
+    global VERIFY
     
-    if not verify.get(str(chat_id)): # Make Admin's ID List
+    if VERIFY.get(str(chat_id)) == None: # Make Admin's ID List
         admin_list = []
         async for x in bot.iter_chat_members(chat_id=chat_id, filter="administrators"):
             admin_id = x.user.id 
             admin_list.append(admin_id)
         admin_list.append(None)
-        verify[str(chat_id)] = admin_list
+        VERIFY[str(chat_id)] = admin_list
 
-    if not user_id in verify.get(str(chat_id)):
+    if not user_id in VERIFY.get(str(chat_id)):
         return
     
     try:
@@ -83,12 +87,12 @@ async def connect(bot: Bot, update):
         await update.reply_text("Channel Aldready In Db...!!!")
         return
     
-    wait_msg = await update.reply_text("Please Wait Till I Add All Your Files From Channel To Db\n\n<i>This May Take 2 or 3 Mins Depending On Your No. Of Files In Channel.....</i>\n\nUntil Then Please Dont Sent Any Other Command Or This Operation May Be Intrupted....")
+    wait_msg = await update.reply_text("Please Wait Till I Add All Your Files From Channel To Db\n\n<i>This May Take 10 or 15 Mins Depending On Your No. Of Files In Channel.....</i>\n\nUntil Then Please Dont Sent Any Other Command Or This Operation May Be Intrupted....")
     
     try:
         type_list = ["video", "audio", "document"]
         data = []
-        
+        skipCT = 0
         
         for typ in type_list:
 
@@ -98,18 +102,45 @@ async def connect(bot: Bot, update):
                 # Better Way? Make A PR
                 try:
                     if msgs.video:
-                        file_id = msgs.video.file_id
+                        try:
+                            file_id = await bot.get_messages(channel_id, message_ids=msgs.message_id)
+                        except FloodWait as e:
+                            asyncio.sleep(e.x)
+                            file_id = await bot.get_messages(channel_id, message_ids=msgs.message_id)
+                        except Exception as e:
+                            print(e)
+                            continue
+                        file_id = file_id.video.file_id
                         file_name = msgs.video.file_name[0:-4]
+                        file_caption  = msgs.caption if msgs.caption else ""
                         file_type = "video"
                     
                     elif msgs.audio:
-                        file_id = msgs.audio.file_id
+                        try:
+                            file_id = await bot.get_messages(channel_id, message_ids=msgs.message_id)
+                        except FloodWait as e:
+                            asyncio.sleep(e.x)
+                            file_id = await bot.get_messages(channel_id, message_ids=msgs.message_id)
+                        except Exception as e:
+                            print(e)
+                            continue
+                        file_id = file_id.audio.file_id
                         file_name = msgs.audio.file_name[0:-4]
+                        file_caption  = msgs.caption if msgs.caption else ""
                         file_type = "audio"
                     
                     elif msgs.document:
-                        file_id = msgs.document.file_id
+                        try:
+                            file_id = await bot.get_messages(channel_id, message_ids=msgs.message_id)
+                        except FloodWait as e:
+                            asyncio.sleep(e.x)
+                            file_id = await bot.get_messages(channel_id, message_ids=msgs.message_id)
+                        except Exception as e:
+                            print(str(e))
+                            continue
+                        file_id = file_id.document.file_id
                         file_name = msgs.document.file_name[0:-4]
+                        file_caption  = msgs.caption if msgs.caption else ""
                         file_type = "document"
                     
                     for i in ["_", "|", "-", "."]: # Work Around
@@ -120,29 +151,40 @@ async def connect(bot: Bot, update):
                     
                     file_link = msgs.link
                     group_id = chat_id
+                    unique_id = ''.join(
+                        random.choice(
+                            string.ascii_lowercase + 
+                            string.ascii_uppercase + 
+                            string.digits
+                        ) for _ in range(15)
+                    )
                     
                     dicted = dict(
-                        file_id=file_id, # File Id For Future Updates Maybe...
+                        file_id=file_id, # Done
+                        unique_id=unique_id,
+                        file_name=file_name,
+                        file_caption=file_caption,
+                        file_type=file_type,
+                        file_link=file_link,
                         chat_id=channel_id,
                         group_id=group_id,
-                        file_name=file_name,
-                        file_type=file_type,
-                        file_link=file_link
                     )
                     
                     data.append(dicted)
                 except Exception as e:
-                    if 'NoneType' in str(e): # For Some Unknown Reason Some File Name is 'None'
+                    if 'NoneType' in str(e): # For Some Unknown Reason Some File Names are NoneType
+                        skipCT +=1
                         continue
                     print(e)
-                
+
+        print(f"{skipCT} Files Been Skipped Due To File Name Been None..... #BlameTG")
     except Exception as e:
         await wait_msg.edit_text("Couldnt Fetch Files From Channel... Please look Into Logs For More Details")
         raise e
     
     await db.add_filters(data)
     await db.add_chat(chat_id, channel_id, channel_name)
-    await ReCacher(chat_id, True, True, bot, update)
+    await recacher(chat_id, True, True, bot, update)
     
     await wait_msg.edit_text(f"Channel Was Sucessfully Added With <code>{len(data)}</code> Files..")
 
@@ -154,32 +196,32 @@ async def disconnect(bot: Bot, update):
     """
     chat_id = update.chat.id
     user_id = update.from_user.id if update.from_user else None
-    target_chat = update.text.split(None, 1)[1]
-    global verify
+    target_chat = update.text.split(None, 1)
+    global VERIFY
     
-    if not verify.get(str(chat_id)): # Make Admin's ID List
+    if VERIFY.get(str(chat_id)) == None: # Make Admin's ID List
         admin_list = []
         async for x in bot.iter_chat_members(chat_id=chat_id, filter="administrators"):
             admin_id = x.user.id 
             admin_list.append(admin_id)
         admin_list.append(None)
-        verify[str(chat_id)] = admin_list
+        VERIFY[str(chat_id)] = admin_list
 
-    if not user_id in verify.get(str(chat_id)):
+    if not user_id in VERIFY.get(str(chat_id)):
         return
     
     try:
-        if target_chat.startswith("@"):
-            if len(target_chat) < 5:
+        if target_chat[1].startswith("@"):
+            if len(target_chat[1]) < 5:
                 await update.reply_text("Invalid Username...!!!")
                 return
-            target = target_chat
+            target = target_chat[1]
             
         elif not target_chat.startswith("@"):
-            if len(target_chat) < 14:
+            if len(target_chat[1]) < 14:
                 await update.reply_text("Invalid Chat Id...\nChat ID Should Be Something Like This: <code>-100xxxxxxxxxx</code>")
                 return
-            target = int(target_chat)
+            target = int(target_chat[1])
                 
     except Exception:
         await update.reply_text("Invalid Input...\nYou Should Specify Valid chat_id(-100xxxxxxxxxx) or @username")
@@ -207,7 +249,7 @@ async def disconnect(bot: Bot, update):
     await db.del_filters(chat_id, channel_id)
     await db.del_active(chat_id, channel_id)
     await db.del_chat(chat_id, channel_id)
-    await ReCacher(chat_id, True, True, bot, update)
+    await recacher(chat_id, True, True, bot, update)
     
     await wait_msg.edit_text("Sucessfully Deleted All Files From DB....")
 
@@ -219,21 +261,21 @@ async def delall(bot: Bot, update):
     """
     chat_id=update.chat.id
     user_id = update.from_user.id if update.from_user else None
-    global verify
+    global VERIFY
     
-    if not verify.get(str(chat_id)): # Make Admin's ID List
+    if VERIFY.get(str(chat_id)) == None: # Make Admin's ID List
         admin_list = []
         async for x in bot.iter_chat_members(chat_id=chat_id, filter="administrators"):
             admin_id = x.user.id 
             admin_list.append(admin_id)
         admin_list.append(None)
-        verify[str(chat_id)] = admin_list
+        VERIFY[str(chat_id)] = admin_list
 
-    if not user_id in verify.get(str(chat_id)):
+    if not user_id in VERIFY.get(str(chat_id)):
         return
     
     await db.delete_all(chat_id)
-    await ReCacher(chat_id, True, True, bot, update)
+    await recacher(chat_id, True, True, bot, update)
     
     await update.reply_text("Sucessfully Deleted All Connected Chats From This Group....")
 
@@ -250,19 +292,22 @@ async def new_files(bot: Bot, update):
     
     try:
         if update.video: 
+            file_type = "video" 
             file_id = update.video.file_id
             file_name = update.video.file_name[0:-4]
-            file_type = "video" 
+            file_caption  = update.caption if update.caption else ""
 
         elif update.audio:
+            file_type = "audio"
             file_id = update.audio.file_id
             file_name = update.audio.file_name[0:-4]
-            file_type = "audio"
+            file_caption  = update.caption if update.caption else ""
 
         elif update.document:
+            file_type = "document"
             file_id = update.document.file_id
             file_name = update.document.file_name[0:-4]
-            file_type = "document"
+            file_caption  = update.caption if update.caption else ""
         
         for i in ["_", "|", "-", "."]: # Work Around
             try:
@@ -276,6 +321,13 @@ async def new_files(bot: Bot, update):
     
     file_link = update.link
     group_ids = await db.find_group_id(channel_id)
+    unique_id = ''.join(
+        random.choice(
+            string.ascii_lowercase + 
+            string.ascii_uppercase + 
+            string.digits
+        ) for _ in range(15)
+    )
     
     data = []
     
@@ -283,11 +335,13 @@ async def new_files(bot: Bot, update):
         for group_id in group_ids:
             data_packets = dict(
                     file_id=file_id, # File Id For Future Updates Maybe...
+                    unique_id=unique_id,
+                    file_name=file_name,
+                    file_caption=file_caption,
+                    file_type=file_type,
+                    file_link=file_link,
                     chat_id=channel_id,
                     group_id=group_id,
-                    file_name=file_name,
-                    file_type=file_type,
-                    file_link=file_link
                 )
             
             data.append(data_packets)
