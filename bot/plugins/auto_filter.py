@@ -64,6 +64,11 @@ async def auto_filter(bot, update):
             file_name = filter.get("file_name")
             file_type = filter.get("file_type")
             file_link = filter.get("file_link")
+            file_size = int(filter.get("file_size", ""))
+            file_size /= 1024*1024 # from B to MiB
+            
+                            # add emoji here if you want
+            button_text = f"[{file_size}] {file_name}" if file_size else file_name
             
             if file_type == "video":
                 if allow_video: 
@@ -102,7 +107,7 @@ async def auto_filter(bot, update):
             
             results.append(
                 [
-                    InlineKeyboardButton(file_name, url=file_link)
+                    InlineKeyboardButton(button_text, url=file_link)
                 ]
             )
         

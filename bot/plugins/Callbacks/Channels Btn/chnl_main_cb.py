@@ -68,13 +68,13 @@ async def cb_channel_list(bot, update: CallbackQuery):
         
     buttons = []
 
-
-    buttons.append([
-        InlineKeyboardButton
-            (
-                "Global Connections", callback_data=f"global({chat_id})"
-            )
-    ])
+    # For Future Update (Little Help Needed😪)
+    # buttons.append([
+    #     InlineKeyboardButton
+    #         (
+    #             "Global Connections", callback_data=f"global({chat_id})"
+    #         )
+    # ])
 
 
     buttons.append(
@@ -240,120 +240,120 @@ async def cb_info(bot, update: CallbackQuery):
         )
 
 
+# 
+    # @Client.on_callback_query(filters.regex(r"^global\((.+)\)"), group=2)
+    # async def cb_global_chats(bot, update:CallbackQuery):
+    #     """
+    #     A Callback Funtion For Displaying Details Of All The Connected Chat And Provide
+    #     Ability To Connect, Disconnect, Delete, Delete Filters of, All Connected Chat In
+    #     1 Go
+    #     """
+    #     global CHAT_DETAILS
+        
+    #     chat_id = update.message.chat.id
+    #     chat_name = update.message.chat.title
+    #     user_id = update.from_user.id
+        
+    #     chat_dict = CHAT_DETAILS.get(str(chat_id))
+    #     chat_admins = chat_dict.get("admins") if chat_dict != None else None
 
-@Client.on_callback_query(filters.regex(r"^global\((.+)\)"), group=2)
-async def cb_global_chats(bot, update:CallbackQuery):
-    """
-    A Callback Funtion For Displaying Details Of All The Connected Chat And Provide
-    Ability To Connect, Disconnect, Delete, Delete Filters of, All Connected Chat In
-    1 Go
-    """
-    global CHAT_DETAILS
-    
-    chat_id = update.message.chat.id
-    chat_name = update.message.chat.title
-    user_id = update.from_user.id
-    
-    chat_dict = CHAT_DETAILS.get(str(chat_id))
-    chat_admins = chat_dict.get("admins") if chat_dict != None else None
+    #     if ( chat_dict or chat_admins ) == None: # Make Admin's ID List
+    #         chat_admins = await admin_list(chat_id, bot, update)
 
-    if ( chat_dict or chat_admins ) == None: # Make Admin's ID List
-        chat_admins = await admin_list(chat_id, bot, update)
+    #     if user_id not in chat_admins:
+    #         return
+        
+    #     f_count = await db.tf_count(chat_id) 
+    #     connected_chats = await db.find_chat(chat_id)
+    #     active_chats = await db.find_active(chat_id)
+        
+    #     db_cids = None
+    #     db_cnames = None
+    #     total_chats = 0
+        
+    #     if connected_chats: # Checks for active chats connected to a chat
+    #         dicts = connected_chats["chat_ids"]
+    #         adicts = active_chats["chats"]
+    #         adb_cids = [ int(x["chat_id"]) for x in adicts ]
+    #         db_cids = []
+    #         db_cnames = []
+    #         for x in dicts:
+    #             cid = x["chat_id"]
+    #             cname = x["chat_name"]
+    #             print(cname)
+                
+    #             db_cids.append(cid)
+    #             if cid in adb_cids:
+    #                 cname + " (A)"
+    #             db_cnames.append(cname)
 
-    if user_id not in chat_admins:
-        return
-    
-    f_count = await db.tf_count(chat_id) 
-    connected_chats = await db.find_chat(chat_id)
-    active_chats = await db.find_active(chat_id)
-    
-    db_cids = None
-    db_cnames = None
-    total_chats = 0
-    
-    if connected_chats: # Checks for active chats connected to a chat
-        dicts = connected_chats["chat_ids"]
-        adicts = active_chats["chats"]
-        adb_cids = [ int(x["chat_id"]) for x in adicts ]
-        db_cids = []
-        db_cnames = []
-        for x in dicts:
-            cid = x["chat_id"]
-            cname = x["chat_name"]
-            print(cname)
+    #             print(db_cnames)
+        
+    #         total_chats = len(db_cids)
+
+    #     text=f"<i>Info About All Connected Of <b>{chat_name}</b></i>\n"
+    #     text+=f"\n<i>Total Connected Chats:</i> {total_chats}\n"
+        
+    #     text+=f"\n<i>Channel Names:</i>\n"
+        
+    #     for y in db_cnames:
+    #         text+=f"\n                   <code>{y}</code>"
             
-            db_cids.append(cid)
-            if cid in adb_cids:
-                cname + " (A)"
-            db_cnames.append(cname)
-
-            print(db_cnames)
-    
-        total_chats = len(db_cids)
-
-    text=f"<i>Info About All Connected Of <b>{chat_name}</b></i>\n"
-    text+=f"\n<i>Total Connected Chats:</i> {total_chats}\n"
-    
-    text+=f"\n<i>Channel Names:</i>\n"
-    
-    for y in db_cnames:
-        text+=f"\n                   <code>{y}</code>"
+    #     text+=f"\n<i>Channel ID's:</i>\n"
         
-    text+=f"\n<i>Channel ID's:</i>\n"
-    
-    for z in db_cids:
-        text+=f"\n                 <code>{z}</code>"
-    
-    text+=f"\n<i>Total Files In DB:</i> <code>{f_count}</code>\n"
-
-
-
-    buttons = [ 
-                [
-                    InlineKeyboardButton
-                        (
-                            "💠 Connect All 💠", callback_data=f"warn({chat_id}|conn|gcmds)"
-                        ),
-                    
-                    InlineKeyboardButton
-                        (
-                            "🚨 Disconnect All 🚨", callback_data=f"warn({chat_id}|disconn|gcmds)"
-                        )
-                ]
-    ]
-
-
-    buttons.append(
-            [                    
-                InlineKeyboardButton
-                    (
-                        "Delete All Chats ❌", callback_data=f"warn({chat_id}|c_delete|gcmds)"
-                    )
-            ]
-    )
-
-
-    buttons.append(
-            [
-                InlineKeyboardButton
-                    (
-                        "Delete All Filters ⚠", callback_data=f"warn({chat_id}|f_delete|gcmds)"
-                    )
-            ]
-    )
-    
-    buttons.append(
-            [
-                InlineKeyboardButton
-                    (
-                        "🔙 Back", callback_data=f"channel_list({chat_id})"
-                    )
-            ]
-    )
-
-    reply_markup = InlineKeyboardMarkup(buttons)
+    #     for z in db_cids:
+    #         text+=f"\n                 <code>{z}</code>"
         
-    await update.message.edit_text(
-            text, reply_markup=reply_markup, parse_mode="html"
-        )
+    #     text+=f"\n<i>Total Files In DB:</i> <code>{f_count}</code>\n"
+
+
+
+    #     buttons = [ 
+    #                 [
+    #                     InlineKeyboardButton
+    #                         (
+    #                             "💠 Connect All 💠", callback_data=f"warn({chat_id}|conn|gcmds)"
+    #                         ),
+                        
+    #                     InlineKeyboardButton
+    #                         (
+    #                             "🚨 Disconnect All 🚨", callback_data=f"warn({chat_id}|disconn|gcmds)"
+    #                         )
+    #                 ]
+    #     ]
+
+
+    #     buttons.append(
+    #             [                    
+    #                 InlineKeyboardButton
+    #                     (
+    #                         "Delete All Chats ❌", callback_data=f"warn({chat_id}|c_delete|gcmds)"
+    #                     )
+    #             ]
+    #     )
+
+
+    #     buttons.append(
+    #             [
+    #                 InlineKeyboardButton
+    #                     (
+    #                         "Delete All Filters ⚠", callback_data=f"warn({chat_id}|f_delete|gcmds)"
+    #                     )
+    #             ]
+    #     )
+        
+    #     buttons.append(
+    #             [
+    #                 InlineKeyboardButton
+    #                     (
+    #                         "🔙 Back", callback_data=f"channel_list({chat_id})"
+    #                     )
+    #             ]
+    #     )
+
+    #     reply_markup = InlineKeyboardMarkup(buttons)
+            
+    #     await update.message.edit_text(
+    #             text, reply_markup=reply_markup, parse_mode="html"
+    #         )
 

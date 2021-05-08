@@ -289,140 +289,140 @@ async def cb_filters_delete(bot, update: CallbackQuery):
     )
     
 
-
-@Client.on_callback_query(filters.regex(r"^gcmds\((.)\)"), group=2)
-async def cb_gcmds(bot, update: CallbackQuery):
-    """
-    A Callback Funtion to Connect, Disconnect, Delete, Delete Filters of, 
-    All Connected Chat in 1 GO
-    """
-    global CHAT_DETAILS
-    query_data = update.data
-    chat_id = update.message.chat.id
-    chat_name = update.message.chat.title
-    user_id = update.from_user.id
-    
-    print(user_id)
+#
+    # @Client.on_callback_query(filters.regex(r"^gcmds\((.)\)"), group=2)
+    # async def cb_gcmds(bot, update: CallbackQuery):
+    #     """
+    #     A Callback Funtion to Connect, Disconnect, Delete, Delete Filters of, 
+    #     All Connected Chat in 1 GO
+    #     """
+    #     global CHAT_DETAILS
+    #     query_data = update.data
+    #     chat_id = update.message.chat.id
+    #     chat_name = update.message.chat.title
+    #     user_id = update.from_user.id
         
-    chat_dict = CHAT_DETAILS.get(str(chat_id))
-    chat_admins = chat_dict.get("admins") if chat_dict != None else None
-
-    if ( chat_dict or chat_admins ) == None: # Make Admin's ID List
-        chat_admins = await admin_list(chat_id, bot, update)
-
-    if user_id not in chat_admins:
-        print(user_id)
-        print(chat_admins)
-        return
-    
-    chat_id, action = re.findall(r"gcmds\((.)\)", query_data)[0].split("|", 1)
-    
-    if action == "conn":
-        await db.add_all_chat_as_active(chat_id)
-        await update.answer("Sucessfully Made All Chat Connection Active.....")
-    
-    elif action == "disconn":
-        await db.delall_active(chat_id)
-        await update.answer("Sucessfully Disabled All Active Chats.....")
-
-    elif action == "c_delete":
-        await db.delete_all(chat_id)
-        await update.answer("Sucessfully Deleted All Data About This Group From DB")
-    
-    elif action == "f_delete":
-        await db.delall_filters(chat_id)
-        await update.answer("Sucessfully Deleted All Files Connected With This Chat...")
-    
-
-    
-    f_count = await db.tf_count(chat_id) 
-    connected_chats = await db.find_chat(chat_id)
-    active_chats = await db.find_active(chat_id)
-    
-    db_cids = None
-    db_cnames = None
-    total_chats = 0
-    
-    if connected_chats: # Checks for active chats connected to a chat
-        dicts = connected_chats["chat_ids"]
-        adicts = active_chats["chats"]
-        adb_cids = [ int(x["chat_id"]) for x in adicts ]
-        db_cids = []
-        db_cnames = []
-        for x in dicts:
-            cid = x["chat_id"]
-            cname = x["chat_name"]
+    #     print(user_id)
             
-            db_cids.append(cid)
-            if cid in adb_cids:
-                cname + " (A)"
-            db_cnames.append(db_cnames)
-    
-        total_chats = len(db_cids)
+    #     chat_dict = CHAT_DETAILS.get(str(chat_id))
+    #     chat_admins = chat_dict.get("admins") if chat_dict != None else None
 
-    text=f"<i>Info About All Connected Of <b>{chat_name}</b></i>\n"
-    text+=f"\n<i>Total Connected Chats:</i> {total_chats}"
-    
-    text+=f"\n<i>Channel Names:</i>\n"
-    
-    for ch in db_cnames:
-        text+=f"                   <code>{ch}</code>\n"
+    #     if ( chat_dict or chat_admins ) == None: # Make Admin's ID List
+    #         chat_admins = await admin_list(chat_id, bot, update)
+
+    #     if user_id not in chat_admins:
+    #         print(user_id)
+    #         print(chat_admins)
+    #         return
         
-    text+=f"\n<i>Channel ID's:</i>\n"
-    
-    for ch in db_cnames:
-        text+=f"\n                 <code>{ch}</code>\n"
-    
-    text+=f"\n<i>Total Files In DB:</i> <code>{f_count}</code>\n"
-
-
-
-    buttons = [ 
-                [
-                    InlineKeyboardButton
-                        (
-                            "💠 Connect All 💠", callback_data=f"warn({chat_id}|conn|gcmds)"
-                        ),
-                    
-                    InlineKeyboardButton
-                        (
-                            "🚨 Disconnect All 🚨", callback_data=f"warn({chat_id}|disconn|gcmds)"
-                        )
-                ]
-    ]
-
-
-    buttons.append(
-            [                    
-                InlineKeyboardButton
-                    (
-                        "Delete All Chats ❌", callback_data=f"warn({chat_id}|c_delete|gcmds)"
-                    )
-            ]
-    )
-
-
-    buttons.append(
-            [
-                InlineKeyboardButton
-                    (
-                        "Delete All Filters ⚠", callback_data=f"warn({chat_id}|f_delete|gcmds)"
-                    )
-            ]
-    )
-    
-    buttons.append(
-            [
-                InlineKeyboardButton
-                    (
-                        "🔙 Back", callback_data=f"channel_list({chat_id})"
-                    )
-            ]
-    )
-
-    reply_markup = InlineKeyboardMarkup(buttons)
+    #     chat_id, action = re.findall(r"gcmds\((.)\)", query_data)[0].split("|", 1)
         
-    await update.message.edit_text(
-            text, reply_markup=reply_markup, parse_mode="html"
-        )
+    #     if action == "conn":
+    #         await db.add_all_chat_as_active(chat_id)
+    #         await update.answer("Sucessfully Made All Chat Connection Active.....")
+        
+    #     elif action == "disconn":
+    #         await db.delall_active(chat_id)
+    #         await update.answer("Sucessfully Disabled All Active Chats.....")
+
+    #     elif action == "c_delete":
+    #         await db.delete_all(chat_id)
+    #         await update.answer("Sucessfully Deleted All Data About This Group From DB")
+        
+    #     elif action == "f_delete":
+    #         await db.delall_filters(chat_id)
+    #         await update.answer("Sucessfully Deleted All Files Connected With This Chat...")
+        
+
+        
+    #     f_count = await db.tf_count(chat_id) 
+    #     connected_chats = await db.find_chat(chat_id)
+    #     active_chats = await db.find_active(chat_id)
+        
+    #     db_cids = None
+    #     db_cnames = None
+    #     total_chats = 0
+        
+    #     if connected_chats: # Checks for active chats connected to a chat
+    #         dicts = connected_chats["chat_ids"]
+    #         adicts = active_chats["chats"]
+    #         adb_cids = [ int(x["chat_id"]) for x in adicts ]
+    #         db_cids = []
+    #         db_cnames = []
+    #         for x in dicts:
+    #             cid = x["chat_id"]
+    #             cname = x["chat_name"]
+                
+    #             db_cids.append(cid)
+    #             if cid in adb_cids:
+    #                 cname + " (A)"
+    #             db_cnames.append(db_cnames)
+        
+    #         total_chats = len(db_cids)
+
+    #     text=f"<i>Info About All Connected Of <b>{chat_name}</b></i>\n"
+    #     text+=f"\n<i>Total Connected Chats:</i> {total_chats}"
+        
+    #     text+=f"\n<i>Channel Names:</i>\n"
+        
+    #     for ch in db_cnames:
+    #         text+=f"                   <code>{ch}</code>\n"
+            
+    #     text+=f"\n<i>Channel ID's:</i>\n"
+        
+    #     for ch in db_cnames:
+    #         text+=f"\n                 <code>{ch}</code>\n"
+        
+    #     text+=f"\n<i>Total Files In DB:</i> <code>{f_count}</code>\n"
+
+
+
+    #     buttons = [ 
+    #                 [
+    #                     InlineKeyboardButton
+    #                         (
+    #                             "💠 Connect All 💠", callback_data=f"warn({chat_id}|conn|gcmds)"
+    #                         ),
+                        
+    #                     InlineKeyboardButton
+    #                         (
+    #                             "🚨 Disconnect All 🚨", callback_data=f"warn({chat_id}|disconn|gcmds)"
+    #                         )
+    #                 ]
+    #     ]
+
+
+    #     buttons.append(
+    #             [                    
+    #                 InlineKeyboardButton
+    #                     (
+    #                         "Delete All Chats ❌", callback_data=f"warn({chat_id}|c_delete|gcmds)"
+    #                     )
+    #             ]
+    #     )
+
+
+    #     buttons.append(
+    #             [
+    #                 InlineKeyboardButton
+    #                     (
+    #                         "Delete All Filters ⚠", callback_data=f"warn({chat_id}|f_delete|gcmds)"
+    #                     )
+    #             ]
+    #     )
+        
+    #     buttons.append(
+    #             [
+    #                 InlineKeyboardButton
+    #                     (
+    #                         "🔙 Back", callback_data=f"channel_list({chat_id})"
+    #                     )
+    #             ]
+    #     )
+
+    #     reply_markup = InlineKeyboardMarkup(buttons)
+            
+    #     await update.message.edit_text(
+    #             text, reply_markup=reply_markup, parse_mode="html"
+    #         )
 

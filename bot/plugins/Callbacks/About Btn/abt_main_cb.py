@@ -18,6 +18,7 @@ async def cb_about(bot, update: CallbackQuery):
     """
     global CHAT_DETAILS
     chat_id = update.message.chat.id
+    user_id = update.from_user.id
     
     chat_dict = CHAT_DETAILS.get(str(chat_id))
     chat_admins = chat_dict.get("admins") if chat_dict != None else None

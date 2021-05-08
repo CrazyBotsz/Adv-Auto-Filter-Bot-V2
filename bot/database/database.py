@@ -447,7 +447,7 @@ class Database(metaclass=Singleton):
         filters = []
                 
         pipeline= {
-            '$text':{'$search': keyword}
+            'group_id': int(group_id), '$text':{'$search': keyword}
         }
         
         

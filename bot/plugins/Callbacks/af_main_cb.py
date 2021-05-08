@@ -43,10 +43,12 @@ async def cb_navg(bot, update: CallbackQuery):
     chat_dict = CHAT_DETAILS.get(str(chat_id))
     chat_admins = chat_dict.get("admins") if chat_dict != None else None
 
-    if ( chat_dict or chat_admins ) == None: # Make Admin's ID List
+    # Make Admin's ID List
+    if ( chat_dict or chat_admins ) == None: 
         chat_admins = await admin_list(chat_id, bot, update)
     
-    if not ((user_id == ruser_id) or (user_id in chat_admins)): # Checks if user is same as requested user or is admin
+    # Checks if user is same as requested user or is admin
+    if not ((user_id == ruser_id) or (user_id in chat_admins)):
         await update.answer("Nice Try ;)",show_alert=True)
         return
 
@@ -60,7 +62,6 @@ async def cb_navg(bot, update: CallbackQuery):
     configs = await db.find_chat(chat_id)
     pm_file_chat = configs["configs"]["pm_fchat"]
     show_invite = configs["configs"]["show_invite_link"]
-    show_invite = (False if pm_file_chat == True else show_invite)
     
     results = FIND.get(query).get("results")
     leng = FIND.get(query).get("total_len")
