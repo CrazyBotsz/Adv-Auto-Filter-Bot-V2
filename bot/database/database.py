@@ -430,6 +430,7 @@ class Database(metaclass=Singleton):
         A Funtion to fetch all similar results for a keyowrd
         from using text index
         """
+    
         await self.create_index()
 
         chat = await self.find_chat(group_id)
