@@ -68,7 +68,7 @@ async def auto_filter(bot, update):
             file_size = round(file_size/1024*1024) # from B to MiB
             
                             # add emoji down below inside " " if you want..
-            button_text = f"[{file_size}] {file_name}" if file_size else file_name
+            button_text = f"[{file_size} MiB] {file_name}" if file_size else file_name
             
             if file_type == "video":
                 if allow_video: 
