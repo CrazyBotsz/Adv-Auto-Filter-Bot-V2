@@ -5,10 +5,11 @@ import asyncio
 from pyrogram import Client, filters
 from pyrogram.errors import UserAlreadyParticipant, FloodWait
 
-from bot import VERIFY # pylint: disable=import-error
-from bot.bot import Bot # pylint: disable=import-error
-from bot.database import Database # pylint: disable=import-error
-from bot.plugins.auto_filter import recacher # pylint: disable=import-error
+from bot import CHAT_DETAILS
+from bot.bot import Bot 
+from bot.database import Database 
+from bot.plugins.auto_filter import recacher
+from bot.plugins.utils import admin_list
 
 db = Database()
 
@@ -20,17 +21,15 @@ async def connect(bot: Bot, update):
     chat_id = update.chat.id
     user_id = update.from_user.id if update.from_user else None
     target_chat = update.text.split(None, 1)
-    global VERIFY
+    global CHAT_DETAILS
     
-    if VERIFY.get(str(chat_id)) == None: # Make Admin's ID List
-        admin_list = []
-        async for x in bot.iter_chat_members(chat_id=chat_id, filter="administrators"):
-            admin_id = x.user.id 
-            admin_list.append(admin_id)
-        admin_list.append(None)
-        VERIFY[str(chat_id)] = admin_list
+    chat_dict = CHAT_DETAILS.get(str(chat_id))
+    chat_admins = chat_dict.get("admins") if chat_dict != None else None
 
-    if not user_id in VERIFY.get(str(chat_id)):
+    if ( chat_dict or chat_admins ) == None: # Make Admin's ID List
+        chat_admins = await admin_list(chat_id, bot, update)
+
+    if user_id not in chat_admins:
         return
     
     try:
@@ -197,17 +196,15 @@ async def disconnect(bot: Bot, update):
     chat_id = update.chat.id
     user_id = update.from_user.id if update.from_user else None
     target_chat = update.text.split(None, 1)
-    global VERIFY
+    global CHAT_DETAILS
     
-    if VERIFY.get(str(chat_id)) == None: # Make Admin's ID List
-        admin_list = []
-        async for x in bot.iter_chat_members(chat_id=chat_id, filter="administrators"):
-            admin_id = x.user.id 
-            admin_list.append(admin_id)
-        admin_list.append(None)
-        VERIFY[str(chat_id)] = admin_list
+    chat_dict = CHAT_DETAILS.get(str(chat_id))
+    chat_admins = chat_dict.get("admins") if chat_dict != None else None
 
-    if not user_id in VERIFY.get(str(chat_id)):
+    if ( chat_dict or chat_admins ) == None: # Make Admin's ID List
+        chat_admins = await admin_list(chat_id, bot, update)
+
+    if user_id not in chat_admins:
         return
     
     try:
@@ -261,17 +258,15 @@ async def delall(bot: Bot, update):
     """
     chat_id=update.chat.id
     user_id = update.from_user.id if update.from_user else None
-    global VERIFY
+    global CHAT_DETAILS
     
-    if VERIFY.get(str(chat_id)) == None: # Make Admin's ID List
-        admin_list = []
-        async for x in bot.iter_chat_members(chat_id=chat_id, filter="administrators"):
-            admin_id = x.user.id 
-            admin_list.append(admin_id)
-        admin_list.append(None)
-        VERIFY[str(chat_id)] = admin_list
+    chat_dict = CHAT_DETAILS.get(str(chat_id))
+    chat_admins = chat_dict.get("admins") if chat_dict != None else None
 
-    if not user_id in VERIFY.get(str(chat_id)):
+    if ( chat_dict or chat_admins ) == None: # Make Admin's ID List
+        chat_admins = await admin_list(chat_id, bot, update)
+
+    if user_id not in chat_admins:
         return
     
     await db.delete_all(chat_id)
