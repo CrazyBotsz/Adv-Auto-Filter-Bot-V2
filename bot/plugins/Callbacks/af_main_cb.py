@@ -63,6 +63,8 @@ async def cb_navg(bot, update: CallbackQuery):
     pm_file_chat = configs["configs"]["pm_fchat"]
     show_invite = configs["configs"]["show_invite_link"]
     
+    # show_invite = (False if pm_file_chat == True else show_invite) # turn show_invite to False if pm_file_chat is True
+
     results = FIND.get(query).get("results")
     leng = FIND.get(query).get("total_len")
     max_pages = FIND.get(query).get("max_pages")
