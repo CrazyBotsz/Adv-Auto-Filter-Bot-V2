@@ -55,7 +55,7 @@ async def auto_filter(bot, update):
     max_per_page = configs["configs"]["max_per_page"] # maximum buttom per page 
     show_invite = configs["configs"]["show_invite_link"] # should or not show active chat invite link
     
-    show_invite = (False if pm_file_chat == True else show_invite) # turn show_invite to False if pm_file_chat is True
+    # show_invite = (False if pm_file_chat == True else show_invite) # turn show_invite to False if pm_file_chat is True
     
     filters = await db.get_filters(group_id, query)
     
