@@ -65,7 +65,7 @@ async def auto_filter(bot, update):
             file_type = filter.get("file_type")
             file_link = filter.get("file_link")
             file_size = int(filter.get("file_size", ""))
-            file_size = round(file_size/1024*1024) # from B to MiB
+            file_size = round(file_size/(1024*1024)) # from B to MiB
             file_size = str(file_size) + " MiB" if file_size < 1024 else str(round(file_size/1024)) + " GiB"
                             # add emoji down below inside " " if you want..
             button_text = f"[{file_size}] {file_name}" if file_size else file_name
