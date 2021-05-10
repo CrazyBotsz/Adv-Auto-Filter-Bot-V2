@@ -113,6 +113,7 @@ async def connect(bot: Bot, update):
                         file_id = file_id.video.file_id
                         file_name = msgs.video.file_name[0:-4]
                         file_caption  = msgs.caption if msgs.caption else ""
+                        file_size = msgs.video.file_size
                         file_type = "video"
                     
                     elif msgs.audio:
@@ -127,6 +128,7 @@ async def connect(bot: Bot, update):
                         file_id = file_id.audio.file_id
                         file_name = msgs.audio.file_name[0:-4]
                         file_caption  = msgs.caption if msgs.caption else ""
+                        file_size = msgs.audio.file_size
                         file_type = "audio"
                     
                     elif msgs.document:
@@ -141,6 +143,7 @@ async def connect(bot: Bot, update):
                         file_id = file_id.document.file_id
                         file_name = msgs.document.file_name[0:-4]
                         file_caption  = msgs.caption if msgs.caption else ""
+                        file_size = msgs.document.file_size
                         file_type = "document"
                     
                     for i in ["_", "|", "-", "."]: # Work Around
@@ -164,6 +167,7 @@ async def connect(bot: Bot, update):
                         unique_id=unique_id,
                         file_name=file_name,
                         file_caption=file_caption,
+                        file_size=file_size
                         file_type=file_type,
                         file_link=file_link,
                         chat_id=channel_id,
