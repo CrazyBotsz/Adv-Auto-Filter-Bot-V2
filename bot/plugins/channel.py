@@ -300,19 +300,22 @@ async def new_files(bot: Bot, update):
             file_id = update.video.file_id
             file_name = update.video.file_name[0:-4]
             file_caption  = update.caption if update.caption else ""
+            file_size = update.video.file_size
 
         elif update.audio:
             file_type = "audio"
             file_id = update.audio.file_id
             file_name = update.audio.file_name[0:-4]
             file_caption  = update.caption if update.caption else ""
+            file_size = update.audio.file_size
 
         elif update.document:
             file_type = "document"
             file_id = update.document.file_id
             file_name = update.document.file_name[0:-4]
             file_caption  = update.caption if update.caption else ""
-        
+            file_size = update.document.file_size
+
         for i in ["_", "|", "-", "."]: # Work Around
             try:
                 file_name = file_name.replace(i, " ")
@@ -342,6 +345,7 @@ async def new_files(bot: Bot, update):
                     unique_id=unique_id,
                     file_name=file_name,
                     file_caption=file_caption,
+                    file_size = file_size,
                     file_type=file_type,
                     file_link=file_link,
                     chat_id=channel_id,
