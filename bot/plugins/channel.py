@@ -167,7 +167,7 @@ async def connect(bot: Bot, update):
                         unique_id=unique_id,
                         file_name=file_name,
                         file_caption=file_caption,
-                        file_size=file_size
+                        file_size=file_size,
                         file_type=file_type,
                         file_link=file_link,
                         chat_id=channel_id,
