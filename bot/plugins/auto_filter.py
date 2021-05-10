@@ -62,6 +62,7 @@ async def auto_filter(bot, update):
     if filters:
         for filter in filters: # iterating through each files
             file_name = filter.get("file_name")
+            file_size = "[" + str(filter.get("file_size")//1048576) + "MB] "
             file_type = filter.get("file_type")
             file_link = filter.get("file_link")
             
@@ -102,7 +103,7 @@ async def auto_filter(bot, update):
             
             results.append(
                 [
-                    InlineKeyboardButton(file_name, url=file_link)
+                    InlineKeyboardButton(file_size + file_name, url=file_link)
                 ]
             )
         
