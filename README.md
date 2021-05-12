@@ -22,7 +22,7 @@
 ㅤㅤㅤㅤㅤㅤㅤ  
 [![Channel](https://img.shields.io/badge/MoTechYT-Support-red?style=flat&logo=telegram)](https://telegram.dog/Mo_Tech_YT)  [![Youtube](https://img.shields.io/badge/Youtube-channel-red?style=flat&logo=Youtube)](https://youtube.com/channel/UCmGBpXoM-OEm-FacOccVKgQ)  
 
-[![INSTA](https://img.shields.io/badge/Connect-Instagram-red?style=flat&logo=INSTAGRAM)](https://telegram.dog/Mrk_yt) [![MRKYT](https://img.shields.io/badge/Connect-Telegram-red?style=flat&logo=telegram)](https://telegram.dog/Mrk_yt)
+[![INSTA](https://img.shields.io/badge/Connect-Instagram-red?style=flat&logo=INSTAGRAM)](Instagram.com/mrk_yt_) [![MRKYT](https://img.shields.io/badge/Connect-Telegram-red?style=flat&logo=telegram)](https://telegram.dog/Mrk_yt)
 
 
 ### Deploy
