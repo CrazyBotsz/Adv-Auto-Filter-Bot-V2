@@ -42,12 +42,12 @@ async def connect(bot: Bot, update):
             
         elif not target_chat[1].startswith("@"):
             if len(target_chat[1]) < 14:
-                await update.reply_text("Invalid Chat Id...\nChat ID Should Be Something Like This: <code>-100xxxxxxxxxx</code> {@Mo_Tech_YT}")
+                await update.reply_text("Invalid Chat Id...\nChat ID Should Be Something Like This: <code>-100xxxxxxxxxx</code>")
                 return
             target = int(target_chat[1])
                 
     except Exception:
-        await update.reply_text("Invalid Input...\nYou Should Specify Valid <code>chat_id(-100xxxxxxxxxx)</code> or <code>@username</code> {@Mo_Tech_YT}")
+        await update.reply_text("Invalid Input...\nYou Should Specify Valid <code>chat_id(-100xxxxxxxxxx)</code> or <code>@username</code>")
         return
     
     try:
@@ -113,6 +113,7 @@ async def connect(bot: Bot, update):
                         file_id = file_id.video.file_id
                         file_name = msgs.video.file_name[0:-4]
                         file_caption  = msgs.caption if msgs.caption else ""
+                        file_size = msgs.video.file_size
                         file_type = "video"
                     
                     elif msgs.audio:
@@ -127,6 +128,7 @@ async def connect(bot: Bot, update):
                         file_id = file_id.audio.file_id
                         file_name = msgs.audio.file_name[0:-4]
                         file_caption  = msgs.caption if msgs.caption else ""
+                        file_size = msgs.audio.file_size
                         file_type = "audio"
                     
                     elif msgs.document:
@@ -141,6 +143,7 @@ async def connect(bot: Bot, update):
                         file_id = file_id.document.file_id
                         file_name = msgs.document.file_name[0:-4]
                         file_caption  = msgs.caption if msgs.caption else ""
+                        file_size = msgs.document.file_size
                         file_type = "document"
                     
                     for i in ["_", "|", "-", "."]: # Work Around
@@ -164,6 +167,7 @@ async def connect(bot: Bot, update):
                         unique_id=unique_id,
                         file_name=file_name,
                         file_caption=file_caption,
+                        file_size=file_size,
                         file_type=file_type,
                         file_link=file_link,
                         chat_id=channel_id,
@@ -219,12 +223,12 @@ async def disconnect(bot: Bot, update):
             
         elif not target_chat.startswith("@"):
             if len(target_chat[1]) < 14:
-                await update.reply_text("Invalid Chat Id...\nChat ID Should Be Something Like This: <code>-100xxxxxxxxxx</code> {@Mo_Tech_YT}")
+                await update.reply_text("Invalid Chat Id...\nChat ID Should Be Something Like This: <code>-100xxxxxxxxxx</code>")
                 return
             target = int(target_chat[1])
                 
     except Exception:
-        await update.reply_text("Invalid Input...\nYou Should Specify Valid chat_id(-100xxxxxxxxxx) or @username {@Mo_Tech_YT}")
+        await update.reply_text("Invalid Input...\nYou Should Specify Valid chat_id(-100xxxxxxxxxx) or @username")
         return
     
     userbot = await bot.USER.get_me()
@@ -296,19 +300,22 @@ async def new_files(bot: Bot, update):
             file_id = update.video.file_id
             file_name = update.video.file_name[0:-4]
             file_caption  = update.caption if update.caption else ""
+            file_size = update.video.file_size
 
         elif update.audio:
             file_type = "audio"
             file_id = update.audio.file_id
             file_name = update.audio.file_name[0:-4]
             file_caption  = update.caption if update.caption else ""
+            file_size = update.audio.file_size
 
         elif update.document:
             file_type = "document"
             file_id = update.document.file_id
             file_name = update.document.file_name[0:-4]
             file_caption  = update.caption if update.caption else ""
-        
+            file_size = update.document.file_size
+
         for i in ["_", "|", "-", "."]: # Work Around
             try:
                 file_name = file_name.replace(i, " ")
@@ -338,6 +345,7 @@ async def new_files(bot: Bot, update):
                     unique_id=unique_id,
                     file_name=file_name,
                     file_caption=file_caption,
+                    file_size = file_size,
                     file_type=file_type,
                     file_link=file_link,
                     chat_id=channel_id,
