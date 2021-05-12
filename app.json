@@ -12,11 +12,11 @@
     "success_url": "https://telegram.dog/mo_tech_yt/26",
     "env": {
         "APP_ID": {
-            "description": "Your APP ID From my.telegram.org or @UseTGXBot",
+            "description": "Your APP ID From my.telegram.org or @MT_MyTelegramOrg_Bot",
             "value": ""
         },
         "API_HASH": {
-            "description": "Your API Hash From my.telegram.org or @UseTGXBot",
+            "description": "Your API Hash From my.telegram.org or @MT_MyTelegramOrg_Bot",
             "value": ""
         },
         "BOT_TOKEN": {
@@ -28,7 +28,7 @@
             "value": ""
         },
         "USER_SESSION": {
-            "description": "A Pyrogram User Session String. Generated From @PyrogramStringBot",
+            "description": "A Pyrogram User Session String. Generated From @MT_UserSession_BoT",
             "value": ""
         }
     },
