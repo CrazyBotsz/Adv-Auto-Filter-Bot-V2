@@ -284,7 +284,7 @@ async def delall(bot: Bot, update):
     await update.reply_text("Sucessfully Deleted All Connected Chats From This Group....")
 
 
-@Client.on_message(filters.channel & (filters.video | filters.audio | filters.document), group=0)
+@Client.on_message(filters.channel & (filters.video | filters.audio | filters.document) & ~filters.edited, group=0)
 async def new_files(bot: Bot, update):
     """
     A Funtion To Handle Incoming New Files In A Channel ANd Add Them To Respective Channels..
