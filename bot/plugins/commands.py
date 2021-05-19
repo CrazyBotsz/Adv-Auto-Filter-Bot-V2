@@ -116,7 +116,7 @@ async def start(bot, update):
         parse_mode="html",
         reply_to_message_id=update.message_id
     )
-    if ENABLE_START_MSG_PIC == "yes":
+    if in ENABLE_START_MSG_PIC == "yes":
         try:
             buttons = [[
                 InlineKeyboardButton(f"{btn_name1}", url=f"{btn_link1}"),
