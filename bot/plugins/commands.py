@@ -160,6 +160,7 @@ async def help(bot, update):
             )
         except:
             pass
+        return
     buttons = [[
         InlineKeyboardButton('Home ⚡', callback_data='start'),
         InlineKeyboardButton('About 🚩', callback_data='about')
@@ -198,6 +199,7 @@ async def about(bot, update):
             )
         except:
             pass
+        return
     buttons = [[
         InlineKeyboardButton('Home ⚡', callback_data='start'),
         InlineKeyboardButton('Close 🔐', callback_data='close')
