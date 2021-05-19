@@ -158,6 +158,8 @@ async def help(bot, update):
                 parse_mode="html",
                 reply_to_message_id=update.message_id
             )
+        except:
+            pass
     buttons = [[
         InlineKeyboardButton('Home ⚡', callback_data='start'),
         InlineKeyboardButton('About 🚩', callback_data='about')
@@ -194,6 +196,8 @@ async def about(bot, update):
                 parse_mode="html",
                 reply_to_message_id=update.message_id
             )
+        except:
+            pass
     buttons = [[
         InlineKeyboardButton('Home ⚡', callback_data='start'),
         InlineKeyboardButton('Close 🔐', callback_data='close')
