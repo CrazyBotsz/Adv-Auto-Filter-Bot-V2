@@ -276,7 +276,7 @@ async def delall(bot: Bot, update):
         VERIFY[str(chat_id)] = admin_list
 
     if not user_id in VERIFY.get(str(chat_id)):
-                return
+        return
     
     await db.delete_all(chat_id)
     await recacher(chat_id, True, True, bot, update)
