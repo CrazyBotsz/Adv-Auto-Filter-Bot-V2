@@ -11,12 +11,7 @@ from logging.handlers import RotatingFileHandler
 from .translation import Translation
 
 # Custom vars
-START_MSG = os.environ.get("START_MSG", """<b>Hey {}!!</b>
-<i>Am Just A Advance Auto Filter Bot....😉
-Just Add Me To Your Group And Channel And Connect Them And See My Pevers 🔥🔥😝
-For More Details Click Help Button Below..
-@CrazyBotsz
-</i>""")
+START_MSG = os.environ.get("START_MSG", "<b>Hey {}!!</b>\n<i>Am Just A Advance Auto Filter Bot....😉\nJust Add Me To Your Group And Channel And Connect Them And See My Pevers 🔥🔥😝\nFor More Details Click Help Button Below..\n@CrazyBotsz</i>")
 START_MSG_BUTTON_NAME_1 = os.environ.get("START_MSG_BUTTON_NAME_1", "Developers")
 START_MSG_BUTTIN_NAME_2 = os.environ.get("START_MSG_BUTTON_NAME_2", "Source Code 🧾")
 START_MSG_BUTTON_NAME_3 = os.environ.get("START_MSG_BUTTON_NAME_3", "Support 🛠")
