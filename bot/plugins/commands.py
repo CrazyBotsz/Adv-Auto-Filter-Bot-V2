@@ -95,27 +95,6 @@ async def start(bot, update):
         else:
             print(file_type)
         
-        return
-
-    buttons = [[
-        InlineKeyboardButton(f"{btn_name1}", url=f"{btn_link1}"),
-        InlineKeyboardButton(f"{btn_name2}", url=f"{btn_link2}")
-    ],[
-        InlineKeyboardButton(f"{btn_name3}", url=f"{btn_link3}")
-    ],[
-        InlineKeyboardButton('Help ⚙', callback_data="help")
-    ]]
-    
-    reply_markup = InlineKeyboardMarkup(buttons)
-    
-    await bot.send_message(
-        chat_id=update.chat.id,
-        text=Translation.START_TEXT.format(
-                update.from_user.first_name),
-        reply_markup=reply_markup,
-        parse_mode="html",
-        reply_to_message_id=update.message_id
-    )
     if ENABLE_START_MSG_PIC == "yes":
         try:
             buttons = [[
@@ -139,6 +118,27 @@ async def start(bot, update):
             return
         except:
             pass
+        return
+    buttons = [[
+        InlineKeyboardButton(f"{btn_name1}", url=f"{btn_link1}"),
+        InlineKeyboardButton(f"{btn_name2}", url=f"{btn_link2}")
+    ],[
+        InlineKeyboardButton(f"{btn_name3}", url=f"{btn_link3}")
+    ],[
+        InlineKeyboardButton('Help ⚙', callback_data="help")
+    ]]
+    
+    reply_markup = InlineKeyboardMarkup(buttons)
+    
+    await bot.send_message(
+        chat_id=update.chat.id,
+        text=Translation.START_TEXT.format(
+                update.from_user.first_name),
+        reply_markup=reply_markup,
+        parse_mode="html",
+        reply_to_message_id=update.message_id
+    )
+
 
 @Client.on_message(filters.command(["help"]) & filters.private, group=1)
 async def help(bot, update):
