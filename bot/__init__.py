@@ -20,7 +20,7 @@ START_MSG_BUTTON_LINK_2 = os.environ.get("START_MSG_BUTTON_LINK_2", "https://git
 START_MSG_BUTTON_LINK_3 = os.environ.get("START_MSG_BUTTON_LINK_3", "https://t.me/CrazyBotszGrp")
 FILE_SENT_BUTTON_NAME = os.environ.get("FILE_SENT_BUTTON_NAME", "Developers")
 FILE_SENT_BUTTON_LINK = os.environ.get("FILE_SENT_BUTTON_LINK", "https://t.me/CrazyBotsz")
-ENABLE_START_MSG_PIC = os.environ.get("ENABLE_START_MSG_PIC", "no").lower()
+ENABLE_PIC = os.environ.get("ENABLE_PIC", "no").lower()
 START_MSG_PHOTO = os.environ.get("START_MSG_PHOTO", "https://telegra.ph/file/ed2aadd877a8b44069180.jpg")
 
 
