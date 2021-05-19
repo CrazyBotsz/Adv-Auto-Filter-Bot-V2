@@ -27,6 +27,51 @@
             "description": "Your Mongo DB URL Obtained From mongodb.com",
             "value": ""
         },
+        "START_MSG": {
+            "description": "set your own custom start message",
+            "value": "",
+            "required": false
+        },
+        "START_MSG_BUTTON_NAME_1": {
+            "description": "set your own start message 1st button name (default name :- Developers)",
+            "value": "",
+            "required": false
+        },
+        "START_MSG_BUTTON_NAME_2": {
+            "description": "set your own start message 2nd button name (default name :- Source Code 🧾)",
+            "value": "",
+            "required": false
+        },
+        "START_MSG_BUTTON_NAME_3": {
+            "description": "set your own start message 3rd button name (default name :- Support 🛠)",
+            "value": "",
+            "required": false
+        },
+        "START_MSG_BUTTON_LINK_1": {
+            "description": "set your own start message 1st button link (default link :- https://t.me/CrazyBotsz)",
+            "value": "",
+            "required": false
+        },
+        "START_MSG_BUTTON_LINK_2": {
+            "description": "set your own start message 2nd button link (default link :- https://github.com/AlbertEinsteinTG/Adv-Auto-Filter-Bot-V2)",
+            "value": "",
+            "required": false
+        },
+        "START_MSG_BUTTON_LINK_3": {
+            "description": "set your own start message 3rd button link (default link :- https://t.me/CrazyBotszGrp)",
+            "value": "",
+            "required": false
+        },
+        "ENABLE_PIC": {
+            "description": "set (yes)  set your own custom media (use small letter)",
+            "value": "no",
+            "required": false
+        },
+        "START_MSG_PHOTO": {
+            "description": "set your custom pic (http://Telegra.ph)",
+            "value": "",
+            "required": false
+        },
         "USER_SESSION": {
             "description": "A Pyrogram User Session String. Generated From @PyrogramStringBot",
             "value": ""
