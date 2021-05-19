@@ -18,8 +18,17 @@ from bot.plugins.settings import( # pylint: disable=import-error
     remove_emoji
 )
 from bot.database import Database # pylint: disable=import-error
+from bot import START_MSG_BUTTON_NAME_1, START_MSG_BUTTIN_NAME_2, START_MSG_BUTTON_LINK_1, START_MSG_BUTTON_LINK_2, FILE_SENT_BUTTON_LINK, FILE_SENT_BUTTON_NAME, START_MSG_BUTTON_LINK_3, START_MSG_BUTTON_NAME_3, ENABLE_START_MSG_PIC, START_MSG_PHOTO
 
 db = Database()
+btn_name1 = START_MSG_BUTTON_NAME_1
+btn_name2 = START_MSG_BUTTIN_NAME_2
+btn_name3 = START_MSG_BUTTON_NAME_3
+btn_link1 = START_MSG_BUTTON_LINK_1
+btn_link2 = START_MSG_BUTTON_LINK_2
+btn_link3 = START_MSG_BUTTON_LINK_3
+file_btn_name = FILE_SENT_BUTTON_NAME
+file_btn_link = FILE_SENT_BUTTON_LINK
 
 
 @Client.on_callback_query(filters.regex(r"navigate\((.+)\)"), group=2)
@@ -1639,16 +1648,16 @@ async def callback_data(bot, update: CallbackQuery):
 
     if query_data == "start":
         buttons = [[
-            InlineKeyboardButton('My Dev 👨‍🔬', url='https://t.me/AlbertEinstein_TG'),
-            InlineKeyboardButton('Source Code 🧾', url ='https://github.com/AlbertEinsteinTG/Adv-Auto-Filter-Bot')
+            InlineKeyboardButton(f"{btn_name1}", url=f"{btn_link1}"),
+            InlineKeyboardButton(f"{btn_name2}", url=f"{btn_link2}")
         ],[
-            InlineKeyboardButton('Support 🛠', url='https://t.me/CrazyBotszGrp')
+            InlineKeyboardButton(f"{btn_name3}", url=f"{btn_link3}")
         ],[
             InlineKeyboardButton('Help ⚙', callback_data="help")
         ]]
     
         reply_markup = InlineKeyboardMarkup(buttons)
-        
+      
         await update.message.edit_text(
             Translation.START_TEXT.format(update.from_user.mention),
             reply_markup=reply_markup,
