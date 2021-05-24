@@ -1,10 +1,7 @@
 # Pro-Auto-Filter-Bot
 
-<p align="center">
-  <a href="https://www.python.org">
-    <img src="http://ForTheBadge.com/images/badges/made-with-python.svg">
-
 ## Dev Details 👤:
+
 <p align="middle">
 <img src="https://telegra.ph/file/9e831d15da94deb56ef4c.jpg" width="150" height="150"><br>
 <img src="https://badgen.net/badge/Nᴀᴍᴇ/Mʀᴋ-YT/FF33FF?icon=awesome&labelColor=0080FF"></a>
@@ -21,6 +18,9 @@
 [![Report Bugs!](https://badgen.net/badge/🐞%20Rᴇᴘᴏʀᴛ%20/Bᴜɢs/red)](https://telegram.dog/mrk_yt)
 [![Join Channel !](https://badgen.net/badge/🔊%20Jᴏɪɴ%20/Cʜᴀɴɴᴇʟ/Black)](https://telegram.dog/mo_Tech_yt)
 
+<p align="center">
+  <a href="https://www.python.org">
+    <img src="http://ForTheBadge.com/images/badges/made-with-python.svg">
   </a>
 </p>
 <p align="center">
