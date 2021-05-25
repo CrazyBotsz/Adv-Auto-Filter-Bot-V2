@@ -203,7 +203,7 @@ async def auto_filter(bot, update):
         try:
             await bot.send_message(
                 chat_id = update.chat.id,
-                text=f"Found {(len_results)} Results For Your Query: <code>{query}</code>",
+                text=f"<b>{query}</b>\n<i>({(len_results)} results)</i>\n\n⭕️ <i>If you didn't get required movie pls contact us</i> <b><a href='http://t.me/Malayalam_Movees_Bot'>👉 CLICH HERE 👈</a></b>\n\n © <b>@malayalam_movees</b>\n\n<b>🛑You must Join Channels to access the links given below🛑\n\n  Channel 1    channel 2    channel 3\n        ⬇️                   ⬇️                     ⬇️</b>",
                 reply_markup=reply_markup,
                 parse_mode="html",
                 reply_to_message_id=update.message_id
