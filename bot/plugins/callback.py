@@ -142,7 +142,7 @@ async def cb_navg(bot, update: CallbackQuery):
     
     reply_markup = InlineKeyboardMarkup(temp_results)
     
-    text=f"<b>{query}</b>\n<i>({leng} results)</i>\n\n⭕️ <i>If you didn't get required movie pls contact us</i> <b><a href='http://t.me/Malayalam_Movees_Bot'>👉 CLICH HERE 👈</a></b>\n\n © <b>@malayalam_movees</b>\n\n<b>🛑You must Join Channels to access the links given below🛑\n\n  Channel 1    channel 2    channel 3\n        ⬇️                   ⬇️                     ⬇️</b>"
+    text=f"<b>{query}</b>\n<i>({leng} Results)</i>\n\n⭕️ <i>If you didn't get required movie pls contact us</i> <b><a href='http://t.me/Malayalam_Movees_Bot'>👉 CLICH HERE 👈</a></b>\n\n<b>🛑You must Join Channels to access the links given below🛑\n\n<b>For Series: @Film_Caffe </b>©\nMain Channel: https://t.me/malayalam_movees ©</b>"
         
     try:
         await update.message.edit(
