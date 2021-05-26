@@ -52,3 +52,5 @@ DB_URI :- [![DB_URI](https://img.shields.io/badge/Click-Here-red?style=flat&logo
 
 USER_SESSION :- [![USER_SESSION](https://img.shields.io/badge/Click-Here-red?style=flat&logo=telegram)](https://repl.it/@prgofficial/String-Gen)
 
+Channel id :- [![MoTechYT](https://img.shields.io/badge/Click-Here-red?style=flat&logo=telegram)](https://telegram.dog/ChannelIDHEXbot)
+
