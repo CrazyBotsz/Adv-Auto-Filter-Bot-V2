@@ -149,6 +149,7 @@ async def cb_navg(bot, update: CallbackQuery):
                 text,
                 reply_markup=reply_markup,
                 parse_mode="html"
+                disable_web_page_preview=True
         )
         
     except FloodWait as f: # Flood Wait Caused By Spamming Next/Back Buttons
