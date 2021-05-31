@@ -206,7 +206,6 @@ async def auto_filter(bot, update):
                 text=f"<b>{query}</b>\n<i>({(len_results)} Results)</i>\n\n⭕️ <i>If you didn't get required movie pls contact us</i> <b><a href='http://t.me/Malayalam_Movees_Bot'>👉 CLICH HERE 👈</a></b>\n\n<b>🛑You must Join Channels to access the links given below🛑\n\n<b>@Malayalam_Movees ©\n@Film_Caffe © (Series)</b>",
                 reply_markup=reply_markup,
                 parse_mode="html",
-                disable_web_page_preview=True
                 reply_to_message_id=update.message_id
             )
 
