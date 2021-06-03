@@ -1,4 +1,128 @@
+import re
+import logging
+import asyncio
 
+from pyrogram import Client, filters
+from pyrogram.types import Message, InlineKeyboardButton, InlineKeyboardMarkup, CallbackQuery
+from pyrogram.errors import ButtonDataInvalid, FloodWait
+
+from bot.database import Database # pylint: disable=import-error
+from bot.bot import Bot # pylint: disable=import-error
+
+
+FIND = {}
+INVITE_LINK = {}
+ACTIVE_CHATS = {}
+db = Database()
+
+@Bot.on_message(filters.text & filters.group & ~filters.bot, group=0)
+async def auto_filter(bot, update):
+    """
+    A Funtion To Handle Incoming Text And Reply With Appropriate Results
+    """
+    group_id = update.chat.id
+
+    if re.findall(r"((^\/|^,|^\.|^[\U0001F600-\U000E007F]).*)", update.text):
+        return
+    
+    if ("https://" or "http://") in update.text:
+        return
+    
+    query = re.sub(r"[1-2]\d{3}", "", update.text) # Targetting Only 1000 - 2999 😁
+    
+    if len(query) < 2:
+        return
+    
+    results = []
+    
+    global ACTIVE_CHATS
+    global FIND
+    
+    configs = await db.find_chat(group_id)
+    achats = ACTIVE_CHATS[str(group_id)] if ACTIVE_CHATS.get(str(group_id)) else await db.find_active(group_id)
+    ACTIVE_CHATS[str(group_id)] = achats
+    
+    if not configs:
+        return
+    
+    allow_video = configs["types"]["video"]
+    allow_audio = configs["types"]["audio"] 
+    allow_document = configs["types"]["document"]
+    
+    max_pages = configs["configs"]["max_pages"] # maximum page result of a query
+    pm_file_chat = configs["configs"]["pm_fchat"] # should file to be send from bot pm to user
+    max_results = configs["configs"]["max_results"] # maximum total result of a query
+    max_per_page = configs["configs"]["max_per_page"] # maximum buttom per page 
+    show_invite = configs["configs"]["show_invite_link"] # should or not show active chat invite link
+    
+    show_invite = (False if pm_file_chat == True else show_invite) # turn show_invite to False if pm_file_chat is True
+    
+    filters = await db.get_filters(group_id, query)
+    
+    if filters:
+        for filter in filters: # iterating through each files
+            file_name = filter.get("file_name")
+            file_type = filter.get("file_type")
+            file_link = filter.get("file_link")
+            file_size = int(filter.get("file_size", "0"))
+            
+            # from B to MiB
+            
+            if file_size < 1024:
+                file_size = f"[{file_size} B]"
+            elif file_size < (1024**2):
+                file_size = f"[{str(round(file_size/1024, 2))} KiB] "
+            elif file_size < (1024**3):
+                file_size = f"[{str(round(file_size/(1024**2), 2))} MiB] "
+            elif file_size < (1024**4):
+                file_size = f"[{str(round(file_size/(1024**3), 2))} GiB] "
+            
+            
+            file_size = "" if file_size == ("[0 B]") else file_size
+            
+            # add emoji down below inside " " if you want..
+            button_text = f"{file_size}{file_name}"
+            
+
+            if file_type == "video":
+                if allow_video: 
+                    pass
+                else:
+                    continue
+                
+            elif file_type == "audio":
+                if allow_audio:
+                    pass
+                else:
+                    continue
+                
+            elif file_type == "document":
+                if allow_document:
+                    pass
+                else:
+                    continue
+            
+            if len(results) >= max_results:
+                break
+            
+            if pm_file_chat: 
+                unique_id = filter.get("unique_id")
+                if not FIND.get("bot_details"):
+                    try:
+                        bot_= await bot.get_me()
+                        FIND["bot_details"] = bot_
+                    except FloodWait as e:
+                        asyncio.sleep(e.x)
+                        bot_= await bot.get_me()
+                        FIND["bot_details"] = bot_
+                
+                bot_ = FIND.get("bot_details")
+                file_link = f"https://t.me/{bot_.username}?start={unique_id}"
+            
+            results.append(
+                [
+                    InlineKeyboardButton(button_text, url=file_link), 
+                ]
             )
         
     else:
