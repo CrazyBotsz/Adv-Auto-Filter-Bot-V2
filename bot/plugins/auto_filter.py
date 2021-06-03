@@ -69,21 +69,20 @@ async def auto_filter(bot, update):
             # from B to MiB
             
             if file_size < 1024:
-                file_size = f"{file_size} B "
+                file_size = f"[{file_size} B]"
             elif file_size < (1024**2):
-                file_size = f"{str(round(file_size/1024, 2))} KiB "
+                file_size = f"[{str(round(file_size/1024, 2))} KiB] "
             elif file_size < (1024**3):
-                file_size = f"{str(round(file_size/(1024**2), 2))} MiB "
+                file_size = f"[{str(round(file_size/(1024**2), 2))} MiB] "
             elif file_size < (1024**4):
-                file_size = f"{str(round(file_size/(1024**3), 2))} GiB "
+                file_size = f"[{str(round(file_size/(1024**3), 2))} GiB] "
             
             
-            file_size = "" if file_size == ("0 B") else file_size
+            file_size = "" if file_size == ("[0 B]") else file_size
             
-
-            # add emoji down below inside " " if you want.. Mrk-yt...
-            button_text = f"🎬»{file_name}" 
-                          
+            # add emoji down below inside " " if you want..
+            button_text = f"{file_size}{file_name}"
+            
 
             if file_type == "video":
                 if allow_video: 
@@ -105,7 +104,7 @@ async def auto_filter(bot, update):
             
             if len(results) >= max_results:
                 break
-
+            
             if pm_file_chat: 
                 unique_id = filter.get("unique_id")
                 if not FIND.get("bot_details"):
@@ -119,11 +118,10 @@ async def auto_filter(bot, update):
                 
                 bot_ = FIND.get("bot_details")
                 file_link = f"https://t.me/{bot_.username}?start={unique_id}"
-                            
+            
             results.append(
                 [
-                    InlineKeyboardButton(button_text, url=file_link),
-                    InlineKeyboardButton(file_size, callback_data="ignore"), 
+                    InlineKeyboardButton(button_text, url=file_link)
                 ]
             )
         
