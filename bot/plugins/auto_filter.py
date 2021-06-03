@@ -121,7 +121,8 @@ async def auto_filter(bot, update):
             
             results.append(
                 [
-                    InlineKeyboardButton(button_text, url=file_link)
+                    InlineKeyboardButton(file_size, callback_data="ignore"),
+                    InlineKeyboardButton(button_text, url=file_link), 
                 ]
             )
         
