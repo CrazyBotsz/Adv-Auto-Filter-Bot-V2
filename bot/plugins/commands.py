@@ -7,13 +7,13 @@ from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup, CallbackQ
 from pyrogram.errors import UserNotParticipant
 from bot import Translation # pylint: disable=import-error
 from bot.database import Database # pylint: disable=import-error
-from bot import FORCESUB_CHANNEL
+from bot import UPDATE_CHANNEL
 
 db = Database()
 
 @Client.on_message(filters.command(["start"]) & filters.private, group=1)
 async def start(bot, update):
-    update_channel = FORCESUB_CHANNEL
+    update_channel = UPDATE_CHANNEL
     if update_channel:
         try:
             user = await bot.get_chat_member(update_channel, update.chat.id)
@@ -25,7 +25,7 @@ async def start(bot, update):
             await update.reply_text(
                 text="<b>🔊Join My Updates Channel to use ME</b>",
                 reply_markup=InlineKeyboardMarkup([
-                    [ InlineKeyboardButton(text=" 💢 Join My Updates Channel 💢 ", url=f"https://t.me/{update_channel}")]
+                    [ InlineKeyboardButton(text=" 💢 Join My Updates Channel 💢 ", url=f"https://t.me/{UPDATE_CHANNEL}")]
               ])
             )
             return
