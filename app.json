@@ -27,6 +27,9 @@
             "description": "Your Mongo DB URL Obtained From mongodb.com",
             "value": ""
         },
+        "MT_UPDATE_CHANNEL": {
+            "description": "Your Update Channel (With Out @) Eg:- MO_TECH_GROUP
+        },
         "USER_SESSION": {
             "description": "A Pyrogram User Session String. Generated From @MT_UserSession_BoT",
             "value": ""
