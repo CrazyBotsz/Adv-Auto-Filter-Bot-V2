@@ -1203,37 +1203,37 @@ async def cb_max_results(bot, update: CallbackQuery):
         [
             InlineKeyboardButton
                 (
-                    "50 ", callback_data=f"set(results|50|{chat_id}|{count})"
+                    "📃 50 Results", callback_data=f"set(results|50|{chat_id}|{count})"
                 )
         ],
         [
             InlineKeyboardButton
                 (
-                    "100 Results", callback_data=f"set(results|100|{chat_id}|{count})"
+                    "📃 100 Results", callback_data=f"set(results|100|{chat_id}|{count})"
                 )
         ],
         [
             InlineKeyboardButton
                 (
-                    "150 Results", callback_data=f"set(results|150|{chat_id}|{count})"
+                    "📃 150 Results", callback_data=f"set(results|150|{chat_id}|{count})"
                 )
         ],
         [
             InlineKeyboardButton
                 (
-                    "200 Results", callback_data=f"set(results|200|{chat_id}|{count})"
+                    "📃 200 Results", callback_data=f"set(results|200|{chat_id}|{count})"
                 )
         ],
         [
             InlineKeyboardButton
                 (
-                    "250 Results", callback_data=f"set(results|250|{chat_id}|{count})"
+                    "📃 250 Results", callback_data=f"set(results|250|{chat_id}|{count})"
                 )
         ],
         [
             InlineKeyboardButton
                 (
-                    "300 Results", callback_data=f"set(results|300|{chat_id}|{count})"
+                    "📃 300 Results", callback_data=f"set(results|300|{chat_id}|{count})"
                 )
         ],
         [
