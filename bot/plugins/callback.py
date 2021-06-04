@@ -8,7 +8,8 @@ from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup, CallbackQ
 
 from bot import start_uptime, Translation, VERIFY # pylint: disable=import-error
 from bot.plugins.auto_filter import ( # pylint: disable=import-error
-    FIND, 
+    FIND,
+    INVITE_LINK,   
     ACTIVE_CHATS,
     recacher,
     gen_invite_links
