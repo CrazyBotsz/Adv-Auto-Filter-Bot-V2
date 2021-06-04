@@ -2,49 +2,7 @@
 # -*- coding: utf-8 -*-
 # (c) @AlbertEinsteinTG & @Mrk_YT
 
-from pyrogram import filters, Client
-from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup, CallbackQuery
-from pyrogram.errors import UserNotParticipant
-from bot import Translation # pylint: disable=import-error
-from bot.database import Database # pylint: disable=import-error
-from bot import UPDATE_CHANNEL
-db = Database()
 
-@Client.on_message(filters.command(["start"]) & filters.private, group=1)
-async def start(bot, update):
-    update_channel = UPDATE_CHANNEL
-    if update_channel:
-        try:
-            user = await bot.get_chat_member(update_channel, update.chat.id)
-            if user.status == "kicked out":
-               await update.reply_text("😔 Sorry Dude, You are **🅱︎🅰︎🅽︎🅽︎🅴︎🅳︎ 🤣🤣🤣**")
-               return
-        except UserNotParticipant:
-            #await update.reply_text(f"Join @{update_channel} To Use Me")
-            await update.reply_text(
-                text="<b>🔊 𝗝𝗼𝗶𝗻 𝗢𝘂𝗿 𝗠𝗮𝗶𝗻 𝗰𝗵𝗮𝗻𝗻𝗲𝗹 🤭\n\nനിങ്ങൾക് സിനിമകൾ വെന്നോ? അതിനായി അത്യം ങ്ങളുടെ മെയിൻ ചാനലിൽ ജോയിൻ ചെയ്യണം... 😁\n\nJoin ചെയതത്തിനു ശേഷം വീണ്ടും ബോട്ട് /start ആക്കൂ.😁</b>",
-                reply_markup=InlineKeyboardMarkup([
-                    [ InlineKeyboardButton(text=" 💢 Join My Updates Channel 💢 ", url=f"https://t.me/{UPDATE_CHANNEL}")]
-              ])
-            )
-            return
-        except Exception:
-            await update.reply_text("<b>This bot should be the admin on your update channel</b>\n\n<b>🗣️ any Doubt @Mo_Tech_Geoup</b>")
-            return    
-    try:
-        file_uid = update.command[1]
-    except IndexError:
-        file_uid = False
-    
-    if file_uid:
-        file_id, file_name, file_caption, file_type = await db.get_file(file_uid)
-        
-        if (file_id or file_type) == None:
-            return
-        
-        caption = file_caption if file_caption != ("" or None) else ("<code>" + file_name + "</code>")
-        
-        if file_type == "document":
         
             await bot.send_document(
                 chat_id=update.chat.id,
