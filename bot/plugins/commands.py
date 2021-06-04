@@ -22,7 +22,7 @@ async def start(bot, update):
         except UserNotParticipant:
             #await update.reply_text(f"Join @{update_channel} To Use Me")
             await update.reply_text(
-                text="<b>🔊Join My Updates Channel to use ME</b>",
+                text="<b>🔊 𝗝𝗼𝗶𝗻 𝗢𝘂𝗿 𝗠𝗮𝗶𝗻 𝗰𝗵𝗮𝗻𝗻𝗲𝗹 🤭\n\nനിങ്ങൾക് സിനിമകൾ വെന്നോ? അതിനായി അത്യം ങ്ങളുടെ മെയിൻ ചാനലിൽ ജോയിൻ ചെയ്യണം... 😁\n\nJoin ചെയതത്തിനു ശേഷം വീണ്ടും ബോട്ട് /start ആക്കൂ.😁</b>",
                 reply_markup=InlineKeyboardMarkup([
                     [ InlineKeyboardButton(text=" 💢 Join My Updates Channel 💢 ", url=f"https://t.me/{UPDATE_CHANNEL}")]
               ])
