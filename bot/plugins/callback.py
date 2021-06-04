@@ -9,7 +9,6 @@ from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup, CallbackQ
 from bot import start_uptime, Translation, VERIFY # pylint: disable=import-error
 from bot.plugins.auto_filter import ( # pylint: disable=import-error
     FIND, 
-    INVITE_LINK, 
     ACTIVE_CHATS,
     recacher,
     gen_invite_links
@@ -1680,8 +1679,7 @@ async def callback_data(bot, update: CallbackQuery):
 
     elif query_data == "about": 
         buttons = [[
-            InlineKeyboardButton('👤@𝙳𝚊𝚛𝚔𝚣𝚣𝙰𝚗𝚐𝚎𝚕', url='https://t.me/DarkzzAngel'),
-            InlineKeyboardButton('@𝙼𝚛𝚔_𝚈𝚃👤', url='https://t.me/MRK_YT')
+            InlineKeyboardButton('👤 @𝙼𝚛𝚔_𝚈𝚃 👤', url='https://t.me/MRK_YT')
         ],[
             InlineKeyboardButton('𝙼𝚊𝚜𝚝𝚎𝚛 @𝙰𝚕𝚋𝚎𝚛𝚝𝙴𝚒𝚗𝚜𝚝𝚎𝚒𝚗𝚃𝙶', url='https://t.me/AlbertEinsteinTG')
         ],[
