@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 # (c) @AlbertEinsteinTG & @MRK_YT
 
-class Translation(object):
+class Translations(object1):
     
     START_TEXT = """<b>🙋‍♂️Hey {}!!</b>
 
@@ -53,9 +53,7 @@ class Translation(object):
     
 <b>➥ 😎Creator</b> : <b><a href="https://t.me/AlbertEinstein_TG">Albert Einstein</a></b>
 
-<b>➥ 👨‍💻Editor-1</b> : <b><a href="https://t.me/MRk_YT">@Mrk_YT</a></b>
-
-<b>➥ 👨‍💻Editor-2</b> : <b><a href="https://t.me/DarkzzAngel">@DarkzzAngel</a></b>
+<b>➥ 👨‍💻Editor</b> : <b><a href="https://t.me/MRk_YT">@Mrk_YT</a></b>
 
 <b>➥ 🗣️Language</b> : <code>Python3</code>
 
