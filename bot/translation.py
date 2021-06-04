@@ -55,7 +55,7 @@ class Translation(object):
 
 <b>➥ 👨‍💻Editor</b> : <b>@Mrk_YT</b>
 
-<b>➥ 🗣️Language</b> : Python3
+<b>➥ 🗣️Language</b> : <b>Python3</b>
 
 <b>➥ 📚Library</b> : <b><a href="https://docs.pyrogram.org">Pyrogram Asyncio 1.13.0 </a></b>
 
