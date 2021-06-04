@@ -1203,7 +1203,7 @@ async def cb_max_results(bot, update: CallbackQuery):
         [
             InlineKeyboardButton
                 (
-                    "50 Results", callback_data=f"set(results|50|{chat_id}|{count})"
+                    "50 ", callback_data=f"set(results|50|{chat_id}|{count})"
                 )
         ],
         [
@@ -1639,13 +1639,15 @@ async def callback_data(bot, update: CallbackQuery):
 
     if query_data == "start":
         buttons = [[
-            InlineKeyboardButton('My Dev ⚡', url='https://t.me/MRK_YT'),
-            InlineKeyboardButton('Source Code 🧾', url ='https://dashboard.heroku.com/new?button-url=https%3A%2F%2Fgithub.com%2FMRK-YT%2FUnlimited-Filter-Bot%2Fblob%2Fmain%2FREADME.md&template=https%3A%2F%2Fgithub.com%2FMRK-YT%2FPro-Auto-Filter-Bot.git')
+            InlineKeyboardButton('👨‍💼 𝙼𝚊𝚜𝚝𝚎𝚛', url='https://t.me/MRK_YT'),
+            InlineKeyboardButton('𝙷𝚎𝚕𝚙 🤔', callback_data="help")
         ],[
-            InlineKeyboardButton('Support🛠', url='https://t.me/Mo_Tech_YT'),
-            InlineKeyboardButton('Tutorial Video', url='https://youtu.be/uAHl5jvnrhk')
+            InlineKeyboardButton('🖥️ 𝚃𝚞𝚝𝚘𝚛𝚒𝚊𝚕 𝚅𝚒𝚍𝚎𝚘 🖥️', url='https://youtu.be/uAHl5jvnrhk')
         ],[
-            InlineKeyboardButton('Help ⚙', callback_data="help")
+            InlineKeyboardButton('🗣️ 𝙰𝚗𝚢 𝙳𝚘𝚞𝚋𝚝', url='https://t.me/Mo_Tech_group'),
+            InlineKeyboardButton('𝚄𝚙𝚍𝚊𝚝𝚎𝚜 🤖', url='https://t.me/Mo_Tech_YT')
+        ],[
+            InlineKeyboardButton('💥 𝚂𝚞𝚋𝚜𝚌𝚛𝚒𝚋𝚎 𝙼𝚢 𝚈𝚘𝚞𝚃𝚞𝚋𝚎 𝙲𝚑𝚊𝚗𝚗𝚎𝚕 💥', url='https://youtu.be/uAHl5jvnrhk')
         ]]
     
         reply_markup = InlineKeyboardMarkup(buttons)
@@ -1677,10 +1679,15 @@ async def callback_data(bot, update: CallbackQuery):
 
 
     elif query_data == "about": 
-        buttons = [[
-            InlineKeyboardButton('Home ⚡', callback_data='start'),
-            InlineKeyboardButton('Close 🔐', callback_data='close')
-        ]]
+       buttons = [[
+           InlineKeyboardButton('👤@𝙳𝚊𝚛𝚔𝚣𝚣𝙰𝚗𝚐𝚎𝚕', url='https://t.me/DarkzzAngel'),
+           InlineKeyboardButton('@𝙼𝚛𝚔_𝚈𝚃👤', url='https://t.me/MRK_YT')
+      ],[
+           InlineKeyboardButton('𝙼𝚊𝚜𝚝𝚎𝚛 @𝙰𝚕𝚋𝚎𝚛𝚝𝙴𝚒𝚗𝚜𝚝𝚎𝚒𝚗𝚃𝙶', url='https://t.me/AlbertEinsteinTG')
+      ],[
+           InlineKeyboardButton('🏠 𝙷𝚘𝚖𝚎', callback_data='start'),
+           InlineKeyboardButton('𝙲𝚕𝚘𝚜𝚎 🔐', callback_data='close')
+      ]]
         
         reply_markup = InlineKeyboardMarkup(buttons)
         
