@@ -80,53 +80,7 @@ async def auto_filter(bot, update):
             
             file_size = "" if file_size == ("[0 B]") else file_size
             
-            # add emoji down below inside " " if you want.. {mrk_yt}
-            button_text = f"🎬»{file_name}"
-
-
-            if file_type == "video":
-                if allow_video: 
-                    pass
-                else:
-                    continue
-                
-            elif file_type == "audio":
-                if allow_audio:
-                    pass
-                else:
-                    continue
-                
-            elif file_type == "document":
-                if allow_document:
-                    pass
-                else:
-                    continue
-            
-            if len(results) >= max_results:
-                break
-            
-            if pm_file_chat: 
-                unique_id = filter.get("unique_id")
-                if not FIND.get("bot_details"):
-                    try:
-                        bot_= await bot.get_me()
-                        FIND["bot_details"] = bot_
-                    except FloodWait as e:
-                        asyncio.sleep(e.x)
-                        bot_= await bot.get_me()
-                        FIND["bot_details"] = bot_
-                
-                bot_ = FIND.get("bot_details")
-                file_link = f"https://t.me/{bot_.username}?start={unique_id}"
-            
-            results.append(
-                [
-                    InlineKeyboardButton(button_text, url=file_link), 
-                    InlineKeyboardButton(file_size, callback_data="ignore"), 
-                ]
-            )
-        
-    else:
+            :
         return # return if no files found for that query
     
 
