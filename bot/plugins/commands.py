@@ -1,17 +1,37 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-# (c) @AlbertEinsteinTG & @MRK_YT
+# (c) @AlbertEinsteinTG, @Mrk_YT & @DarkzzAngel
 
 from pyrogram import filters, Client
 from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup, CallbackQuery
+from pyrogram.errors import UserNotParticipant
 from bot import Translation # pylint: disable=import-error
 from bot.database import Database # pylint: disable=import-error
+from bot import FORCESUB_CHANNEL
 
 db = Database()
 
 @Client.on_message(filters.command(["start"]) & filters.private, group=1)
 async def start(bot, update):
-    
+    update_channel = FORCESUB_CHANNEL
+    if update_channel:
+        try:
+            user = await bot.get_chat_member(update_channel, update.chat.id)
+            if user.status == "kicked out":
+               await update.reply_text("😔 Sorry Dude, You are **🅱︎🅰︎🅽︎🅽︎🅴︎🅳︎ 🤣🤣🤣**")
+               return
+        except UserNotParticipant:
+            #await update.reply_text(f"Join @{update_channel} To Use Me")
+            await update.reply_text(
+                text="<b>🔊Join My Updates Channel to use ME</b>",
+                reply_markup=InlineKeyboardMarkup([
+                    [ InlineKeyboardButton(text=" 💢 Join My Updates Channel 💢 ", url=f"https://t.me/{update_channel}")]
+              ])
+            )
+            return
+        except Exception:
+            await update.reply_text("This bot should be the admin on your update channel\n\n<b>any Doubt @Mo_Tech_Geoup</b>")
+            return    
     try:
         file_uid = update.command[1]
     except IndexError:
@@ -136,6 +156,11 @@ async def help(bot, update):
 async def about(bot, update):
     
     buttons = [[
+        InlineKeyboardButton('👤@𝙳𝚊𝚛𝚔𝚣𝚣𝙰𝚗𝚐𝚎𝚕', url='https://t.me/DarkzzAngel'),
+        InlineKeyboardButton('@𝙼𝚛𝚔_𝚈𝚃👤', url='https://t.me/MRK_YT')
+    ],[
+        InlineKeyboardButton('𝙼𝚊𝚜𝚝𝚎𝚛 @𝙰𝚕𝚋𝚎𝚛𝚝𝙴𝚒𝚗𝚜𝚝𝚎𝚒𝚗𝚃𝙶', url='https://t.me/AlbertEinsteinTG')
+    ],[
         InlineKeyboardButton('🏠 𝙷𝚘𝚖𝚎', callback_data='start'),
         InlineKeyboardButton('𝙲𝚕𝚘𝚜𝚎 🔐', callback_data='close')
     ]]
