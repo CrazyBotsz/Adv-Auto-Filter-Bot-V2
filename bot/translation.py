@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 # (c) @AlbertEinsteinTG & @MRK_YT
 
-class Translations(object1):
+class Translation(object):
     
     START_TEXT = """<b>🙋‍♂️Hey {}!!</b>
 
