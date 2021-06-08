@@ -1,21 +1,14 @@
+import os
 import motor.motor_asyncio # pylint: disable=import-error
 from bot import DB_URI
 
-class Singleton(type):
-    __instances__ = {}
+DB_NAME = os.environ.get("DB_NAME", "Adv_Auto_Filter")
 
-    def __call__(cls, *args, **kwargs):
-        if cls not in cls.__instances__:
-            cls.__instances__[cls] = super(Singleton, cls).__call__(*args, **kwargs)
-
-        return cls.__instances__[cls]
-
-
-class Database(metaclass=Singleton):
+class Database:
 
     def __init__(self):
         self._client = motor.motor_asyncio.AsyncIOMotorClient(DB_URI)
-        self.db = self._client["Adv_Auto_Filter"]
+        self.db = self._client[DB_NAME]
         self.col = self.db["Main"]
         self.acol = self.db["Active_Chats"]
         self.fcol = self.db["Filter_Collection"]
