@@ -38,7 +38,7 @@ async def start(bot, update):
                         [
                             InlineKeyboardButton
                                 (
-                                    'Developers', url="https://t.me/CrazyBotsz"
+                                    'Developers', url="https://t.me/filmcornermm"
                                 )
                         ]
                     ]
@@ -57,7 +57,7 @@ async def start(bot, update):
                         [
                             InlineKeyboardButton
                                 (
-                                    'Developers', url="https://t.me/CrazyBotsz"
+                                    'Developers', url="https://t.me/filmcornermm"
                                 )
                         ]
                     ]
@@ -91,7 +91,7 @@ async def start(bot, update):
     buttons = [[
         InlineKeyboardButton('join', url='https://t.me/filmcornermm'),
     ],[
-        InlineKeyboardButton('Support 🛠', url='https://t.me/CrazyBotszGrp')
+        InlineKeyboardButton('Support 🛠', url='https://t.me/filmcornermm')
     ],[
         InlineKeyboardButton('Help ⚙', callback_data="help")
     ]]
