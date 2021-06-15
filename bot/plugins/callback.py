@@ -74,7 +74,7 @@ async def cb_navg(bot, update: CallbackQuery):
     try:
         temp_results = results[index_val].copy()
     except IndexError:
-        return # Quick Fix🏃🏃
+        return # Quick Fix🥀🏃🏃
     except Exception as e:
         print(e)
         return
@@ -1639,7 +1639,7 @@ async def callback_data(bot, update: CallbackQuery):
 
     if query_data == "start":
         buttons = [[
-            InlineKeyboardButton('My Dev 👨‍🔬', url='https://t.me/AlbertEinstein_TG'),
+            InlineKeyboardButton('My Dev 👨‍🔬', url='https://t.me/AlbertEinstein_'),
             InlineKeyboardButton('Source Code 🧾', url ='https://github.com/CrazyBotsz/Adv-Filter-Bot-V2')
         ],[
             InlineKeyboardButton('Support 🛠', url='https://t.me/CrazyBotszGrp')
@@ -1707,4 +1707,3 @@ def time_formatter(seconds: float) -> str:
         ((str(minutes) + "m, ") if minutes else "") + \
         ((str(seconds) + "s") if seconds else "")
     return tmp
-
