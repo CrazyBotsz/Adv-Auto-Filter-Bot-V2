@@ -89,8 +89,8 @@ async def start(bot, update):
         return
 
     buttons = [[
-        InlineKeyboardButton('Movie world', url='https://t.me/T5links'),
-        InlineKeyboardButton('Movie update', url ='https://t.me/T6links')
+        InlineKeyboardButton('Movies Owner', url='https://t.me/NTG_Family'),
+        InlineKeyboardButton('Movies World', url ='https://t.me/T5links')
     ],[
         InlineKeyboardButton('Web series', url='https://t.me/T8links')
     ],[
