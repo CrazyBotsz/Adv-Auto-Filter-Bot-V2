@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-# (c) @SpEcHIDe
+# (c) @NTG_Family
 
 from pyrogram import Client, __version__
 
