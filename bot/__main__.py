@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-# (c) @AlbertEinsteinTG
+# (c) @world_wide_movies
 
 from .bot import Bot
 
