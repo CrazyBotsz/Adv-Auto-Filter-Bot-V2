@@ -158,9 +158,7 @@ class Database:
                                 channel_id
                             }
                         }
-                    },
-                False,
-                True
+                    }
             )
 
             await self.del_active(group_id, channel_id)
