@@ -495,4 +495,3 @@ class Database:
         """
         return await self.fcol.count_documents({"group_id": group_id})
 
-

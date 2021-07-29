@@ -15,8 +15,8 @@ INVITE_LINK = {}
 ACTIVE_CHATS = {}
 db = Database()
 
-@Bot.on_message(filters.text & filters.group & ~filters.bot, group=0)
-async def auto_filter(bot, update):
+@Bot.on_message(filters.text & filters.group & ~filters.edited, group=0)
+async def auto_filter(bot: Client, update: Message):
     """
     A Funtion To Handle Incoming Text And Reply With Appropriate Results
     """
@@ -28,7 +28,9 @@ async def auto_filter(bot, update):
     if ("https://" or "http://") in update.text:
         return
     
-    query = re.sub(r"[1-2]\d{3}", "", update.text) # Targetting Only 1000 - 2999 😁
+    # Targetting Only 1000 - 2999 to remove from search query..!
+    # Make the below line as: query = update.text to make year too in search query..!
+    query = re.sub(r"[1-2]\d{3}", "", update.text) 
     
     if len(query) < 2:
         return
@@ -55,7 +57,7 @@ async def auto_filter(bot, update):
     max_per_page = configs["configs"]["max_per_page"] # maximum buttom per page 
     show_invite = configs["configs"]["show_invite_link"] # should or not show active chat invite link
     
-    show_invite = (False if pm_file_chat == True else show_invite) # turn show_invite to False if pm_file_chat is True
+    # show_invite = (False if pm_file_chat == True else show_invite) # turn show_invite to False if pm_file_chat is True
     
     filters = await db.get_filters(group_id, query)
     
@@ -83,7 +85,7 @@ async def auto_filter(bot, update):
             # add emoji down below inside " " if you want..
             button_text = f"{file_size}{file_name}"
             
-
+            
             if file_type == "video":
                 if allow_video: 
                     pass
@@ -193,8 +195,9 @@ async def auto_filter(bot, update):
                 
             for x in ibuttons:
                 result[0].insert(0, x) #Insert invite link buttons at first of page
-                
-            ibuttons = None # Free Up Memory...
+            
+            # Free Up Memory...
+            ibuttons = None
             achatId = None
             
             
