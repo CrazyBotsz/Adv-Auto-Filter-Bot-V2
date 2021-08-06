@@ -573,7 +573,7 @@ async def cb_disconnect(bot, update: CallbackQuery):
     if user_id not in VERIFY.get(str(chat_id)):
         return
 
-    channel_id, channel_name = re.findall(r"connect\((.+)\)", query_data)[0].split("|", 1)
+    channel_id, channel_name = re.findall(r"disconnect\((.+)\)", query_data)[0].split("|", 1)
     
     f_count = await db.cf_count(chat_id, int(channel_id))
     
