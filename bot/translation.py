@@ -5,12 +5,12 @@
 class Translation(object):
     
     START_TEXT = """<b>Hey {}!!</b>
-<i>Am Just A Advance Auto Filter Bot....😉
+<i>𝙰𝚖 𝙲𝙳𝚇 𝙿𝚛𝚘𝚓𝚎𝚌𝚝𝚜 𝚂𝚒𝚖𝚙𝚕𝚎 𝙰𝚞𝚝𝚘𝙵𝚒𝚕𝚝𝚎𝚛 𝙱𝚘𝚝.....😉
 
-Just Add Me To Your Group And Channel And Connect Them And See My Pevers 🔥🔥😝
+𝐇𝐢 𝐈 𝐀𝐦 𝐀𝐝𝐯𝐚𝐧𝐜𝐞𝐝 𝐅𝐢𝐥𝐭𝐞𝐫𝐁𝐨𝐭 𝐅𝐨𝐫 𝐅𝐢𝐥𝐭𝐞𝐫𝐢𝐧𝐠 𝐘𝐨𝐮𝐫 𝐅𝐢𝐥𝐞𝐬 𝐏𝐨𝐰𝐞𝐫𝐞𝐝 𝐁𝐲 ©️ @Housefull_links 🔥🔥😝
 
 For More Details Click Help Button Below..
-@CrazyBotsz
+@cdx_bots
 </i>"""    
     
     HELP_TEXT = """
