@@ -35,7 +35,7 @@ async def start(bot, update):
                         [
                             InlineKeyboardButton
                                 (
-                                    'Developers', url="https://t.me/Cdx_bots"
+                                    'Developers', url="https://t.me/cdx_bots"
                                 )
                         ]
                     ]
@@ -48,7 +48,7 @@ async def start(bot, update):
 
     buttons = [[
         InlineKeyboardButton('Developers', url='https://t.me/housefull_links'),
-        InlineKeyboardButton('Source Code 🧾', url ='😉')
+        InlineKeyboardButton('Source Code 🧾', url ='https://t.me/housefull_links')
     ],[
         InlineKeyboardButton('Support 🛠', url='https://t.me/cdx_bots')
     ],[
