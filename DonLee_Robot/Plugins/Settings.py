@@ -1,7 +1,7 @@
 # !/usr/bin/env python3
 # -*- coding: utf-8 -*-
 # (c) @AlbertEinsteinTG
-# (c) @Muhammed_RK, @Mo_Tech_YT , @Mo_Tech_Group, @MT_Botz
+# (e) @Muhammed_RK, @Mo_Tech_YT , @Mo_Tech_Group, @MT_Botz
 # Copyright permission under MIT License
 # All rights reserved by PR0FESS0R-99
 # License -> https://github.com/PR0FESS0R-99/DonLee_Robot/blob/main/LICENSE
@@ -9,7 +9,7 @@
 import re
 from pyrogram import Client, filters
 from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup
-from DonLee_Robot import DonLee_Robot
+from DonLee_Robot.donlee_Robot import DonLee_Robot
 from DonLee_Robot import VERIFY # pylint: disable=import-error
 
 @DonLee_Robot.on_message(filters.command(["settings"]) & filters.group, group=1)
