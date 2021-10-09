@@ -5,15 +5,15 @@ import asyncio
 from pyrogram import Client, filters
 from pyrogram.errors import UserAlreadyParticipant, FloodWait
 
-from Donlee_Robot import VERIFY # pylint: disable=import-error
-from Donlee_Robot.donlee_robot import Donlee_Robot # pylint: disable=import-error
-from Donlee_Robot.Database import Database # pylint: disable=import-error
-from Donlee_Robot.Plugins.Auto_Filter import recacher # pylint: disable=import-error
+from DonLee_Robot import VERIFY # pylint: disable=import-error
+from DonLee_Robot.donlee_robot import DonLee_Robot # pylint: disable=import-error
+from DonLee_Robot.Database import Database # pylint: disable=import-error
+from DonLee_Robot.Plugins.Auto_Filter import recacher # pylint: disable=import-error
 
 db = Database()
 
-@Donlee_Robot.on_message(filters.command(["add"]) & filters.group, group=1)
-async def connect(bot: Donlee_Robot, update):
+@DonLee_Robot.on_message(filters.command(["add"]) & filters.group, group=1)
+async def connect(bot: DonLee_Robot, update):
     """
     A Funtion To Handle Incoming /add Command TO COnnect A Chat With Group
     """
@@ -193,8 +193,8 @@ async def connect(bot: Donlee_Robot, update):
     await wait_msg.edit_text(f"Channel Was Sucessfully Added With <code>{len(data)}</code> Files..")
 
 
-@Donlee_Robot.on_message(filters.command(["del"]) & filters.group, group=1)
-async def disconnect(bot: Donlee_Robot, update):
+@DonLee_Robot.on_message(filters.command(["del"]) & filters.group, group=1)
+async def disconnect(bot: DonLee_Robot, update):
     """
     A Funtion To Handle Incoming /del Command TO Disconnect A Chat With A Group
     """
@@ -258,8 +258,8 @@ async def disconnect(bot: Donlee_Robot, update):
     await wait_msg.edit_text("Sucessfully Deleted All Files From DB....")
 
 
-@Donlee_Robot.on_message(filters.command(["delall"]) & filters.group, group=1)
-async def delall(bot: Donlee_Robot, update):
+@DonLee_Robot.on_message(filters.command(["delall"]) & filters.group, group=1)
+async def delall(bot: DonLee_Robot, update):
     """
     A Funtion To Handle Incoming /delall Command TO Disconnect All Chats From A Group
     """
