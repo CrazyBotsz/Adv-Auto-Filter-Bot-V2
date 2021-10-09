@@ -7,6 +7,5 @@
 # License -> https://github.com/PR0FESS0R-99/DonLee_Robot/blob/main/LICENSE
 
 from .donlee_robot import Donlee_Robot
-
 app = Donlee_Robot()
 app.run()
