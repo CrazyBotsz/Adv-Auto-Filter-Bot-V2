@@ -5,15 +5,15 @@ import asyncio
 from pyrogram import Client, filters
 from pyrogram.errors import UserAlreadyParticipant, FloodWait
 
-from bot import VERIFY # pylint: disable=import-error
-from bot.bot import Bot # pylint: disable=import-error
-from bot.database import Database # pylint: disable=import-error
-from bot.plugins.auto_filter import recacher # pylint: disable=import-error
+from Donlee_Robot import VERIFY # pylint: disable=import-error
+from Donlee_Robot.donlee_robot import Donlee_Robot # pylint: disable=import-error
+from Donlee_Robot.Database import Database # pylint: disable=import-error
+from Donlee_Robot.Plugins.Auto_Filter import recacher # pylint: disable=import-error
 
 db = Database()
 
-@Client.on_message(filters.command(["add"]) & filters.group, group=1)
-async def connect(bot: Bot, update):
+@Donlee_Robot.on_message(filters.command(["add"]) & filters.group, group=1)
+async def connect(bot: Donlee_Robot, update):
     """
     A Funtion To Handle Incoming /add Command TO COnnect A Chat With Group
     """
@@ -193,8 +193,8 @@ async def connect(bot: Bot, update):
     await wait_msg.edit_text(f"Channel Was Sucessfully Added With <code>{len(data)}</code> Files..")
 
 
-@Client.on_message(filters.command(["del"]) & filters.group, group=1)
-async def disconnect(bot: Bot, update):
+@Donlee_Robot.on_message(filters.command(["del"]) & filters.group, group=1)
+async def disconnect(bot: Donlee_Robot, update):
     """
     A Funtion To Handle Incoming /del Command TO Disconnect A Chat With A Group
     """
@@ -258,8 +258,8 @@ async def disconnect(bot: Bot, update):
     await wait_msg.edit_text("Sucessfully Deleted All Files From DB....")
 
 
-@Client.on_message(filters.command(["delall"]) & filters.group, group=1)
-async def delall(bot: Bot, update):
+@Donlee_Robot.on_message(filters.command(["delall"]) & filters.group, group=1)
+async def delall(bot: Donlee_Robot, update):
     """
     A Funtion To Handle Incoming /delall Command TO Disconnect All Chats From A Group
     """
@@ -284,8 +284,8 @@ async def delall(bot: Bot, update):
     await update.reply_text("Sucessfully Deleted All Connected Chats From This Group....")
 
 
-@Client.on_message(filters.channel & (filters.video | filters.audio | filters.document) & ~filters.edited, group=0)
-async def new_files(bot: Bot, update):
+@Donlee_Robot.on_message(filters.channel & (filters.video | filters.audio | filters.document) & ~filters.edited, group=0)
+async def new_files(bot: Donlee_Robot, update):
     """
     A Funtion To Handle Incoming New Files In A Channel ANd Add Them To Respective Channels..
     """
