@@ -1,23 +1,27 @@
 {
-    "name": "Auto Filter Bot V2",
-    "description": "A Filter Bot Which Doesnt Need Manuall Filter Adding",
-    "logo": "https://telegra.ph/file/667e15c821117633d07bd.png",
+    "name": "DonLee AutoFilter V2.9",
+    "description": "iam Adv Auto Filter Bot Version 2.9",
+    "logo": "https://telegra.ph/file/92daa86a5ceb28fa6962d.jpg",
     "keywords": [
         "Auto",
         "Filter",
-        "Mongo DB"
+        "v2.9"
     ],
-    "website": "https://github.com/AlbertEinsteinTG",
-    "repository": "https://github.com/AlbertEinsteinTG/Adv-Auto-Filter-Bot-V2",
-    "success_url": "https://telegram.dog/CrazyBotsz",
+    "website": "https://youtube.com/channel/UCmGBpXoM-OEm-FacOccVKgQ",
+    "repository": "https://github.com/PR0FESS0R-99/DonLee_Robot/tree/MoTech",
+    "success_url": "https://youtube.com/channel/UCmGBpXoM-OEm-FacOccVKgQ",
     "env": {
         "APP_ID": {
-            "description": "Your APP ID From my.telegram.org or @UseTGXBot",
+            "description": "Your APP ID From my.telegram.org or @MT_MytelegramOrg_Bot",
             "value": ""
         },
         "API_HASH": {
-            "description": "Your API Hash From my.telegram.org or @UseTGXBot",
+            "description": "Your API Hash From my.telegram.org or @MT_MytelegramOrg_Bot",
             "value": ""
+        },
+        "BOT_NAME": {
+            "description": "Enter Your Bot Name From @BotFather",
+            "value": "DonLee_Robot"
         },
         "BOT_TOKEN": {
             "description": "Your Bot Token From @BotFather",
@@ -27,8 +31,38 @@
             "description": "Your Mongo DB URL Obtained From mongodb.com",
             "value": ""
         },
+        "SIZE_BUTTON": {
+            "description": "How To Use This Key Watch Tutorial Video - ()",
+            "value": "",
+            "required": false
+        },
+        "FSUB_TEXT": {
+            "description": "Forces Subscribers Text",
+            "value": "",
+            "required": false
+        },
+        "KITTUMO": {
+            "description": "Ayakko kitto sadhanangal 🤣",
+            "value": "ayakko kitto kittumo tharo tharumo ayakkamo send undo undaavo"
+        },
+        "EXPELL": {
+            "description": "The words if contained should be rejected",
+            "value": "movie Movie"
+        },
+        "IN_EXPELL": {
+           "description": "The words in Expelled you're okay with",
+           "value": "scary Scary emoji Emoji"
+        },
+        "OWNER_ID": {
+           "description": "You're id From @MT_Id_Bot",
+           "value": "1876193641"
+        },
         "USER_SESSION": {
-            "description": "A Pyrogram User Session String. Generated From @PyrogramStringBot",
+            "description": "A Pyrogram User Session String. Generated From @MT_usersession_Bot",
+            "value": ""
+        },
+        "FORCES_SUB": {
+            "description": "update Channel UserName (Without @)",
             "value": ""
         }
     },
