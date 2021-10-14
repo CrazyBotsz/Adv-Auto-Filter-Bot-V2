@@ -4,9 +4,7 @@
 # All rights reserved by PR0FESS0R-99
 # License -> https://github.com/PR0FESS0R-99/DonLee_Robot/blob/main/LICENSE
 
-import re
-import datetime
-import motor.motor_asyncio
+import motor.motor_asyncio # pylint: disable=import-error
 from DonLee_Robot.Simple_Config import Mo_Tech_YT
 
 class Database:
@@ -17,8 +15,9 @@ class Database:
         self.col = self.db["Main"]
         self.acol = self.db["Active_Chats"]
         self.fcol = self.db["Filter_Collection"]
-        self.dcol = self.db.users
         
+        self.cache = {}
+        self.acache = {}
 
 
     async def create_index(self):
