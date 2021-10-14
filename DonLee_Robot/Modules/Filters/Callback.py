@@ -154,7 +154,7 @@ async def cb_navg(bot, update: CallbackQuery):
     
     reply_markup = InlineKeyboardMarkup(temp_results)
     
-    text=f"🎬 Title : {query}\n🗃️ Total Files : {len_results if len_results <= max_pages*8 else max_pages*8}\n👤 Requested By : {update.from_user.mention}\n☑️ Chat : {update.chat.title}"
+    text=f"🎬 Title : {query}\n🗃️ Total Files : {len_result if len_result <= max_pages*8 else max_pages*8}"
         
     try:
         await update.message.edit_caption(
