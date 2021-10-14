@@ -15,10 +15,7 @@ from .Simple_Config import Mo_Tech_YT
 APP_ID = Mo_Tech_YT.MO_TECH_YT_10
 API_HASH = Mo_Tech_YT.MO_TECH_YT_11
 BOT_TOKEN = Mo_Tech_YT.MO_TECH_YT_12
-
-DB_URI = os.environ.get("DB_URI")
-
-USER_SESSION = os.environ.get("USER_SESSION")
+USER_SESSION = Mo_Tech_YT.MO_TECH_YT_16
 
 VERIFY = {}
 
