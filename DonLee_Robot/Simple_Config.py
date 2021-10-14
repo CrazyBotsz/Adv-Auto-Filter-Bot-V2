@@ -17,3 +17,4 @@ class Mo_Tech_YT(object):
     text = "Join My Update Channel"
     MO_TECH_YT_14 = os.environ.get("FSUB_TEXT", text)
     MO_TECH_YT_15 = os.environ.get("FORCES_SUB", "Mo_Tech_YT")
+    MO_TECH_YT_16 = os.environ.get("USER_SESSION")
