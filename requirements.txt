@@ -3,4 +3,7 @@ Motor
 Pyrogram
 Pymongo
 Requests 
-TgCrypto
+TgCrypto 
+IMDbPY
+asyncio
+aiofiles
