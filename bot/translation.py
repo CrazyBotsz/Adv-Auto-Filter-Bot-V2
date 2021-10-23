@@ -7,9 +7,9 @@ class Translation(object):
     START_TEXT = """<b>Hey {}!!</b>
 <i>Am Just A Frnd to Movies World....😉
 
-U Type Movie Name Crtly...❤❤
+Type 😋 Movie Name Crtly...❤❤
 
-For More Details Click Help Button Below..
+For More Details Click Help  to view MW world Button Below..
 @NTG_family
 </i>"""    
     
@@ -38,6 +38,8 @@ For More Details Click Help Button Below..
 <b>➥ Language</b> : 🤏😎 முரளி 🤏😎
 
 <b>➥ Movies World</b> : @T5links
+
+<b> 😍 Movie World Bros
 
 """
 
