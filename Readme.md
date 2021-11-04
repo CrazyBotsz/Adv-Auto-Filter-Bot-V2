@@ -1,13 +1,13 @@
 # [DONLEE_ROBOT](https://telegram.dog/Donlee_Robot)
 
 <p align="center">
-  <a href="https://github.com/PR0FESS0R-99/DonLee_Robot/stargazers">
-    <img src="https://img.shields.io/github/stars/PR0FESS0R-99/DonLee_Robot?style=social">
+  <a href="https://github.com/PR0FESS0R-99/DonLee_bot/stargazers">
+    <img src="https://img.shields.io/github/stars/PR0FESS0R-99/DonLee_bot?style=social">
 
   </a>
   
-  <a href="https://github.com/PR0FESS0R-99/DonLee_Robot/fork">
-    <img src="https://img.shields.io/github/forks/PR0FESS0R-99/DonLee_Robot?label=Fork&style=social">
+  <a href="https://github.com/PR0FESS0R-99/DonLee_bot/fork">
+    <img src="https://img.shields.io/github/forks/PR0FESS0R-99/DonLee_bot?label=Fork&style=social">
 
   </a>  
 </p>
@@ -36,7 +36,7 @@ Just Sent Any Text As Query It Will Search For All Connected Chat's Files In Its
 <br>
 
 ### Notice
-* This [Deploy button](https://heroku.com/deploy?template=https://github.com/PR0FESS0R-99/DonLee_Robot/tree/main) is the original
+* This [Deploy button](https://heroku.com/deploy?template=https://github.com/PR0FESS0R-99/DonLee_bot/tree/main) is the original
 * Click [Deploy Video](https://youtu.be/uAHl5jvnrhk) to watch the video
 
 #### Deploy Video
@@ -44,7 +44,7 @@ Just Sent Any Text As Query It Will Search For All Connected Chat's Files In Its
 <a href="https://youtu.be/uAHl5jvnrhk"><img src="https://img.shields.io/youtube/views/uAHl5jvnrhk?style=social">
 
 #### Deploy To Heroku
-<a href="https://heroku.com/deploy?template=https://github.com/PR0FESS0R-99/DonLee_Robot/tree/main"><img src="https://i.ibb.co/tsq26Pz/PR0-FESS0-R-99.gif" alt="PR0FESS0R-99" border="0" height="125" width="200" align="center" /></a>
+<a href="https://heroku.com/deploy?template=https://github.com/PR0FESS0R-99/DonLee_bot/tree/main"><img src="https://i.ibb.co/tsq26Pz/PR0-FESS0-R-99.gif" alt="PR0FESS0R-99" border="0" height="125" width="200" align="center" /></a>
 </p>
 </details>
 
@@ -53,7 +53,7 @@ Just Sent Any Text As Query It Will Search For All Connected Chat's Files In Its
 <br>
 
 ### Notice
-* This [Deploy button](https://heroku.com/deploy?template=https://github.com/PR0FESS0R-99/DonLee_Robot/tree/MoTech) is the original
+* This [Deploy button](https://heroku.com/deploy?template=https://github.com/PR0FESS0R-99/DonLee_bot/tree/MoTech) is the original
 * Click [Deploy Video](https://youtu.be/lI71HsWzTKE) to watch the video
 
 #### Deploy Video
@@ -61,7 +61,7 @@ Just Sent Any Text As Query It Will Search For All Connected Chat's Files In Its
 <a href="https://youtu.be/lI71HsWzTKE"><img src="https://img.shields.io/youtube/views/lI71HsWzTKE?style=social">
 
 #### Deploy To Heroku
-<a href="https://heroku.com/deploy?template=https://github.com/PR0FESS0R-99/DonLee_Robot/tree/MoTech"><img src="https://i.ibb.co/tsq26Pz/PR0-FESS0-R-99.gif" alt="PR0FESS0R-99" border="0" height="125" width="200" align="center" /></a>
+<a href="https://heroku.com/deploy?template=https://github.com/PR0FESS0R-99/DonLee_bot/tree/MoTech"><img src="https://i.ibb.co/tsq26Pz/PR0-FESS0-R-99.gif" alt="PR0FESS0R-99" border="0" height="125" width="200" align="center" /></a>
 
 </a>
 </p>
