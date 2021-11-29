@@ -3,7 +3,7 @@ import string
 import asyncio
 
 from pyrogram import Client, filters
-from pyrogram.errors import UserAlreadyParticipant, FloodWait
+from pyrogram.errors import UserAlreadyParticipant, FloodWait, UserNotParticipant 
 
 from bot import VERIFY # pylint: disable=import-error
 from bot.bot import Bot # pylint: disable=import-error
@@ -62,10 +62,11 @@ async def connect(bot: Bot, update):
     userbot_name = userbot_info.first_name
     
     try:
-        await bot.USER.join_chat(join_link)
+        await bot.get_chat_member(chat_id=target, user_id=userbot_id)
         
-    except UserAlreadyParticipant:
-        pass
+    except UserNotParticipant:
+        await update.reply_text(f"Please add my userbot [{userbot_name}](tg://user?id={userbot_id}) To the channel {target} as admin", quote=True, parse_mode='md')
+        return
     
     except Exception:
         await update.reply_text(f"My UserBot [{userbot_name}](tg://user?id={userbot_id}) Couldnt Join The Channel `{target}` Make Sure Userbot Is Not Banned There Or Add It Manually And Try Again....!!")
