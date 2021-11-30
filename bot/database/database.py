@@ -158,9 +158,7 @@ class Database:
                                 channel_id
                             }
                         }
-                    },
-                False,
-                True
+                    }
             )
 
             await self.del_active(group_id, channel_id)
@@ -295,7 +293,7 @@ class Database:
         templ = {"$pull": {"chats": dict(chat_id = channel_id)}}
         
         try:
-            await self.acol.update_one({"_id": group_id}, templ, False, True)
+            await self.acol.update_one({"_id": group_id}, templ)
         except Exception as e:
             print(e)
             pass
