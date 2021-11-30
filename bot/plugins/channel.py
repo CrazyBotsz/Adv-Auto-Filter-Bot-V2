@@ -5,12 +5,13 @@ import asyncio
 from pyrogram import Client, filters
 from pyrogram.errors import UserAlreadyParticipant, FloodWait
 
-from bot import VERIFY # pylint: disable=import-error
+from bot import VERIFY, LOGGER # pylint: disable=import-error
 from bot.bot import Bot # pylint: disable=import-error
 from bot.database import Database # pylint: disable=import-error
 from bot.plugins.auto_filter import recacher # pylint: disable=import-error
 
 db = Database()
+logger = LOGGER(__name__)
 
 @Client.on_message(filters.command(["add"]) & filters.group, group=1)
 async def connect(bot: Bot, update):
@@ -50,25 +51,25 @@ async def connect(bot: Bot, update):
         await update.reply_text("Invalid Input...\nYou Should Specify Valid <code>chat_id(-100xxxxxxxxxx)</code> or <code>@username</code>")
         return
     
+    # Exports invite link from target channel for user to join
     try:
         join_link = await bot.export_chat_invite_link(target)
     except Exception as e:
-        print(e)
-        await update.reply_text(f"Make Sure Im Admin At <code>{target}</code> And Have Permission For '<i>Inviting Users via Link</i>' And Try Again.....!!!")
+        logger.exception(e, exc_info=True)
+        await update.reply_text(f"Make Sure Im Admin At <code>{target}</code> And Have Permission For <i>Inviting Users via Link</i> And Try Again.....!!!\n\n<i><b>Error Logged:</b></i> <code>{e}</code>", parse_mode='html')
         return
     
     userbot_info = await bot.USER.get_me()
-    userbot_id = userbot_info.id
-    userbot_name = userbot_info.first_name
     
+    # Joins to targeted chat using above exported invite link
+    # If aldready joined, code just pass on to next code
     try:
         await bot.USER.join_chat(join_link)
-        
     except UserAlreadyParticipant:
         pass
-    
-    except Exception:
-        await update.reply_text(f"My UserBot [{userbot_name}](tg://user?id={userbot_id}) Couldnt Join The Channel `{target}` Make Sure Userbot Is Not Banned There Or Add It Manually And Try Again....!!")
+    except Exception as e:
+        logger.exception(e, exc_info=True)
+        await update.reply_text(f"{userbot_info.mention} Couldnt Join The Channel <code>{target}</code> Make Sure Userbot Is Not Banned There Or Add It Manually And Try Again....!!\n\n<i><b>Error Logged:</b></i> <code>{e}</code>", parse_mode='html')
         return
     
     try:
