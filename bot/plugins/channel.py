@@ -54,6 +54,7 @@ async def connect(bot: Bot, update):
     # Exports invite link from target channel for user to join
     try:
         join_link = await bot.export_chat_invite_link(target)
+        join_link = join_link.replace('+', 'joinchat/')
     except Exception as e:
         logger.exception(e, exc_info=True)
         await update.reply_text(f"Make Sure Im Admin At <code>{target}</code> And Have Permission For <i>Inviting Users via Link</i> And Try Again.....!!!\n\n<i><b>Error Logged:</b></i> <code>{e}</code>", parse_mode='html')
