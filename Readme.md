@@ -12,7 +12,7 @@
   </a>  
 </p>
 
-_This Just A Simple Hand Auto Filter Bot For Searching Files From Channel..._
+_This Just A Simple Hand Auto Filter Bot For Searching Movies and Series..._
 
 _Just Sent Any Text I Will Search In All Connected Chat And Reply You With The Message link_
 
