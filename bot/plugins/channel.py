@@ -16,7 +16,7 @@ logger = LOGGER(__name__)
 @Client.on_message(filters.command(["add"]) & filters.group, group=1)
 async def connect(bot: Bot, update):
     """
-    A Funtion To Handle Incoming /add Command TO COnnect A Chat With Group
+    A Funtion To Handle Incoming /add Command TO Connect A Chat With Group
     """
     chat_id = update.chat.id
     user_id = update.from_user.id if update.from_user else None
@@ -48,7 +48,7 @@ async def connect(bot: Bot, update):
             target = int(target_chat[1])
                 
     except Exception:
-        await update.reply_text("Invalid Input...\nYou Should Specify Valid <code>chat_id(-100xxxxxxxxxx)</code> or <code>@username</code>")
+        await update.reply_text("Invalid Input..\nYou Should Specify Valid <code>chat_id(-100xxxxxxxxxx)</code>")
         return
     
     # Exports invite link from target channel for user to join
