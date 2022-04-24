@@ -11,10 +11,11 @@ from . import API_HASH, APP_ID, LOGGER, \
 class User(Client):
     def __init__(self):
         super().__init__(
-            USER_SESSION,
+            "userbot",
             api_hash=API_HASH,
             api_id=APP_ID,
-            workers=4
+            session_string=USER_SESSION,
+            workers=20
         )
         self.LOGGER = LOGGER
 
