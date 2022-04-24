@@ -103,15 +103,16 @@ async def connect(bot: Bot, update):
                 # Using 'if elif' instead of 'or' to determine 'file_type'
                 # Better Way? Make A PR
                 try:
+                    try:
+                        file_id = await bot.get_messages(channel_id, message_ids=msgs.id)
+                    except FloodWait as e:
+                        asyncio.sleep(e.x)
+                        file_id = await bot.get_messages(channel_id, message_ids=msgs.id)
+                    except Exception as e:
+                        print(e)
+                        continue
+
                     if msgs.video:
-                        try:
-                            file_id = await bot.get_messages(channel_id, message_ids=msgs.message_id)
-                        except FloodWait as e:
-                            asyncio.sleep(e.x)
-                            file_id = await bot.get_messages(channel_id, message_ids=msgs.message_id)
-                        except Exception as e:
-                            print(e)
-                            continue
                         file_id = file_id.video.file_id
                         file_name = msgs.video.file_name[0:-4]
                         file_caption  = msgs.caption if msgs.caption else ""
@@ -119,14 +120,6 @@ async def connect(bot: Bot, update):
                         file_type = "video"
                     
                     elif msgs.audio:
-                        try:
-                            file_id = await bot.get_messages(channel_id, message_ids=msgs.message_id)
-                        except FloodWait as e:
-                            asyncio.sleep(e.x)
-                            file_id = await bot.get_messages(channel_id, message_ids=msgs.message_id)
-                        except Exception as e:
-                            print(e)
-                            continue
                         file_id = file_id.audio.file_id
                         file_name = msgs.audio.file_name[0:-4]
                         file_caption  = msgs.caption if msgs.caption else ""
@@ -134,19 +127,14 @@ async def connect(bot: Bot, update):
                         file_type = "audio"
                     
                     elif msgs.document:
-                        try:
-                            file_id = await bot.get_messages(channel_id, message_ids=msgs.message_id)
-                        except FloodWait as e:
-                            asyncio.sleep(e.x)
-                            file_id = await bot.get_messages(channel_id, message_ids=msgs.message_id)
-                        except Exception as e:
-                            print(str(e))
-                            continue
                         file_id = file_id.document.file_id
                         file_name = msgs.document.file_name[0:-4]
                         file_caption  = msgs.caption if msgs.caption else ""
                         file_size = msgs.document.file_size
                         file_type = "document"
+                    
+                    else:
+                        return
                     
                     for i in ["_", "|", "-", "."]: # Work Around
                         try:
