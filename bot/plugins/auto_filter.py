@@ -15,7 +15,7 @@ INVITE_LINK = {}
 ACTIVE_CHATS = {}
 db = Database()
 
-@Bot.on_message(filters.text & filters.group & ~filters.bot, group=0)
+@Bot.on_message(filters.text & filters.group, group=0)
 async def auto_filter(bot, update):
     """
     A Funtion To Handle Incoming Text And Reply With Appropriate Results
@@ -206,7 +206,7 @@ async def auto_filter(bot, update):
                 text=f"Found {(len_results)} Results For Your Query: <code>{query}</code>",
                 reply_markup=reply_markup,
                 parse_mode="html",
-                reply_to_message_id=update.message_id
+                reply_to_message_id=update.id
             )
 
         except ButtonDataInvalid:
