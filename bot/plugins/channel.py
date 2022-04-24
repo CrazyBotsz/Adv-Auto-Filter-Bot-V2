@@ -106,7 +106,7 @@ async def connect(bot: Bot, update):
                     try:
                         file_id = await bot.get_messages(channel_id, message_ids=msgs.id)
                     except FloodWait as e:
-                        asyncio.sleep(e.x)
+                        asyncio.sleep(e.value)
                         file_id = await bot.get_messages(channel_id, message_ids=msgs.id)
                     except Exception as e:
                         print(e)
