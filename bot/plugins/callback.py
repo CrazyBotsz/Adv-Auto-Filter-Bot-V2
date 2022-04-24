@@ -152,7 +152,7 @@ async def cb_navg(bot, update: CallbackQuery):
         )
         
     except FloodWait as f: # Flood Wait Caused By Spamming Next/Back Buttons
-        await asyncio.sleep(f.x)
+        await asyncio.sleep(f.value)
         await update.message.edit(
                 text,
                 reply_markup=reply_markup,
