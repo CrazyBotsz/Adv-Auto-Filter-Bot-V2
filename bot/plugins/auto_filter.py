@@ -112,7 +112,7 @@ async def auto_filter(bot, update):
                         bot_= await bot.get_me()
                         FIND["bot_details"] = bot_
                     except FloodWait as e:
-                        asyncio.sleep(e.x)
+                        asyncio.sleep(e.value)
                         bot_= await bot.get_me()
                         FIND["bot_details"] = bot_
                 
