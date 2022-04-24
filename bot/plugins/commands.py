@@ -63,7 +63,7 @@ async def start(bot, update):
                 update.from_user.first_name),
         reply_markup=reply_markup,
         parse_mode="html",
-        reply_to_message_id=update.message_id
+        reply_to_message_id=update.id
     )
 
 
@@ -83,7 +83,7 @@ async def help(bot, update):
         text=Translation.HELP_TEXT,
         reply_markup=reply_markup,
         parse_mode="html",
-        reply_to_message_id=update.message_id
+        reply_to_message_id=update.id
     )
 
 
@@ -102,5 +102,5 @@ async def about(bot, update):
         reply_markup=reply_markup,
         disable_web_page_preview=True,
         parse_mode="html",
-        reply_to_message_id=update.message_id
+        reply_to_message_id=update.id
     )
