@@ -8,7 +8,7 @@
         "Mongo DB"
     ],
     "website": "https://github.com/CrazyBotsz",
-    "repository": "https://github.com/CrazyBotsz/Adv-Auto-Filter-Bot-V2",
+    "repository": "https://github.com/Adbotuser/Avogadrofilterbot",
     "success_url": "https://telegram.dog/CrazyBotsz",
     "env": {
         "APP_ID": {
