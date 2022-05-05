@@ -2,7 +2,7 @@ import re
 import logging
 import asyncio
 
-from pyrogram import Client, filters
+from pyrogram import Client, filters, enums
 from pyrogram.types import Message, InlineKeyboardButton, InlineKeyboardMarkup, CallbackQuery
 from pyrogram.errors import ButtonDataInvalid, FloodWait
 
@@ -205,7 +205,7 @@ async def auto_filter(bot, update):
                 chat_id = update.chat.id,
                 text=f"Found {(len_results)} Results For Your Query: <code>{query}</code>",
                 reply_markup=reply_markup,
-                parse_mode="html",
+                parse_mode=enums.ParseMode.HTML,
                 reply_to_message_id=update.id
             )
 
