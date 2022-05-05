@@ -3,7 +3,7 @@
 # (c) @AlbertEinsteinTG
 
 import re
-from pyrogram import Client, filters
+from pyrogram import Client, filters, enums
 from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup
 
 from bot import VERIFY # pylint: disable=import-error
@@ -76,7 +76,7 @@ async def settings(bot, update):
         chat_id=chat_id, 
         text=text, 
         reply_markup=reply_markup, 
-        parse_mode="html",
+        parse_mode=enums.ParseMode.HTML,
         reply_to_message_id=update.id
         
         )

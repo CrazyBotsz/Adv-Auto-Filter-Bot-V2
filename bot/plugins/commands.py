@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 # (c) @AlbertEinsteinTG
 
-from pyrogram import filters, Client
+from pyrogram import filters, Client, enums
 from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup, CallbackQuery
 from bot import Translation, LOGGER # pylint: disable=import-error
 from bot.database import Database # pylint: disable=import-error
@@ -29,7 +29,7 @@ async def start(bot, update):
                 file_id,
                 quote=True,
                 caption = caption,
-                parse_mode="html",
+                parse_mode=enums.ParseMode.HTML,
                 reply_markup=InlineKeyboardMarkup(
                     [
                         [
@@ -42,7 +42,7 @@ async def start(bot, update):
                 )
             )
         except Exception as e:
-            await update.reply_text(f"<b>Error:</b>\n<code>{e}</code>", True, parse_mode="html")
+            await update.reply_text(f"<b>Error:</b>\n<code>{e}</code>", True, parse_mode=enums.ParseMode.HTML)
             LOGGER(__name__).error(e)
         return
 
@@ -62,7 +62,7 @@ async def start(bot, update):
         text=Translation.START_TEXT.format(
                 update.from_user.first_name),
         reply_markup=reply_markup,
-        parse_mode="html",
+        parse_mode=enums.ParseMode.HTML,
         reply_to_message_id=update.id
     )
 
@@ -82,7 +82,7 @@ async def help(bot, update):
         chat_id=update.chat.id,
         text=Translation.HELP_TEXT,
         reply_markup=reply_markup,
-        parse_mode="html",
+        parse_mode=enums.ParseMode.HTML,
         reply_to_message_id=update.id
     )
 
@@ -101,6 +101,6 @@ async def about(bot, update):
         text=Translation.ABOUT_TEXT,
         reply_markup=reply_markup,
         disable_web_page_preview=True,
-        parse_mode="html",
+        parse_mode=enums.ParseMode.HTML,
         reply_to_message_id=update.id
     )
