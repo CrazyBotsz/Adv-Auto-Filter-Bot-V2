@@ -44,7 +44,7 @@ async def cb_navg(bot, update: CallbackQuery):
         
         admin_list = []
         
-        async for x in bot.iter_chat_members(chat_id=chat_id, filter="administrators"):
+        async for x in bot.get_chat_members(chat_id=chat_id, filter=enums.ChatMembersFilter.ADMINISTRATORS):
             admin_id = x.user.id 
             admin_list.append(admin_id)
             

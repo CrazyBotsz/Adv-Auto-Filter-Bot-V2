@@ -2,7 +2,7 @@ import random
 import string
 import asyncio
 
-from pyrogram import Client, filters
+from pyrogram import Client, filters, enums
 from pyrogram.errors import UserAlreadyParticipant, FloodWait
 
 from bot import VERIFY, LOGGER # pylint: disable=import-error
@@ -25,7 +25,7 @@ async def connect(bot: Bot, update):
     
     if VERIFY.get(str(chat_id)) == None: # Make Admin's ID List
         admin_list = []
-        async for x in bot.get_chat_members(chat_id=chat_id, filter="administrators"):
+        async for x in bot.get_chat_members(chat_id=chat_id, filter=enums.ChatMembersFilter.ADMINISTRATORS):
             admin_id = x.user.id 
             admin_list.append(admin_id)
         admin_list.append(None)
@@ -92,13 +92,14 @@ async def connect(bot: Bot, update):
     wait_msg = await update.reply_text("Please Wait Till I Add All Your Files From Channel To Db\n\n<i>This May Take 10 or 15 Mins Depending On Your No. Of Files In Channel.....</i>\n\nUntil Then Please Dont Sent Any Other Command Or This Operation May Be Intrupted....")
     
     try:
-        type_list = ["video", "audio", "document"]
+        mf = enums.MessagesFilter
+        type_list = [mf.VIDEO, mf.DOCUMENT, mf.AUDIO]
         data = []
         skipCT = 0
         
         for typ in type_list:
 
-            async for msgs in bot.USER.search_messages(channel_id,filter=typ): #Thanks To @PrgOfficial For Suggesting
+            async for msgs in bot.USER.search_messages(channel_id, filter=typ): #Thanks To @PrgOfficial For Suggesting
                 
                 # Using 'if elif' instead of 'or' to determine 'file_type'
                 # Better Way? Make A PR
@@ -195,7 +196,7 @@ async def disconnect(bot: Bot, update):
     
     if VERIFY.get(str(chat_id)) == None: # Make Admin's ID List
         admin_list = []
-        async for x in bot.get_chat_members(chat_id=chat_id, filter="administrators"):
+        async for x in bot.get_chat_members(chat_id=chat_id, filter=enums.ChatMembersFilter.ADMINISTRATORS):
             admin_id = x.user.id 
             admin_list.append(admin_id)
         admin_list.append(None)
@@ -259,7 +260,7 @@ async def delall(bot: Bot, update):
     
     if VERIFY.get(str(chat_id)) == None: # Make Admin's ID List
         admin_list = []
-        async for x in bot.get_chat_members(chat_id=chat_id, filter="administrators"):
+        async for x in bot.get_chat_members(chat_id=chat_id, filter=enums.ChatMembersFilter.ADMINISTRATORS):
             admin_id = x.user.id 
             admin_list.append(admin_id)
         admin_list.append(None)
