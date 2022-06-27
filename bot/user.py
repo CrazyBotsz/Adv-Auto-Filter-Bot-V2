@@ -21,6 +21,8 @@ class User(Client):
 
     async def start(self):
         await super().start()
+        try: await self.export_session_string()
+        except: pass
         usr_bot_me = await self.get_me()
         return (self, usr_bot_me.id)
 
